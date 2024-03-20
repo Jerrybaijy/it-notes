@@ -62,45 +62,32 @@
   git pull
   ```
 
-- **配置两个 Remote Repo**
+- **两个 Remote Repo**
 
   ```bash
   # 查看本地 Repo 配置的 Remote Repo
   git remote -v
-  # origin  https://gitlab.com/jerrybai/REPO_NAME.git (fetch)
-  # origin  https://gitlab.com/jerrybai/REPO_NAME.git (push)
-  
-  # 添加 GitHub Remote Repo
-  git remote set-url --add origin https://github.com/jerrybaijy/REPO_NAME.git
-  
-  git remote -v
-  # origin  https://gitlab.com/jerrybai/jerry-test.git (fetch)
-  # origin  https://gitlab.com/jerrybai/jerry-test.git (push)
-  # origin  https://github.com/Jerrybaijy/jerry-test.git (push)
-  
-  # GitLab 作为默认 Remote Repo，可以 Pull 和 Push
-  # GitHub 只可以 Push
-  
-  # 删除其中一个
-  git remote set-url --delete origin https://github.com/jerrybaijy/REPO_NAME.git
+  # 添加默认 Remote Repo（本地没有 Remote Repo 的操作，添加后需设置 Upstream）
+  git remote add origin REMOTE_REPO
+  # 添加另一个 Remote Repo，后添加的只能 pull
+  git remote set-url --add origin REMOTE_REPO
+  # 移除一个 Remote Repo
+  git remote set-url --delete origin REMOTE_REPO
+  # 移除所有 Remote Repo
+  git remote rm origin
   ```
 
 - **git init 步骤**
 
   ```bash
-  # 手动远程建立空仓库
-  
-  # 本地初始化仓库
+  # 创建一个 Local Repo
   git init
-  # 添加和提交
-  git add .
-  git commit -m "MESAGE"
-  # 建立和远程仓库的关系
-  git remote add origin PATH
-  # 拉取
-  git pull --rebase origin BRANCH_NAME # 这步一定要使用--rebase
-  # 推送
+  # UI 界面创建 Remote Repo
+  # 添加默认 Remote Repo
+  git remote add origin REMOTE_REPO
+  # 设置 upstream
   git push -u origin BRANCH_NAME
+  # 其它与正常操作同理
   ```
 
 # Branch

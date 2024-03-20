@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0
+        }
+        .header{
+            height: 40px;
+            line-height: 40px;
+            background-color: #333;
+            color: #b0b0b0;
+            font-size: 12px;
+        }
+        .header .container{
+            width: 1226px;
+            margin: auto;
+        }
+        .header .left{
+            float: left;
+        }
+        .header .right{
+            float: right;
+        }
+        .header .menu{
+            display: inline-block;
+            padding-left: 10px;
+            padding-right: 10px;
+            color: #b0b0b0;
+            text-decoration: none;
+        }
+        .header .menu:hover{
+            color: white;
+        }
+        .header .menu .download{
+            position: absolute;
+            width: 100px;
+            left: -13px;
+            display: none;
+        }
+        .header .menu .download img{
+            width: 100%;
+        }
+
+        /*注意是menu:hover*/
+        /*悬停在menu上，而不是download上，但变化的是download*/
+        .header .menu:hover .download{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<!--背景贯穿整行整体-->
+<div class="header">
+
+    <!--中间区域整体-->
+    <div class="container">
+
+        <!--左侧浮动整体-->
+        <div class="left">
+            <a target="_blank" href="https://www.mi.com/" class="menu" style="padding-left: 0">小米官网</a>
+            <a target="_blank" href="https://www.mi.com/" class="menu">小米商城</a>
+            <a target="_blank" href="https://www.mi.com/" class="menu">小米云服务</a>
+            <a target="_blank" href="https://www.mi.com/" class="menu">天星数科</a>
+
+            <!--悬停展示二维码-->
+            <a target="_blank" href="https://www.mi.com/" class="menu" style="position: relative">下载app
+                <div class="download">
+                    <img src="image/qcode.png">
+                </div>
+            </a>
+        </div>
+
+        <!--右侧浮动整体-->
+        <div class="right">
+            <a target="_blank" href="https://www.mi.com/" class="menu">登录</a>
+            <a target="_blank" href="https://www.mi.com/" class="menu" style="padding-right: 0">注册</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

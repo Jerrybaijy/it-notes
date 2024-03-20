@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+
+
+<form action="/register_ok" method="post" enctype="multipart/form-data">
+<!--需首先在py端定义一个新网址作为跳转页面-->
+<!--提交跳转页面：action="/register_ok" flask获取信息方式：method="get"-->
+<!--将要提交的信息包含在form表单中-->
+
+
+    <div>
+        头像：<input type="file" name="picture">
+    </div>
+
+    <div>
+        用户名：<input type="text" placeholder="请输入用户名" name="user">
+        <!--接收信息的变量名为name="user"，值为输入内容-->
+    </div>
+
+    <div>
+        密码：<input type="text" placeholder="请输入密码" name="pwd">
+    </div>
+
+    <div>
+        角色：
+        <select name="role">
+        <!--接收信息的变量名为name="role"-->
+            <option value="teacher">老师</option>
+            <!--接收信息的值为value="teacher"-->
+            <option value="student">学生</option>
+        </select>
+    </div>
+
+    <div>
+        性别：
+        男<input type="radio" name="gender" value="male"/>
+        <!--接收信息的变量名为name="gender"，值为value="male"-->
+        女<input type="radio" name="gender" value="female"/>
+    </div>
+
+    <div>
+        爱好：
+        篮球<input type="checkbox" name="hobby" value="basketball"/>
+        足球<input type="checkbox" name="hobby" value="football"/>
+        游泳<input type="checkbox" name="hobby" value="swim"/>
+    </div>
+
+    <div>
+        其它：<textarea name="others"></textarea>
+        <!--接收信息的变量名为name="others"，值为输入内容-->
+    </div>
+
+    <input type="submit" value="注册">
+    <!--需配合form表单一起使用-->
+</form>
+
+
+
+
+
+
+</body>
+</html>

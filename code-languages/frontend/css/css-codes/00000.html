@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试页面</title>
+    <style>
+        /*执行xxx时，对所有的li标签生效*/
+        .xxx li{
+            background-color: red;
+            color: green;
+        }
+         /*执行xxx时，仅对xxx的直接子标签a生效，即对百度生效*/
+        .xxx > a{
+            background-color: red;
+            color: green;
+        }
+
+        /*执行xxx时，仅对xxx的子标签div里的子标签a生效，即对谷歌生效*/
+        .xxx > div > a{
+            background-color: red;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="xxx">
+        <a>百度</a>
+        <div>
+            <a>谷歌</a>
+        </div>
+
+        <ul>
+            <li>美国</li>
+            <li>日本</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态表格案例2</title>
+</head>
+<body>
+<input type="button" value="添加" onclick="creatData()">
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>姓名</th>
+        <th>年龄</th>
+    </tr>
+    </thead>
+
+    <tbody id="body">
+
+    </tbody>
+</table>
+
+<script>
+    function creatData() {
+        var userList = [
+            {"ID": 1, "姓名": "张三", "年龄": 20},
+            {"ID": 2, "姓名": "李四", "年龄": 20},
+            {"ID": 3, "姓名": "王五", "年龄": 20}
+        ]
+        var body = document.getElementById("body");
+
+        for (var x in userList) {
+            var tr = document.createElement("tr");
+            var user = userList[x]
+
+            for (var k in user) {
+                var td = document.createElement("td");
+                td.innerText = user[k]
+                tr.append(td)
+            }
+            body.append(tr)
+        }
+    }
+</script>
+</body>
+</html>

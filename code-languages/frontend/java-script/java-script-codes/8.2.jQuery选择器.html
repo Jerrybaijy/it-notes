@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery选择器</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <style>
+        .c1 {
+            color: red;
+        }
+        #c2 {
+            color: blue;
+        }
+        input[type="text"] {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div class="c1">
+    <div id="c2">北京</div>
+    <h1>
+        <span class="c1">北京</span>
+        <a>北京</a>
+    </h1>
+    <input type="text"/>
+</div>
+
+<script>
+    // 选择器
+    // class选择器
+    $(".c1")
+    // 标签选择器
+    $("div")
+    // ID选择器
+    $("c2")
+    // 层级选择器
+    $(".c1 h1")
+    // 属性选择器
+    $("input[type=\"text\"]")
+
+    // 筛选器
+    // 上一个兄弟
+    $("h1").prev()  // 即<div id="c2">北京</div>,可叠加
+    // 下一个兄弟
+    $("h1").next()  // 即<input type="text"/>,可叠加
+    // 所有兄弟
+    $("h1").siblings()
+
+    // 父亲
+    $("h1").parent()  // 即<div class="c1"></div>,可叠加
+    // 儿子
+    $("h1").children("a")  // 即<a>北京</a>,可叠加
+    $("h1").children(".c1")  // 即<span>北京</span>,可叠加
+    // 子子孙孙
+    $(".c1").find()
+</script>
+</body>
+</html>

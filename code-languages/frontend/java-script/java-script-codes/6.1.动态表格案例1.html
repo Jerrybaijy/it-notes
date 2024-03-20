@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态表格案例1</title>
+</head>
+<body>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>姓名</th>
+        <th>年龄</th>
+    </tr>
+    </thead>
+
+    <tbody id="body">
+
+    </tbody>
+</table>
+
+
+<script>
+    var body = document.getElementById("body");
+    var tr = document.createElement("tr");
+    var user = {"ID": 1, "姓名": "张三", "年龄": 20};
+    for (var k in user){
+        var td = document.createElement("td");
+        td.innerText = user[k];
+        tr.append(td);
+    }
+    body.append(tr);
+</script>
+
+
+</body>
+</html>

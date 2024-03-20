@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滚动案例</title>
+</head>
+<body>
+<span id="txt">欢迎中国联通领导张开莅临指导</span>
+<script>
+    // function 定义函数run
+    function run() {
+        // 1.getElementById 获取HTML标签并定义接收变量tag
+        var tag = document.getElementById("txt");
+
+        // 2.innerText 获取标签的内容并定义接收变量dataString
+        var dataString = tag.innerText;
+
+        // 3.生成新字符串
+        var firstChar = dataString[0];  // 欢
+        var otherString = dataString.substring(1, dataString.length);  // 迎中国联通领导张开莅临指导
+        var newString = otherString + firstChar;  // 迎中国联通领导张开莅临指导欢
+
+        // 4.更改标签内容
+        tag.innerText = newString;
+    }
+
+    // setInterval 定时器
+    setInterval(run, 500);  // 函数名run 时间间隔500ms
+
+</script>
+</body>
+</html>

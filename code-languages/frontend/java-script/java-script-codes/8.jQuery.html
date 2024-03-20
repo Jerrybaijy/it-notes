@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div id="city">北京</div>
+
+<script>
+    var tag = $("#city")
+    var oldString = tag.text()
+    var newString = oldString + "666"
+    $("#city").text(newString)
+    console.log(newString)
+</script>
+</body>
+</html>

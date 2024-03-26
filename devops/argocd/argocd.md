@@ -109,7 +109,7 @@
    # 解码，PASSWORD为上一步获取到的加密密码
    echo PASSWORD== | base64 --decode
    
-   # 上次密码KYftEr-aAfYyInXB
+   # 上次密码gqEdYQIdO48sA-56
    ```
 
 6. 在本地或公网通过 IP 访问 Argo CD 页面登录，用户名为admin
@@ -282,9 +282,9 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
      
      # 本地访问应用
      ports:
-     - port: 80
-       protocol: TCP
-       targetPort: 8080
+       - port: 80
+         protocol: TCP
+         targetPort: 8080
      ```
 
 5. 进入项目目录，部署应用
@@ -310,6 +310,27 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
    ```
 
 8. 在本地或公网通过 IP 访问应用
+
+9. 删除应用
+
+   1. 不要直接在集群删除应用，要先在 Argo CD 页面删除应用（因为已配置自愈，Argo CD 会自动创建应用）
+   2. 再删除应用的命名空间
+
+10. 删除 Argo CD
+
+    1. **删除 ArgoCD 自定义资源定义（CRD）**
+
+       ```bash
+       kubectl delete crd applications.argoproj.io appprojects.argoproj.io argocds.argoproj.io
+       ```
+
+    2. **删除 ArgoCD 的命名空间**
+
+       ```bash
+       kubectl delete namespace 
+       ```
+
+       
 
 
 

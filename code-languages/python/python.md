@@ -5,13 +5,13 @@
 - B站：银角大王-武沛齐《精品 Python全套教程》
 ```
 
-# 第一章 Python的环境搭建
+# 环境搭建
 
-## Python的安装
+## 安装
 
 以Python3.9.2为例
 
-### Python的安装
+### 安装
 
 - 双击解压包python-3.9.2-amd64运行
   
@@ -29,20 +29,29 @@
   
   ![image-20231026224550908](assets/image-20231026224550908.png)
 
-### Python的配置
+### 配置
 
 - 关于安装目录
 
   - Lib：存放模块
   
   - site-packages：存放第三方模块
+  
 - 配置Python环境变量
 
   - 详见《Windows笔记》环境变量
-- 修改pip下载源
-  - 运行cmd
-  - C:\Users\39331\AppData\Local\Programs\Python\Python311\Scripts\pip.exe config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
-
+  
+- **pip**
+  
+  ```bash
+  # 查看 pip 版本
+  pip --version
+  # 设置 pip 下载源
+  pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
+  # 查看 pip 下载源
+  pip config get global.index-url
+  ```
+  
 - 帮助
 
   ```
@@ -70,9 +79,8 @@
   >>> help(sum)
   ```
 
-  
 
-## Python编辑器
+## 编辑器
 
 ​	编辑器，又称IDE (Integrated Development Environment，集成开发环境)
 ​	作用：编写Python代码+调用Python解释器运行代码。
@@ -105,7 +113,7 @@
   
   ​	缺点：软件体积大，启动慢。
 
-#### Pycharm的安装
+#### 安装
 
 - 官网下载社区免费版Pycharm；
 
@@ -116,7 +124,7 @@
   ![image-20231026230614766](assets/image-20231026230614766.png)
 
 
-####  Pycharm Professional安装及破解
+####  破解
 
 - 官网下载Pycharm Professional；
 
@@ -156,75 +164,68 @@
 
   ![image-20231026233121030](assets/image-20231026233121030.png)
 
-#### Pycharm的配置
-
-- 选择环境和设置保存路径
-
-  - 打开Pycharm，新建项目
-  
-  ![image-20231026233614255](assets/image-20231026233614255.png)
-
-  - 选择项目存储路径和创建环境，添加环境，选择System Interpreter，取消最后一项，Creat；
-如果使用虚拟环境，通过其它方式安装的模块可能无法使用；
-  
-  ![image-20231026233829521](assets/image-20231026233829521.png)
-  
-  ![image-20231026233902818](assets/image-20231026233902818.png)
-
-  ![image-20231026233945887](assets/image-20231026233945887.png)
+#### 配置
 
 - **设置鼠标滚轮**
 
-  Main menu > Settings >Editor>General> Mouse Control选项：Change font size with Ctrl+Mouse Wheel打上对勾，所有编辑器打勾
-  
+  Main menu > Settings >Editor>General> `Mouse Control` 选项：Change font size with Ctrl+Mouse Wheel 打上对勾，All editors 打勾
+
 - **设置代码字体大小**
 
-  - Main menu > Settings > File > > Editor > Font
-  
+  - Main menu > Settings > Editor > Font
+
   - Size=24，Line Height=1.2
-  
-  - 如果设置不生效，Main menu > Settings > File > > Editor > Color Scheme Font
-  
+
+  - 如果设置不生效，Main menu > Settings > Editor > Color Scheme > Color Scheme Font
+
     取消勾选  `Use color scheme font instead of the default`
-  
+
 - **汉化**
 
   Main menu > Settings > Plugins，搜索“Chinese”，Install安装汉化包。软件重启即汉化版
-  
+
 - **代码格式化**
 
-  - 主菜单 > 设置 > 编辑器 > 代码样式 > Python > “空格选项卡”
+  - Main menu > Settings > Editor > Code Style > Python > `Space` 选项卡
   - “在命名形参中的 = 周围”和“在关键字实参中的 = 周围”两项打勾，保存。
   - 编辑完代码按Ctrl + Shift + L，可实现自动更正空格格式。注意注释部分不会被更正
-  
+
 - **安装主题**
 
   主菜单 > 设置 > 外观与行为 > 外观 > 获取更多主题
-  
+
 - **创建文件**
 
   - 项目路径右键 >>> New >>> Python Fire >>> 给文件命名>>> 回车；
-  
+
   - 编写代码，自动保存；
-  
+
   - 运行：（1、项目栏，2、右键，3、快捷键）快捷键：Ctrl+Shift+F10。
-  
+
 - **同一项目添加多个文件夹**
 
   - Settings >>> Project >>> Project Structure >>>
   - 右侧Add Content Root >>> 选择要添加的文件夹 >>> OK
-  
+
 - **将Terminal默认项切换至cmd**
 
   - Terminal可以模拟cmd
   - Settings >>> Tools >>> Terminal >>> Shell path下拉菜单，切换至cmd
-  
+
 - **无法调用第三方模块**
 
   - Settings >>> Project：当前文件名 >>> Python Interpreter >>> 右侧Add Interpreter >>> Existing >>> 右侧… >>> 
   - 找到python.exe/将python.exe拖入窗口 >>> OK
-  
 
+
+#### 创建项目
+
+- 项目环境
+
+  - Previously configured interpreter：已存在环境，使用全局的 Python 解释器，正常无法使用虚拟环境的依赖。
+  - Viutualenv：虚拟环境，与全局环境隔离，不影响全局，可以使用全局环境依赖。
+
+  ![image-20240322004048261](assets/image-20240322004048261.png)
 
 ### Sublime
 
@@ -3833,178 +3834,138 @@
 
 ​	Flask 是一个轻量级的 Python Web 框架，用于构建 Web 应用程序。它由 Armin Ronacher 创建，基于 Werkzeug 和 Jinja2。Flask 的设计目标是简单而灵活，使得开发者能够快速地构建 Web 应用。
 
-## 基本应用
+## 环境搭建
 
-说明：此部分为学习 B 站武沛齐《精品 Python 全套课程》利用 flask 框架讲述 html 的部分知识
+- 安装flask
 
-- **创建py文件**
-
-  ```python
-  from flask import Flask, render_template
-  app = Flask(__name__)
-  
-  # 创建网址
-  @app.route("/union/xxx")
-  def index():
-  	return render_template("index.html")  # 返回至网址的html文件
-  
-  if __name__ == '__main__':
-      app.run()
-  
+  ```bash
+  # 查看 flask
+  pip show flask
+  # 安装 flask
+  pip install Flask
   ```
 
-- **创建html文件**
+## 基本项目
 
-  - 项目名右键 >>> new >>> Directory：命名templates
-  - templates右键>>> new >>> HTML File >>> 命名为“index” 
-  - 在HTML文件中写html标签
+![image-20240322141019074](assets/image-20240322141019074.png)
 
-## form表单
+1. [B 站武沛齐《精品 Python 全套课程》P19 10-1 前端开发 - 01:05:36](https://www.bilibili.com/video/BV1zd4y1y7px?p=19&vd_source=02dd98cfbf740b256dca0ec3e66776e6)
 
-说明：此部分为学习B站武沛齐《精品 Python 全套课程》利用flask框架讲述form表单的基本用法
+2. 此项目没有整理至《projects》，没有存储至 Git 托管平台
 
-- **get方式**
+3. 创建 Flask 项目
 
-  在接收数据时，在浏览器url上有体现：http://127.0.0.1:5000/register_ok?user=zhangsan；
+4. 在项目根目录创建后端主程序文件 register.py
 
-  ```python
-  @app.route("/register_ok", methods = ["GET"])  # 或者不写methods。
-  request.args.get()
-  ```
+   ```python
+   from flask import Flask, render_template, request, redirect
+   app = Flask(__name__)
+   
+   # 定义注册路由
+   @app.route("/register")
+   def register():
+       # 返回至register页面
+       return render_template("register.html")
+   
+   # 定义submit路由
+   @app.route("/register_ok", methods=["POST"])
+   def register_ok():
+       # 1.接收用户提交数据
+       # 左侧user为要存入数据库的变量名，右侧user为form表单提交数据的变量名
+       user = request.form.get("user")
+       pwd = request.form.get("pwd")
+       role = request.form.get("role")
+       gender = request.form.get("gender")
+       others = request.form.get("others")
+       # 接收复选框  request.args.getlist()
+       hobby = request.form.getlist("hobby")
+   
+       # 2.保存数据
+       with open("users.txt", "a", encoding="utf-8") as f:
+           line = "{}|{}|{}|{}|{}|{}\n".format(user, pwd, role, gender, hobby, others)
+           f.write(line)
+       # 3.返回至login页面
+       return render_template("login.html")
+   if __name__ == '__main__':
+       app.run()
+   ```
 
-  ```html
-  <form action="/register_ok" method="get"></form>
-  ```
+5. 在 templates 文件夹创建前端文件 register.html, login.html
 
-- **post方式**
+   - register.html
 
-  在接收数据时，在浏览器url上没有体现，而是放在请求体中传递；传递文件必须使用post形式传递。
+     ```html
+     <!DOCTYPE html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <title>Title</title>
+     </head>
+     <body>
+     # 定义submit路由和HTTP协议
+     <form action="/register_ok" method="POST">
+         <div>
+             <!--"user"作为接收用户输入内容的变量-->
+             用户名：<input type="text" placeholder="请输入用户名" name="user">
+         </div>
+     
+         <div>
+             密码：<input type="text" placeholder="请输入密码" name="pwd">
+         </div>
+     
+         <div>
+             角色：
+             <!--"role"作为接收用户选择内容的变量-->
+             <select name="role">
+                 <option value="teacher">老师</option>
+                 <option value="student">学生</option>
+             </select>
+         </div>
+     
+         <div>
+             性别：
+             男<input type="radio" name="gender" value="male"/>
+             女<input type="radio" name="gender" value="female"/>
+         </div>
+     
+         <div>
+             爱好：
+             篮球<input type="checkbox" name="hobby" value="basketball"/>
+             足球<input type="checkbox" name="hobby" value="football"/>
+             游泳<input type="checkbox" name="hobby" value="swim"/>
+         </div>
+     
+         <div>
+             其它：<textarea name="others"></textarea>
+         </div>
+     
+         <input type="submit" value="注册">
+     </form>
+     </body>
+     </html>
+     ```
 
-  ```python
-  @app.route("/register_ok", methods = ["POST")
-  request.form.get()
-  ```
+   - login.html
 
-  ```html
-  <form action="/register_ok" method="post" enctype="multipart/form-data" ></form>
-  ```
+     ```html
+     <!DOCTYPE html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <title>login</title>
+     </head>
+     <body>
+     <h1>注册完成，请登录</h1>
+     </body>
+     </html>
+     ```
 
-- **get方式案例**
+6. 运行项目，手动进入 register 页面：http://127.0.0.1:5000/register
 
-  ```python
-  @app.route("/register_ok")
-  def register_ok():
-      # 1.接收用户提交数据
-      user = request.args.get("user")
-      # 左侧user为要存入数据库的变量名，右侧user为form表单接收数据的变量名
-  
-      pwd = request.args.get("pwd")
-      role = request.args.get("role")
-      gender = request.args.get("gender")
-      others = request.args.get("others")
-  
-      # 接收复选框  request.args.getlist()
-      hobby = request.args.getlist("hobby")
-  	# checkbox标签返回的数据为多个值，所以用getlist
-  
-      # 2.保存数据
-      with open("users.txt", "a", encoding = "utf-8") as f:
-          line = "{}|{}|{}|{}|{}|{}\n".format(user, pwd, role, gender, hobby, others)
-          f.write(line)
-  
-      # 3.跳转页面
-  	return redirect("/login")
-  	# 需要在py端和html端编写login代码
-  
-  ```
+7. 输入信息，点击注册
 
-  ```html
-  <form action="/register_ok" method="get">
-  <!--需首先在py端定义一个新网址作为跳转页面-->
-  <!--提交跳转页面：action="/register_ok" flask获取信息方式：method="get"-->
-  <!--将要提交的信息包含在form表单中-->
-  
-      <div>
-          用户名：<input type="text" placeholder="请输入用户名" name="user">
-          <!--接收信息的变量名为name="user"，值为输入内容-->
-      </div>
-  
-      <div>
-          密码：<input type="text" placeholder="请输入密码" name="pwd">
-      </div>
-  
-      <div>
-          角色：
-          <select name="role">
-          <!--接收信息的变量名为name="role"-->
-              <option value="teacher">老师</option>
-              <!--接收信息的值为value="teacher"-->
-              <option value="student">学生</option>
-          </select>
-      </div>
-  
-      <div>
-          性别：
-          男<input type="radio" name="gender" value="male"/>
-          <!--接收信息的变量名为name="gender"，值为value="male"-->
-          女<input type="radio" name="gender" value="female"/>
-      </div>
-  
-      <div>
-          爱好：
-          篮球<input type="checkbox" name="hobby" value="basketball"/>
-          足球<input type="checkbox" name="hobby" value="football"/>
-          游泳<input type="checkbox" name="hobby" value="swim"/>
-      </div>
-  
-      <div>
-          其它：<textarea name="others"></textarea>
-          <!--接收信息的变量名为name="others"，值为输入内容-->
-      </div>
-  
-      <input type="submit" value="注册">
-      <!--需配合form表单一起使用-->
-  </form>
-  ```
-
-- **post方式案例**
-
-  ```python
-  @app.route("/register_ok", methods = ["POST"])
-  # 传递方式：methods = ["POST"]
-  def register_ok():
-      # 1.接收用户提交数据
-      # 传递方式为post，所以将args改成form，其它同理。
-      user = request.form.get("user")
-  
-      # 上传文件必须使用post传递，且将args改成files。
-      picture = request.files.get("picture")
-      picture_name = "{}.png".format(user)
-      # 上传文件使用.save保存数据
-      picture.save(picture_name)
-  
-      # 2.保存数据
-      # 除上传文件外，其它同get传递方式。
-  
-      # 3.跳转页面
-      同get传递方式
-  
-  ```
-
-  ```html
-  <form action="/register_ok" method="post" enctype="multipart/form-data">
-  <!--py端获取方式为"POST"，此处改为method="post"-->
-  <!--py端获取方式为"POST"，此处添加enctype="multipart/form-data"-->
-  
-      <div>
-          头像：<input type="file" name="picture">
-      </div>
-  
-      <div>
-          用户名：<input type="text" placeholder="请输入用户名" name="user">
-          <!--与"GET"方式相同-->
-      </div>
-  ```
+   1. 程序会自动在项目根目录创建一个 users.txt 文件，并将用户提交信息存储在文件中。
+   2. 页面自动跳转至 login 页面。
 
 # 第十四章 Django框架
 

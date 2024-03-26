@@ -19,11 +19,18 @@
 
 - npm 是 Node.js 的包管理器
 
+
+## npm
+
+- 命令
+
   ```bash
   # 查看 npm 版本
   npm --version
   # 更新 npm 包管理工具到最新版
   npm install -g npm@latest
+  # 创建静态文件夹
+  npm run build
   ```
 
   
@@ -3367,9 +3374,19 @@
 
   7. 在主程序文件内引入组件文件 `Appbar.js`，并以标签形式调用 Appbar.js 中的函数
 
+## 流程
+
+1. 环境搭建
+2. 安装组件库
+3. 编写主程序文件和组件文件
+4. 调试运行 `npm start`
+5. 生成静态文件夹 build
+6. 编写 Dockerfil
+7. 生成 image
+
 ## 主程序文件
 
-- 主程序文有一个主函数，以标签形式调用组件的函数
+- 主程序文件 App.js 有一个主函数，以标签形式调用组件的函数
 
   源自项目 student-springboot-react-frontend
 

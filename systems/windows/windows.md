@@ -350,6 +350,17 @@
 
 # 第n章 Windows解决方法
 
+## 包管理器
+
+- 安装包管理器
+
+  ```bash
+  # Chocolatey
+  Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+  ```
+
+  
+
 ## 无法访问Windows APP文件夹
 
 1. 选中WindowsApps文件夹，并点击鼠标右键，在弹出的选项框中点击“属性”选项；

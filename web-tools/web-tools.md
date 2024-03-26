@@ -52,11 +52,11 @@ postman模拟前端操作数据库
 
 ## 环境搭建
 
-### Windows 系统
+- [Google Cloud CLI](https://cloud.google.com/sdk/gcloud?hl=zh-cn) 是一套用于创建和管理 Google Cloud 资源的工具。
+
+### Windows
 
 1. [根据操作系统选择安装 Google Cloud CLI](https://cloud.google.com/sdk/docs/install?hl=zh-cn)
-
-   1. [Google Cloud CLI](https://cloud.google.com/sdk/gcloud?hl=zh-cn) 是一套用于创建和管理 Google Cloud 资源的工具。
 
 2. 安装之后会出现 Google Cloud SDK Shell 应用
 
@@ -68,6 +68,47 @@ postman模拟前端操作数据库
 
    ```bash
    gcloud components install gke-gcloud-auth-plugin
+   ```
+
+### Linux
+
+1. [根据操作系统选择安装 Google Cloud CLI](https://cloud.google.com/sdk/docs/install?hl=zh-cn)
+
+2. 进入 User 目录
+
+3. 下载 Linux 归档文件
+
+   ```bash
+   curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-469.0.0-linux-x86_64.tar.gz
+   ```
+
+4. 解压
+
+   ```bash
+   tar -xf google-cloud-cli-469.0.0-linux-x86_64.tar.gz
+   ```
+
+5. 将 gcloud CLI 添加到路径
+
+   ```bash
+   ./google-cloud-sdk/install.sh
+   ```
+
+6. 初始化
+
+   ```bash
+   ./google-cloud-sdk/bin/gcloud init
+   ```
+
+   1. 选择第 2 项：Log in with a new account
+   2. 点击输出的网址，跳转到网页获取 authorization code，并粘贴回至 bash
+   3. 选择项目，目前项目为 opportune-study-413101
+   4. 选择默认区域：上次选 [7] us-central1-c
+
+7. 安装 kubectl
+
+   ```bash
+   gcloud components install kubectl
    ```
 
 ## 常用命令
@@ -89,7 +130,7 @@ postman模拟前端操作数据库
   # 查看当前项目
   gcloud config list project
   # 切换项目
-  gcloud config set project PROJECT_ID
+  gcloud config set project $PROJECT_ID
   ```
 
 - **镜像**
@@ -106,29 +147,358 @@ postman模拟前端操作数据库
 
   ```bash
   # 创建仓库
-  gcloud artifacts repositories create REPO_NAME --project=PROJECT_ID --repository-format=docker --location=LOCATION --description="MESSAGE"
+  gcloud artifacts repositories create REPO_NAME --project=$PROJECT_ID --repository-format=docker --location=LOCATION --description="MESSAGE"
   # 查看仓库
   gcloud artifacts repositories list
   # 删除仓库
-  gcloud artifacts repositories delete REPO_NAME --location=LOCATION --project=PROJECT_ID
+  gcloud artifacts repositories delete REPO_NAME --location=$LOCATION --project=$PROJECT_ID
   ```
 
 - **集群**
 
   ```bash
   # 创建集群
-  gcloud container clusters create-auto CLUSTER_NAME --location=LOCATION
+  gcloud container clusters create-auto $CLUSTER_NAME --location=$LOCATION
   # 查看集群
   gcloud container clusters list
   # 删除集群
-  gcloud container clusters delete CLUSTER_NAME --location=LOCATION
-  # 集群
-  
+  gcloud container clusters delete $CLUSTER_NAME --location=$LOCATION
+  # 停止集群
+  gcloud container clusters resize $CLUSTER_NAME --size=0 --zone=$LOCATION
   ```
 
-## GKE
+## [GKE](https://cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview?hl=zh-cn)
 
-GKE (Google Kubernetes Engine)，详见 Kubernetes
+GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服务，可以使用 Google 的基础架构大规模部署和运营容器化应用。
+
+### 手动部署
+
+1. 来源：[部署容器化应用](https://cloud.google.com/kubernetes-engine/docs/deploy-app-cluster)
+
+2. 这是一个 GKE 练习，将一个简单的容器化 Web Server 部署到 GKE 集群，并可以在互联网访问
+
+3. 此练习没有使用  Yaml 文件部署
+
+4. **准备**
+
+   1. Google Cloud CLI 环境搭建完成，详见 《Google Cloud》
+
+   2. 在 Google Cloud 中启用 API
+
+   3. 设置默认项目
+
+      ```bash
+      gcloud config set project opportune-study-413101
+      ```
+
+5. **创建集群**
+
+   1. 创建集群
+
+      ```bash
+      gcloud container clusters create-auto hello-cluster --location=us-central1
+      ```
+
+   2. 获取用于集群的身份验证凭据
+
+      ```bash
+      gcloud container clusters get-credentials hello-cluster --location us-central1
+      ```
+
+6. **部署应用**
+
+   - 手动部署应用
+
+     ```bash
+     kubectl create deployment hello-server --image=us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
+     ```
+
+   - 可替换为自己创建的镜像
+
+7. **公开端口**
+
+   ```bash
+   kubectl expose deployment hello-server --type LoadBalancer --port 80 --target-port 8080
+   ```
+
+8. **获取外部 IP**
+
+   ```bash
+   kubectl get service hello-server
+   ```
+
+9. **访问应用**
+
+   ```bash
+   curl http://EXTERNAL-IP
+   ```
+
+10. **清理**
+
+    1. 删除 Service
+
+       ```bash
+       kubectl delete service hello-server
+       ```
+
+    2. 删除集群
+
+       ```bash
+       gcloud container clusters delete hello-cluster --location us-central1
+       ```
+
+### Yaml 部署
+
+- 来源：[部署特定语言应用](https://cloud.google.com/kubernetes-engine/docs/quickstarts/deploy-app-container-image?hl=zh-cn#go)
+- 这是一个 GKE 练习，将一个简单的容器化 Web Server 部署到 GKE 集群，并可以在互联网访问
+- 此练习使用  Yaml 文件部署
+
+#### 准备
+
+1. Google Cloud CLI 环境搭建完成，详见 《Google Cloud》
+
+2. 在 Google Cloud 中启用 API
+
+3. 设置默认项目
+
+   ```bash
+   gcloud config set project opportune-study-413101
+   ```
+
+4. 安装 Go 语言环境
+
+   ```bash
+   sudo apt-get install golang
+   go version
+   ```
+
+#### 编写应用
+
+1. 如果使用自己的镜像，可以跳过此步
+
+2. 创建工作目录 `helloworld-gke` 并进入
+
+3. 创建名为 `example.com/helloworld` 的新模块
+
+   ```bash
+   go mod init example.com/helloworld
+   ```
+
+4. 创建名为 `helloworld.go` 的新文件
+
+   ```go
+   package main
+   
+   import (
+           "fmt"
+           "log"
+           "net/http"
+           "os"
+   )
+   
+   func main() {
+           http.HandleFunc("/", handler)
+   
+           port := os.Getenv("PORT")
+           if port == "" {
+                   port = "8080"
+           }
+   
+           log.Printf("Listening on localhost:%s", port)
+           log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
+   }
+   
+   func handler(w http.ResponseWriter, r *http.Request) {
+           log.Print("Hello world received a request.")
+           target := os.Getenv("TARGET")
+           if target == "" {
+                   target = "World"
+           }
+           fmt.Fprintf(w, "Hello %s!\n", target)
+   }
+   ```
+
+#### 创建镜像
+
+1. 如果使用自己的镜像，可以跳过此步
+
+2. 创建 Dockerfile
+
+   ```dockerfile
+   FROM golang:1.21.0 as builder
+   WORKDIR /app
+   RUN go mod init quickstart-go
+   COPY *.go ./
+   RUN CGO_ENABLED=0 GOOS=linux go build -o /quickstart-go
+   
+   # 使用 Docker 多阶段构建来创建精简的生产镜像
+   # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
+   # 原文件不是这个image，导致容器无法启动
+   FROM debian
+   WORKDIR /
+   COPY --from=builder /quickstart-go /quickstart-go
+   
+   # 原文件没有这句，导致找不到nonroot用户，容器无法启动
+   RUN groupadd -r nonroot && useradd -r -g nonroot nonroot
+   
+   USER nonroot:nonroot
+   ENTRYPOINT ["/quickstart-go"]
+   ```
+
+3. 获取 Google Cloud 项目 ID
+
+   ```bash
+   gcloud config get-value project
+   ```
+
+4. 在集群所在的位置创建名为 `hello-repo` 的仓库
+
+   ```bash
+   gcloud artifacts repositories create hello-repo --project=opportune-study-413101 --repository-format=docker --location=us-central1 --description="Docker repository"
+   ```
+
+5. 创建镜像
+
+   ```bash
+   gcloud builds submit --tag us-central1-docker.pkg.dev/opportune-study-413101/hello-repo/helloworld-gke .
+   ```
+
+#### 创建集群
+
+1. 创建集群
+
+   ```sh
+   gcloud container clusters create-auto helloworld-gke --location us-central1
+   ```
+
+2. 验证有权访问该集群
+
+   ```
+   kubectl get nodes
+   ```
+
+#### 创建 Deployment
+
+1. 创建 `deployment.yaml` 文件
+
+   `$GCLOUD_PROJECT` 是您的 Google Cloud 项目 ID，$LOCATION 是代码库位置，例如 us-central1
+
+   ```yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: helloworld-gke
+   spec:
+     replicas: 1
+     selector:
+       matchLabels:
+         app: hello
+     template:
+       metadata:
+         labels:
+           app: hello
+       spec:
+         containers:
+         - name: hello-app
+           # Replace $LOCATION with your Artifact Registry location (e.g., us-west1).
+           # Replace $GCLOUD_PROJECT with your project ID.
+           image: $LOCATION-docker.pkg.dev/$GCLOUD_PROJECT/hello-repo/helloworld-gke:latest
+           # This app listens on port 8080 for web traffic by default.
+           ports:
+           - containerPort: 8080
+           env:
+             - name: PORT
+               value: "8080"
+           resources:
+             requests:
+               memory: "1Gi"
+               cpu: "500m"
+               ephemeral-storage: "1Gi"
+             limits:
+               memory: "1Gi"
+               cpu: "500m"
+               ephemeral-storage: "1Gi"
+   ```
+
+2. 部署应用
+
+   ```bash
+   kubectl apply -f deployment.yaml
+   ```
+
+3. 查看应用
+
+   如果所有 `AVAILABLE` 部署都为 `READY`，则表示 Deployment 已完成。否则再次运行 `kubectl apply -f deployment.yaml`，更新 Deployment 以纳入任何更改
+
+   ```bash
+   kubectl get deployments
+   ```
+
+4. 查看 Pod
+
+   ```bash
+   kubectl get pods
+   ```
+
+#### 创建 Service
+
+1. 创建 `service.yaml` 文件
+
+   ```yaml
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: hello
+   spec:
+     type: LoadBalancer
+     selector:
+       app: hello
+     ports:
+     - port: 80
+       targetPort: 8080
+   ```
+
+2. 部署 Service
+
+   ```sh
+   kubectl apply -f service.yaml
+   ```
+
+#### 访问应用
+
+1. 获取外部 IP
+
+   输出结果的 `EXTERNAL-IP` 列中，复制 Service 的外部 IP 地址
+
+   ```bash
+   kubectl get service
+   ```
+
+2. 访问应用
+
+   ```bash
+   http://EXTERNAL-IP
+   ```
+
+#### 清理
+
+1. Delete service
+
+   ```bash
+   kubectl delete service hello
+   ```
+
+2. Delete cluster
+
+   ```bash
+   gcloud container clusters delete helloworld-gke --location us-central1
+   ```
+
+3. Delete repo
+
+   ```bash
+   gcloud artifacts repositories delete hello-repo --location=us-central1 --project=opportune-study-413101
+   ```
 
 # MySQL
 
@@ -506,6 +876,20 @@ Postman 是一个 API 开发工具，用于创建、测试和调试 API。它可
 ## 环境搭建
 
 1. [官网下载 Postman](https://www.postman.com/downloads/?utm_source=postman-home)
+
+## 使用方法
+
+- 模拟浏览器向后端发送请求
+
+  ![image-20240321193038122](assets/image-20240321193038122.png)
+
+- **请求方法**：例 PUT，对应前端的 method
+
+- **请求地址**：对应后端的接口，例子中 /student 是类，/update/{studentId} 由 controller 定义
+
+- **Body**：即用户要发送的请求内容，以 JSON 格式发送
+
+- 最后一行是反馈结果，类似于 console
 
 # SSH
 

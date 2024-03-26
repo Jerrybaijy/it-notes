@@ -296,30 +296,54 @@ Java 中也支持嵌套循环、死循环、break和continue关键字，用法�
 
 ​	Spring Boot 是一个 Java 语言的框架。它是基于 Spring Framework 构建的，用于简化和加速 Java 应用程序的开发和部署。
 
-## 环境搭建
+## 创建项目
 
-1. 确认已安装 Java 的运行环境 JDK
-2. [进入 Spring Initializr 网站](https://start.spring.io/)
-	1. 添加项目信息
-	2. 添加项目依赖
-	3. 生成项目压缩文件
-3. 下载并解压项目压缩文件到项目文件夹
-4. IDEA 打开项目文件夹
-5. 设置 JDK
+1. [进入 Spring Initializr 网站](https://start.spring.io/)
+  1. 添加项目信息
+     - Group：com.jerrycodes
+     - Artifact：$PROJECT_NAME
+  2. 添加项目依赖
+  3. 生成项目压缩文件
+2. 下载并解压项目压缩文件到项目文件夹
+3. IDEA 打开项目文件夹
+4. 设置 JDK
+
+## 依赖
+
+- 
 
 ## 包和类
 
-- package `controller`：用于与 HTTP 交互
-- package `model`
-	- class `CLASS_NAME`：创建类和对象
-- package `service`：服务
-	- class - Interfaces `SERVICE_NAME`：服务接口
-	-  class `SERVICE_NAME_IMPL`：服务实现
+- java /.../...
+- Package `controller`：用于与 HTTP 交互，并传递给 service
+- Package `model`
+  - Class `CLASS_NAME`：定义类的方法
+- Package `service`：服务
+  - Class - Interfaces `SERVICE_NAME`：服务接口，接收 controller 的信息，并传递给 serviceImpl
+  -  Class `SERVICE_NAME_IMPL`：服务实现
+- Packge `repository`：数据库接口
+  - Class `CLASS_NAME`：数据库接口
 
 
+## 数据库
 
-- controller 用于与 HTTP 交互
-- model package 用于构建类模型
-- repository package 用于构建数据库接口
-- service package 用于构建类的接口和实现
-- resources 用于构建数据库交互
+- resources / application.properties
+
+- 数据库进入方法和驱动
+
+  ```properties
+  # configuration
+  spring.application.name=studentsystem
+  
+  spring.jpa.hibernate.ddl-auto=update
+  spring.datasource.url=jdbc:mysql://localhost:3306/fullstack
+  spring.datasource.username=root
+  spring.datasource.password=
+  spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+  ```
+
+  
+
+## 项目
+
+- student-springboot-react-backend

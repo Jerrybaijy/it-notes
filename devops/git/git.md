@@ -7,18 +7,22 @@
 
 ### 环境搭建
 
-#### Windows 环境
+#### Windows
 
 - 官网下载安装包：**[64-bit Git for Windows Setup](https://github.com/git-for-windows/git/releases/download/v2.44.0.windows.1/Git-2.44.0-64-bit.exe)**
 - 安装时注意选择 `main` 分支
 
+#### Linux
+
+- 目前使用的 Linux 自带 Git
+
 #### 配置
 
-1. 配置用户名和邮箱
+1. 配置用户名和邮箱，此处的用户名和邮箱并不是登录用的
 
    ```bash
    # 配置用户名，如果有空格，要用引号包含
-   git config --global user.name JerryBai
+   git config --global user.name jerrybaijy
    
    # 配置email
    git config --global user.email jerry.baijy@hotmail.com
@@ -29,6 +33,13 @@
    # 查看配置信息
    git config --global --list
    ```
+
+2. 登录
+
+   1. 第一次 push，系统会要求输入平台用户名和密码
+   2. GitLab 可以用户名密码登录
+   3. GitHub 需使用令牌登录，详见 GitHub
+
 
 ### 其它基础
 
@@ -80,13 +91,13 @@
 - **git init 步骤**
 
   ```bash
-  # 创建一个 Local Repo
-  git init
+  # 创建一个 Local Repo，并设置默认分支名为 main。
+  git init --initial-branch=main
   # UI 界面创建 Remote Repo
   # 添加默认 Remote Repo
-  git remote add origin REMOTE_REPO
-  # 设置 upstream
-  git push -u origin BRANCH_NAME
+  git remote add origin $REMOTE_REPO
+  # 设置 upstream（前提是已经commit过）
+  git push -u origin main
   # 其它与正常操作同理
   ```
 
@@ -102,16 +113,18 @@
   # 查看分支
   git branch
   # 创建分支
-  git branch BRANCH_NAME # 使用-d删除
+  git branch $BRANCH_NAME # 使用-d删除
   # 切换分支
-  git checkout BRANCH_NAME # 使用-b创建并切换新分支
+  git checkout $BRANCH_NAME # 使用-b创建并切换新分支
   # 关联分支
-  git push -u origin BRANCH_NAME # git pull -u origin BRANCH_NAME
+  git push -u origin $BRANCH_NAME # git pull -u origin BRANCH_NAME
   # 合并分支
-  git merge BRANCH_NAME
+  git merge $BRANCH_NAME
+  # 重命名目前分支
+  git branch -m $BRANCH_NAME
   
   # 删除远程分支
-  git push origin --delete REMOTE_BRANCH_NAME
+  git push origin --delete $REMOTE_BRANCH_NAME
   ```
 
 ## 其它
@@ -120,8 +133,8 @@
 
   ```bash
   # 关联分支
-  git push -u origin BRANCH_NAME
-  git pull -u origin BRANCH_NAME
+  git push -u origin $BRANCH_NAME
+  git pull -u origin $BRANCH_NAME
   
   # 清除关联
   git remote rm origin
@@ -152,25 +165,45 @@
 
 # GitHub
 
+## 登录
+
+1. GitHub 不再支持密码登录，以下是使用令牌登录方法。
+2. 网页登录到你的 GitHub 帐户
+3. 点击你的头像，在下拉菜单中选择 "Settings"
+4. 在左侧导航栏中，选择 "Developer settings"
+5. 在左侧导航栏中，选择 "Generate new token"
+6. 点击 "Tokens (classic)"
+7. 在下拉菜单中选择 "Generate new token (classic)"
+   1. "Note" 随便填，只是用于标记这个令牌想在哪用
+   2. "Expiration" 使用期限
+   3. 如果自己用，所有选项都打勾（实际经验只勾选 "repo" 大类也没影响目前使用）
+   4. 创建令牌，会得到令牌，注意令牌内容只能看见这一次
+8. 当在 Bash 中要求输入用户名密码时
+   1. 用户名依然是原来的用户名
+   2. 密码用令牌代替
+
+## 解决办法
+
 - 在 Linux 中从 GitHub 上下载特定文件
 
   ``` bash
-  curl -O https://raw.githubusercontent.com/<user>/<repository>/<branch>/<path_to_file1> -O https://raw.githubusercontent.com/<user>/<repository>/<branch>/<path_to_file1>/file2
-  # eg：同时下载两个
-  curl -O https://raw.githubusercontent.com/GoogleCloudPlatform/kubernetes-engine-samples/main/quickstarts/hello-app/main.go -O https://raw.githubusercontent.com/GoogleCloudPlatform/kubernetes-engine-samples/main/quickstarts/hello-app/Dockerfile
+  curl -O https://raw.githubusercontent.com/$USER/$REPO/$BRANCH/$PATH_TO_FILE
+  # eg：同时下载两个，可同时使用两个 -O 下载两个文件
+  curl -O https://raw.githubusercontent.com/Jerrybaijy/it-notes/main/devops/docker/docker.md
   ```
 
-  
 
 # GitLab
 
 ## GitLab 基础
 
-## 配置文件
+## GitLab CI
 
 ​	目的是根据用户自己编写的应用文件 `main.go`、`Dockerfile`、 `.gitlab-ci.yml`，在将文件 psush 到 Gitlab 时，自动生成 Docker image 并推送到 Dockerhub。
 
-- 创建配置文件：`.gitlab-ci.yml`
+### 配置文件
+
+- 示例
 
   ```yaml
   variables:
@@ -193,49 +226,22 @@
       - docker build -t $IMAGE_NAME:$IMAGE_TAG .
       - docker push $IMAGE_NAME:$IMAGE_TAG
   ```
-  
-  ```yaml
-  # 这个配置文件设置了一个 CI/CD 流水线，有一个阶段 (`build`) 和一个任务 (`build_image`)
-  # 定义可以在下文引用的变量
-  variables:
-    IMAGE_NAME: jerrybaijy/jerry-image
-    IMAGE_TAG: v1.0
-  
-  # CI/CD 流水线的阶段
-  stages:
-    - build
-  
-  # 定义了一个名为 build_image 的任务
-  build_image:
-    stage: build # 指定了该任务属于 build 阶段
-    image: docker:20.10.20 # 指定了要用作该任务环境的 Docker 镜像
-    services: # 指定了主要任务容器旁边要运行的额外服务
-      - docker:20.10.20-dind #  -dind 后缀代表 Docker in Docker，允许任务在容器内部运行 Docker 命令
-    variables:
-      DOCKER_TLS_CERTDIR: "/certs" # 此变量将 DOCKER_TLS_CERTDIR 环境变量设置为 /certs，指定 Docker TLS 证书存储的目录
-    before_script: # 指定了在 script 部分之前要执行的命令。
-      - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD # 引用存储在托管平台variables中的用户名和密码
-    script: # 指定了任务的主要命令
-      - docker build -t $IMAGE_NAME:$IMAGE_TAG . # 三个原文件的路径，即当前目录
-      - docker push $IMAGE_NAME:$IMAGE_TAG # 引用本文件开始定义的变量
-  ```
-  
-- **使用方法**
 
-  - 从 GitLab clone 项目 `webserver-go-gitlab-ci`
-  - 项目包含三个文件 `main.go`,  `.gitlab-ci.yml` 和 `Dockerfile` 
-  - 通过 `.gitlab-ci.yml` 和 `Dockerfile` ，经 `git push` 以后，产生两个效果
-    - 把本仓库文件 Push 至 GitLab
-    - 在 GitLab 的 Pipline 中自动生成一个名为 `jerry-image` 的 image，并同时推送至 DockerHub
+### 基本流程
 
-  - 此方法的项目源文件存储在 GitLab 中的 `webserver-go-gitlab-ci`，供长期使用
-  - 此方法生成的 image 存储在 DockerHub 中的 `jerry-image`，供长期使用
+1. 远程创建仓库 clone 至本地
+2. 项目目录创建  `main.go`, `Dockerfile` 和 `.gitlab-ci.yml` 文件
+3. GitLab 仓库项目配置环境变量
+   1. 在配置文件中可能需要某些敏感信息（如密码），可在文件中使用 `$VARIABLE_NAME` 代替，在托管平台中设置这个变量信息，然后在 Pipeline 执行配置文件时，平台会自动处理。
+   2. 进入项目设置页面
+   3. 左下角 Settings → CI/CD
+   4. 选择 Variables → 添加变量信息
+      - 不要选择 Protect variable 选项，否则在非 main 分支无法完成 CI。
+      - 注意一定要选择 Masked variable 选项，否则在 log 日志时会打印出来。
+4. 推送至 GitLab
+   - 项目文件推送至远程仓库
+   - GitLab 在 Pipeline 中自动生成 Image 并推送至 DockerHub
 
+### 项目
 
-## 解决办法
-
-### 配置变量
-
-- 在配置文件中可能需要某些敏感信息（如密码），可在文件中使用 `$[VARIABLE_NAME]` 代替，然后在托管平台中设置这个变量信息，然后在执行配置文件时，平台会自动处理
-- [PROJECT_NAME] → Settings → CI/CD → Variables → 添加变量信息
-  - 注意一定要选择 Masked 选项，否则在 log 日志时会打印出来。
+- GitLab CI Image

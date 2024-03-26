@@ -52,9 +52,8 @@ Linux 是一个开源的类 Unix 操作系统内核。它是一个多用户、�
 2. 在搜索栏中输入你想要安装的 Linux 发行版的名称，例如 "Ubuntu"。
 3. 选择并下载你选择的 Linux 发行版，例如 "Ubuntu 20.04 LTS"。
 4. 安装完成后，点击启动，设置用户名和密码。
-5. 注意：即使你输入密码，也不会在屏幕上显示，就像没输入一样。
-6. 将 "Ubuntu 20.04 LTS" 移动到 D 盘
-   1. 设置 > 应用 > "Ubuntu 20.04 LTS" > 移动
+   1. 注意：即使你输入密码，也不会在屏幕上显示，就像没输入一样。
+
 
 - **使用 WSL**
 
@@ -69,20 +68,43 @@ Linux 是一个开源的类 Unix 操作系统内核。它是一个多用户、�
 
 ## 系统管理
 
-- **关于用户**
+- **用户**
 
   ```bash
   # 创建用户
-  sudo adduser NEW_USER_NAME
+  sudo adduser $NEW_USER_NAME
   # 将用户添加到 sudo 组
-  sudo usermod -aG sudo USER_NAME
+  sudo usermod -aG sudo $USER_NAME
   # 切换用户
-  su - USER_NAME
+  su - $USER_NAME
   ```
 
-- `sudo systemctl enable APPICATION`：添加到开机启动
+- **包管理器**
 
-- `sudo COMMAND`：以超级权限执行命令（让普通用户变成root用户）
+  ```bash
+  # 升级默认包管理器 apt
+  sudo apt update
+  # 安装snap
+  sudo apt install snapd
+  ```
+
+- **命令行工具**
+
+  ```bash
+  # 安装 curl
+  sudo snap install curl
+  ```
+
+- **其它命令**
+
+  ```bash
+  # 添加到开机启动
+  sudo systemctl enable $APPICATION
+  # 以超级权限执行命令（让普通用户变成root用户）
+  sudo $COMMAND
+  ```
+
+  
 
 ## 操作常识
 
@@ -132,26 +154,16 @@ Linux 是一个开源的类 Unix 操作系统内核。它是一个多用户、�
 - **基础命令**
 
   ```bash
-  # 使用 nano 查看文件
-  nano [PATH] FILE_NAME
+  # 查看文件
+  cat $FILE_NAME
   # 创建文件
-  touch [PATH] FILE_NAME
+  touch $FILE_NAME
   # 编辑文件
-  nano [PATH] FILE_NAME
+  nano $FILE_NAME
   # 删除文件
-  rm [PATH] FILE_NAME
-  ```
-
-- **复制**
-
-  ```bash
-  cp SOURCE_PATH/FILE DES_PATH
-  ```
-
-- **查看文件内容**
-
-  ```bash
-  cat PATH/FILE
+  rm $FILE_NAME
+  # 复制文件
+  cp $FILE_NAME $DES_PATH
   ```
 
 - **文本搜索**

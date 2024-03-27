@@ -163,7 +163,7 @@
   # 查看容器日志
   docker logs [OPTIONS] CONTAINER
   # 检查容器详细信息
-  docker container inspect [OPTIONS] CONTAINER [CONTAINER...]
+  docker inspect [OPTIONS] CONTAINER [CONTAINER...]
   ```
   
 - **进入容器执行**
@@ -219,71 +219,44 @@
 
 - [**`-t $IMAGE_NAME[:$TAG]`**](https://docs.docker.com/reference/cli/docker/image/build/#tag)：命名镜像（-t / --tag），可一次使用多个 `-t`
 
-# Dockerfile
+# [Dockerfile](https://docs.docker.com/reference/dockerfile/#dockerfile-reference)
 
 ​	Dockerfile 文件用于构建 docker 镜像，文件中包含了镜像的各种配置信息。
 
-## 关键部分
+## 命令说明
 
-1. **基础镜像（Base Image）**：选择适合你应用程序的基础镜像作为起点。基础镜像是构建你的镜像的基础，通常包含了操作系统和一些基本的软件工具。在示例中，我们选择了Python官方提供的3.9版本的镜像作为基础。
+- **常用命令**
 
-   ```dockerfile
-   FROM <image_name>:<tag> as builder
-   # eg
-   FROM python:3.9-slim as builder
-   ```
+  ```dockerfile
+  FROM node:latest
+  WORKDIR /app
+  COPY ./build .
+  RUN npm install -g http-server
+  CMD ["http-server", "-p", "8080"]
+  ```
 
-2. **设置工作目录**：设置容器内的工作目录
+- **FROM**：基础镜像
 
-   ```dockerfile
-   WORKDIR /app
-   ```
+- **WORKDIR**：工作目录
 
-3. **依赖安装（Dependency Installation）**：如果你的应用程序依赖于其他软件包或库，你需要在Dockerfile中安装它们。通常会使用`RUN`命令运行适当的安装命令，如`pip install`用于Python依赖。
+  - 如该目录不存在，WORKDIR 会自动创建
+  - 工作目录是进入容器的默认目录，后续指令的工作目录
+  - 每一个 RUN 命令都是新建的一层，只有通过 WORKDIR 创建的目录才会一直存在
+  - 可以有多个 WORKDIR，对应多阶段的命令
 
-   ```dockerfile
-   COPY requirements.txt .
-   RUN pip install --no-cache-dir -r requirements.txt
-   ```
+- **EXPOSE**：对外暴露出的端口（只是声明）
 
-   - Python使用`pip install`安装依赖
-   - 将当前目录下的`requirements.txt`文件复制到容器的`/app`目录中，这个文件列出了Python依赖
+- **ADD**：从本地复制文件到容器（还可从 URL 下载）
 
-   - 使用pip安装`requirements.txt`中列出的Python依赖，`--no-cache-dir`参数用于避免缓存。
+- **COPY**：从本地复制文件到容器
 
-   ```dockerfile
-   RUN go mod init hello-app
-   ```
+- **ENV**：设置环境变量
 
-   - 在 Go 项目中，使用`go mod init`初始化一个名为 "hello-app" 的 Go 模块。这会在你的项目目录下生成一个 `go.mod` 文件，其中记录了你的项目的依赖。接下来，当你运行 `go build` 时，Go 工具会根据 `go.mod` 文件自动下载并安装依赖。
+  - `ENV $KEY $VALUE`
 
-4. **复制文件（File Copying）**：将应用程序的文件复制到镜像中。这可能包括应用程序代码、配置文件、静态资源等。使用`COPY`或`ADD`命令将这些文件从本地文件系统复制到镜像中。
+- **CMD**：指定容器创建时的默认命令。（可以被覆盖）
 
-   ```dockerfile
-   COPY server.py .
-   ```
-
-   将当前目录下的`server.py`文件复制到容器的`/app`目录中。
-
-5. **环境配置（Environment Configuration）**：配置容器内部的环境变量，以确保应用程序能够正确运行。这可能包括端口号、数据库连接信息等。使用`ENV`命令设置环境变量。
-
-   ```dockerfile
-   ENV PORT 8080
-   ```
-
-   设置名为`PORT`的环境变量，并将其值设为8080。
-
-6. **启动命令（Startup Command）**：定义容器启动时的默认命令。这是告诉Docker容器应该运行哪个应用程序的关键部分。使用`CMD`或`ENTRYPOINT`命令定义启动命令。
-
-   ```dockerfile
-   CMD ["python", "server.py"]
-   ```
-
-   定义容器启动时的默认命令，即运行`python server.py`来启动Python应用程序。
-
-## 字段说明
-
-- **ENTRYPOINT**：设置容器的入口点
+- **ENTRYPOINT**：指定容器创建时的默认命令。（不可以被覆盖）
 
 ## 相关项目
 

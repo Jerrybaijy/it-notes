@@ -208,32 +208,23 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
    - **deployment.yaml**
 
      ```yaml
-     # 定义一个 Kubernetes 的 Deployment 资源
      apiVersion: apps/v1
      kind: Deployment
      metadata:
-       # 设置 Deployment 的名称为 myapp
        name: myapp
      spec:
-       # 定义 Pod 选择器，用于匹配属于该 Deployment 的 Pod
        selector:
          matchLabels:
            app: myapp
-       # 定义要创建的 Pod 的副本数为 2
        replicas: 2
-       # 定义 Pod 的模板
        template:
          metadata:
-           # 给 Pod 设置标签
            labels:
              app: myapp
          spec:
-           # 定义 Pod 的规格
            containers:
              - name: myapp
-               # 定义镜像为自己的 Go 语言基础镜像
                image: jerrybaijy/jerry-image:v1.1
-               # 定义容器公开的端口
                ports:
                  - containerPort: 8080
                env:
@@ -249,44 +240,24 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
                    cpu: "500m"
                    ephemeral-storage: "1Gi"
      ```
-
+     
    - **service.yaml**
-
+   
      ```yaml
-     # 定义 Kubernetes 的 Service 资源
      apiVersion: v1
      kind: Service
      metadata:
-       # 设置 Service 的名称为 myapp-service
        name: myapp-service
      spec:
-       # 定义用于选择与 Service 关联的 Pod 的标签
        selector:
          app: myapp
-       # 定义 Service 所公开的端口配置
-       type: LoadBalancer
+       type: LoadBalancer # 如本地访问服务类型为 ClusterIP
        ports:
          - port: 80     
-           # 定义将流量转发到 Pod 的端口号
            targetPort: 8080
      ```
-
-     本地与公网对比
-
-     ```yaml
-     # 公网访问应用
-     type: LoadBalancer
-     ports:
-       - port: 80
-         targetPort: 8080
      
-     # 本地访问应用
-     ports:
-       - port: 80
-         protocol: TCP
-         targetPort: 8080
-     ```
-
+   
 5. 进入项目目录，部署应用
 
    ```bash

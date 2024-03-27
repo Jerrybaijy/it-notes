@@ -135,6 +135,95 @@
   kubectl delete deployment DEPLOYMENT_NAME
   ```
 
+- **deployment.yaml**
+
+  ```yaml
+  apiVersion: apps/v1              # API 版本
+  kind: Deployment                 # 资源类型
+  metadata:                        # 资源元数据
+    labels:                        # 资源标签
+      $KEY: $VLUE                  # 资源的标签键值对，可以用来标识和分类资源
+    name:                          # Deploymnet 名称
+    namespace:                     # Deploymnet 命名空间
+  spec:                            # Deploymnet 规格
+    replicas:                      # Pod 数量
+    selector:                      # 标签选择器，用于选择要管理的 Pod
+      matchLabels:                 # 匹配标签
+        $KEY: $VLUE                # 标签选择器中用于匹配的标签键值对
+    template:                      # Pod 模板
+      metadata:                    # Pod 元数据
+        labels:                    # Pod 标签
+          $KEY: $VLUE              # Pod 的标签键值对
+      spec:                        # Container 规格
+        containers:                # Container 列表
+        - image:                   # Image 地址
+          imagePullSecrets:        # Image 下载策略
+          name:                    # Container 名称
+          args:                    # ENTRYPOINT 参数
+          commnd:                  # 执行命令
+          ports:                   # Container 公开端口
+          env:                     # 环境变量
+          resources:               # 容器资源限制和请求
+            requests:                               # 请求资源
+              memory: "1Gi"                         # 请求内存为 1Gi
+              cpu: "500m"                           # 请求 CPU 为 500m
+              ephemeral-storage: "1Gi"              # 请求临时存储为 1Gi
+            limits:                                 # 资源限制
+              memory: "1Gi"                         # 内存限制为 1Gi
+              cpu: "500m"                           # CPU 限制为 500m
+              ephemeral-storage: "1Gi"              # 临时存储限制为 1Gi
+          livenessProbe:           # 存活检查
+          readinessProbe:          # 就绪检查
+          startupProbe:            # 启动检查
+          volumeMounts:            # 卷挂载
+          securityContext:         # 安全上下文
+          lifecycle:               # 容器生命周期回调
+        volumes:                   # Pod 的卷列表
+  ```
+
+  ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: jerry-app
+    name:
+    namespace:
+  spec:
+    replicas:
+    selector:
+      matchLabels:
+        app: jerry-app
+    template:
+      metadata:
+        labels:
+          app: jerry-app
+      spec:
+        containers:
+        - image:
+          imagePullSecrets:
+          name:
+          args:
+          commnd:
+          ports:
+          env:
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+              ephemeral-storage: "1Gi"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+              ephemeral-storage: "1Gi"
+          livenessProbe:
+          readinessProbe:
+          volumeMounts:
+          securityContext:
+          lifecycle:
+        volumes:
+  ```
+
 # Node
 
 # Pod
@@ -148,6 +237,36 @@
   kubectl get svc [-n NAMESPACE]
   ```
 
+- **service.yaml**
+
+  ```yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: myapp-service
+  spec:
+    selector:
+      app: myapp
+    type: LoadBalancer
+    ports:
+      - port: 80
+        targetPort: 8080
+  ```
+  
+  ```yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: myapp-service
+  spec:
+    selector:
+      app: myapp
+    type: LoadBalancer            # 服务类型为 LoadBalancer，用于将外部流量引导到 Pod，如本地访问服务类型为 ClusterIP
+    ports:                        # 服务监听的端口列表
+      - port: 80                  # 公网端口 80
+        targetPort: 8080          # Pod 端口 8080
+  ```
+  
 - **port**
 
   - 在 Kubernetes 集群中创建一个 Service 资源，将其暴露为外部的负载均衡服务
@@ -213,6 +332,8 @@ Helm 是 Kubernetes 的包管理器，使用 "chart" 的打包格式来描述 Ku
   helm push $CHART_NAME-0.1.0.tgz $REPO_NAME
   # 部署 chart
   helm install $RELEASE_NAME $REPO/$CHART_NAME
+  # 删除 release
+  
   # 查看 release
   helm list
   # 测试 release
@@ -236,36 +357,60 @@ Helm 是 Kubernetes 的包管理器，使用 "chart" 的打包格式来描述 Ku
 - 步骤
 
   ```bash
+  # ~目录
   helm create $CHART
+  helm create front-chart
+  
   helm package $CHART
+  helm package front-chart
   
-  # UI 创建 repo
+  # UI 创建 repo，并 clone 至本地
   
-  git clone https://github.com/Jerrybaijy/$REPO.git
   cd $REPO
-  touch index.yaml
-  
   mv ~/test-app-0.1.0.tgz .
-  helm repo index . # 重置 index
   
   cd ..
+  # 在 $REPO_PATH 文件夹中生成 index.yaml，此文件中含有 url 信息
+  # helm repo index $REPO_PATH --url https://jerrybaijy.github.io/$REPO/
+  helm repo index repo5 --url https://jerrybaijy.github.io/repo5/
   
-  helm repo index $REPO/ --url https://jerrybaijy.github.io/$REPO/
   cd $REPO
+  # Git 推送，然后设置 pages branch
   
-  git add .
-  git commit -m "change index"
-  git push
+  kubectl create namespace new
   
+  # 将远程的 $REPO 添加至本地的 $HELM_REPO 配置
+  helm repo add $HELM_REPO https://jerrybaijy.github.io/$REPO
+  helm repo add repo5 https://jerrybaijy.github.io/repo5
   
-  # 设置 pages branch
+  helm install $RELEASE_NAME $HELM_REP/$CHART -n $NAMESPACE
+  helm install repo5-app repo5/front-chart -n new
   
-  helm repo add $REPO https://jerrybaijy.github.io/$REPO
-  kubectl create namespace $NAMESPACE
-  helm install $RELEASE_NAME $REPO/$CHART -n $NAMESPACE
+  kubectl get pod -n new
+  kubectl get svc -n new
+  kubectl delete namespace new
   ```
+
+- Helm 仓库
+
+  ```bash
+  # 查看仓库
+  helm repo list
+  # 删除仓库
+  helm repo remove $REPO_NAME
+  # 删除所有仓库
+  rm ~/.config/helm/repositories.yaml
+  ```
+
   
-  
+
+## 步骤
+
+1. 创建 chart
+2. 封装 chart
+3. UI 创建 repo，并 clone 至本地
+4. 将 chart 封装文件移动到本地 repo
+5. 
 
 
 ## values
@@ -377,5 +522,4 @@ Helm 是 Kubernetes 的包管理器，使用 "chart" 的打包格式来描述 Ku
   
   affinity: {}
   ```
-
 

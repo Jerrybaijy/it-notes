@@ -4,8 +4,6 @@
 
 - Git 版本回退之后无法 push，即使 --force 也不行
 
-- 端口：pod、本地、远程
-
 - 记笔记时变量的通用 表示法
 
   `sudo usermod -aG docker $USER` 
@@ -15,8 +13,6 @@
 - 路径问题
 
   DIR   PATH   URL
-
-- git push `.gitignore` 里面的文件不推，对以后pull下来有没有影响
 
 ## 欠账
 
@@ -42,11 +38,6 @@
   - helm  对标docker
 
   - chart  打包
-
-
-## 项目
-
-postman模拟前端操作数据库
 
 # Google Cloud
 
@@ -1145,5 +1136,16 @@ XAMPP 是一个流行的免费开源的跨平台软件包，用于搭建和运�
 
 
 
+# YAML
 
+​	YAML 是 "YAML Ain't a Markup Language"（YAML 不是一种标记语言）的递归缩写。在开发的这种语言时，YAML 的意思其实是："Yet Another Markup Language"（仍是一种标记语言）。
 
+- 大小写敏感
+- 缩进
+  - 使用缩进表示层级关系
+  - 缩进的空格数不重要，只要相同层级的元素左对齐即可
+  - 缩进不允许使用 Tab，只允许 Space
+  - 上下级缩进 2 个空格
+  - 字符（如冒号）后缩进 1 个空格
+- `#` 表示注释
+- `-` 表示列表项

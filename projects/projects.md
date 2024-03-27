@@ -463,7 +463,7 @@
    2. 安装 Material-UI 和 Material Icons
    3. 创建组件文件 `Appbar.js` 和  `Student.js`
 
-2. 组件 `Appbar.js`
+2. 创建组件 `Appbar.js`
 
    ```js
    import * as React from 'react';
@@ -501,7 +501,7 @@
    }
    ```
 
-3. 组件  `Student.js`
+3. 创建组件  `Student.js`
 
    ```js
    import * as React from 'react';
@@ -630,7 +630,7 @@
    }
    ```
 
-4. 主程序 `App.js`
+4. 创建主程序 `App.js`
 
    ```js
    import './App.css';
@@ -654,7 +654,19 @@
    export default App;
    ```
 
-   
+5. 生成静态文件夹
+
+6. 创建 Dockerfile
+
+   ```dockerfile
+   FROM node:latest
+   WORKDIR /app
+   COPY ./build .
+   RUN npm install -g http-server
+   CMD ["http-server", "-p", "8080"]
+   ```
+
+7. 通过 GitLab Pipeline 生成 Image
 
 
 

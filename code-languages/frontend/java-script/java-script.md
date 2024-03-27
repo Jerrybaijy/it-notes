@@ -1,7 +1,5 @@
 # JS基础
 
-## JS简介
-
 - 简介
 
   ```
@@ -22,7 +20,7 @@
 
 ## npm
 
-- 命令
+- **命令**
 
   ```bash
   # 查看 npm 版本
@@ -31,6 +29,23 @@
   npm install -g npm@latest
   # 创建静态文件夹
   npm run build
+  ```
+
+- **选项**
+
+  ```bash
+  -g # 全局
+  ```
+
+## http-server
+
+- http-server 是一个基于 Node.js 的简单的静态文件服务器，可以用来快速地在本地启动一个 HTTP 服务器，用于提供静态文件服务。
+
+  ```bash
+  # 安装
+  npm install -g http-server
+  # 启动
+  http-server -p 8080
   ```
 
   
@@ -3298,23 +3313,41 @@
 
 ​	用于构建用户界面的 JavaScript 库，由 Facebook 开发。
 
-## Reac 基础
-
-### 环境搭建
+## 环境搭建
 
 - 确认已安装 Node.js，npm 更新至最新版，详见 Java Script 环境搭建
 
 - 创建 React 项目
 
   ```bash
-  # 创建 React App
   npx create-react-app PROJECT_NAME
-  # React App 文件夹下启动 APP
-  cd /PATH/TO/PROJECT_NAME
-  npm start
   ```
 
-### Reac 管理
+## 基本流程
+
+1. **准备**
+   1. 环境搭建
+   2. 安装组件库
+2. **源文件**
+   1. 编写主程序文件和组件文件
+   2. 调试源文件 `npm start`
+3. **静态文件**
+   1. 生成静态文件夹 build `npm run build`
+4. **Image**
+   1. 编写 Dockerfil
+   2. 生成 Image
+
+## 环境搭建
+
+- 确认已安装 Node.js，npm 更新至最新版，详见 Java Script 环境搭建
+
+- 创建 React 项目
+
+  ```bash
+  npx create-react-app PROJECT_NAME
+  ```
+
+## Reac 管理
 
 - Reac 管理
 
@@ -3373,16 +3406,6 @@
   6. `src` 文件夹下创建 `components` 文件夹，在里面创建组件文件 `Appbar.js`，粘贴代码
 
   7. 在主程序文件内引入组件文件 `Appbar.js`，并以标签形式调用 Appbar.js 中的函数
-
-## 流程
-
-1. 环境搭建
-2. 安装组件库
-3. 编写主程序文件和组件文件
-4. 调试运行 `npm start`
-5. 生成静态文件夹 build
-6. 编写 Dockerfil
-7. 生成 image
 
 ## 主程序文件
 

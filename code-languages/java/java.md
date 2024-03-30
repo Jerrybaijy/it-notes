@@ -131,7 +131,27 @@
   System.out.println();
   ```
 
-  
+
+## Maven
+
+​	Maven 是一个用于构建和管理 Java 项目的工具
+
+### 安装
+
+#### Windows
+
+1. [官网下载 Maven 二进制 zip 归档文件：apache-maven-3.9.6-bin.zip](https://maven.apache.org/download.cgi)
+2. 解压到自己的安装目录，如 D:\Program Files (x86)\apache-maven-3.9.6
+3. 设置系统环境变量，如 D:\Program Files (x86)\apache-maven-3.9.6\apache-maven-3.9.6\bin
+
+### 命令
+
+- 命令
+
+  ```bash
+  # 构建项目
+  mvn clean package -DskipTests
+  ```
 
 # 数据类型
 
@@ -296,17 +316,53 @@ Java 中也支持嵌套循环、死循环、break和continue关键字，用法�
 
 ​	Spring Boot 是一个 Java 语言的框架。它是基于 Spring Framework 构建的，用于简化和加速 Java 应用程序的开发和部署。
 
-## 创建项目
+## 基本流程
 
-1. [进入 Spring Initializr 网站](https://start.spring.io/)
-  1. 添加项目信息
-     - Group：com.jerrycodes
-     - Artifact：$PROJECT_NAME
-  2. 添加项目依赖
-  3. 生成项目压缩文件
-2. 下载并解压项目压缩文件到项目文件夹
-3. IDEA 打开项目文件夹
-4. 设置 JDK
+1. **创建项目**
+
+   1. [进入 Spring Initializr 网站](https://start.spring.io/)
+     2. 添加项目信息
+        - Group：com.jerrycodes
+        - Artifact：$PROJECT_NAME
+     3. 添加项目依赖
+     4. 生成项目压缩文件
+   5. 下载并解压项目压缩文件到项目文件夹
+   6. IDEA 打开项目文件夹，设置 JDK
+   7. 创建包、类、数据库连接等
+
+2. **本地测试**
+
+   1. 启动 APP 后端
+   2. 使用 Postman 模拟前端浏览器与后端交互
+   3. 调试通过即可转向前端开发
+
+3. **生成 JAR 文件**
+
+   1. Maven 已安装
+
+   2. 在项目的根目录中运行 Maven 命令来构建项目，这将在 `target` 目录中生成一个名为 `$APPLICATION.jar` 的可执行 JAR 文件。
+
+      ```bash
+      mvn clean package -DskipTests
+      ```
+
+   3. 将 `.gitignore` 中的 target 注释掉，或者将生成的可执行 JAR 文件 `your-application.jar` 复制到项目根目录
+
+4. **生成 Image**
+
+   - 使用 GitLab Pipeline 生成 Image
+
+   - `.gitlab-ci.yml` 按通用格式写
+
+   - Dockerfile
+
+     ```dockerfile
+     FROM openjdk:17.0.1-jdk-slim
+     WORKDIR /app
+     COPY $APPLICATION.jar app.jar
+     EXPOSE 8080
+     CMD ["java", "-jar", "app.jar"]
+     ```
 
 ## 依赖
 
@@ -342,7 +398,8 @@ Java 中也支持嵌套循环、死循环、break和continue关键字，用法�
   spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
   ```
 
-  
+
+
 
 ## 项目
 

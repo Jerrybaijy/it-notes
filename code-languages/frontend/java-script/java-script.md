@@ -48,7 +48,6 @@
   http-server -p 8080
   ```
 
-  
 
 ## 代码位置
 
@@ -3313,39 +3312,57 @@
 
 ​	用于构建用户界面的 JavaScript 库，由 Facebook 开发。
 
-## 环境搭建
-
-- 确认已安装 Node.js，npm 更新至最新版，详见 Java Script 环境搭建
-
-- 创建 React 项目
-
-  ```bash
-  npx create-react-app PROJECT_NAME
-  ```
-
 ## 基本流程
 
-1. **准备**
-   1. 环境搭建
-   2. 安装组件库
-2. **源文件**
-   1. 编写主程序文件和组件文件
-   2. 调试源文件 `npm start`
-3. **静态文件**
-   1. 生成静态文件夹 build `npm run build`
-4. **Image**
-   1. 编写 Dockerfil
-   2. 生成 Image
+1. **创建项目**
 
-## 环境搭建
+   1. Node.js 已安装，npm 更新至最新版
 
-- 确认已安装 Node.js，npm 更新至最新版，详见 Java Script 环境搭建
+   2. 创建 React 项目
 
-- 创建 React 项目
+      ```bash
+      npx create-react-app PROJECT_NAME
+      ```
 
-  ```bash
-  npx create-react-app PROJECT_NAME
-  ```
+   3. 安装组件库
+
+   4. 编写主程序文件和组件文件
+
+2. **本地测试**
+
+   1. 后端与数据库已启动
+
+   2. 调试源文件
+
+      ```bash
+      npm start
+      ```
+
+3. **生成静态文件**
+
+   1. 在项目的根目录中运行 npm 命令，这将项目根目录中生成一个名为 `build` 的静态文件夹。
+
+      ```bash
+      npm run build
+      ```
+
+   2. 将 `.gitignore` 中的 build 注释掉
+
+4. **生成 Image**
+
+   1. 使用 GitLab Pipeline 生成 Image
+
+   2. `.gitlab-ci.yml` 按通用格式写
+
+   3. Dockerfile
+
+      ```dockerfile
+      FROM node:latest
+      WORKDIR /app
+      COPY ./build .
+      RUN npm install -g http-server
+      CMD ["http-server", "-p", "8080"]
+      ```
 
 ## Reac 管理
 

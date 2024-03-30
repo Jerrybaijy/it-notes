@@ -1,3 +1,368 @@
+# Argo CD Git
+
+## 项目概述
+
+- **项目来源**：[ YouTube 博主 TechWorld with Nana](https://www.youtube.com/watch?v=MeU5_k9ssrs)
+- **文件来源**：[使用项目 Student Spring Boot React Full Stack 的 jerrybaijy/student-springboot-react-frontend:v1.0](https://hub.docker.com/repository/docker/jerrybaijy/student-springboot-react-frontend/general)
+- **概述**：此项目旨在实现通过 Argo CD 以 Git 方式（区别于 Helm 方式）在集群中部署一个应用
+- **存储**：代码存储在 Git 托管平台
+
+## 具体步骤
+
+1. 集群已运行，Argo CD 已安装。
+
+2. UI 界面创建 Git 仓库 argocd-git，clone 至本地
+
+3. argocd-git 根目录创建 dev 目录
+
+4. dev 目录创建 deployment.yaml
+
+   ```yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: argocd-git
+   spec:
+     selector:
+       matchLabels:
+         app: argocd-git
+     replicas: 1
+     template:
+       metadata:
+         labels:
+           app: argocd-git
+       spec:
+         containers:
+           - name: argocd-git
+             image: jerrybaijy/student-springboot-react-frontend:v1.0
+             ports:
+               - containerPort: 8080
+             env:
+               - name: PORT
+                 value: "8080"
+             resources:
+               requests:
+                 memory: "1Gi"
+                 cpu: "500m"
+                 ephemeral-storage: "1Gi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "500m"
+                 ephemeral-storage: "1Gi"
+   ```
+
+5. dev 目录创建 service.yaml
+
+   ```yaml
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: argocd-git
+   spec:
+     selector:
+       app: argocd-git
+     type: LoadBalancer # 如本地访问服务类型为 ClusterIP
+     ports:
+       - port: 80
+         targetPort: 8080
+   ```
+
+6. argocd-git 根目录创建 application.yaml
+
+   ```yaml
+   apiVersion: argoproj.io/v1alpha1
+   kind: Application
+   metadata:
+     name: argocd-git
+     namespace: argocd
+   
+   spec:
+     project: default
+     source:
+       repoURL: https://gitlab.com/jerrybai/argocd-git.git
+       targetRevision: HEAD
+       path: dev
+     
+     destination:
+       server: https://kubernetes.default.svc
+       namespace: argocd-git
+   
+     syncPolicy:
+       syncOptions:
+         - CreateNamespace=true
+       automated:
+         selfHeal: true
+         prune: true
+   ```
+
+7. 部署应用
+
+   ```
+   kubectl apply -f application.yaml
+   ```
+
+8. 查看 IP 即可访问应用（如有需要可进行端口转发）
+
+   ```bash
+   kubectl get svc -n argocd-git
+   ```
+
+## 未验证
+
+- **以下内容为 Nana 视频提及的信息，还未验证**
+- 等价产品：Flux CD
+
+流程
+
+- 开发人员将代码推送至 GitHub
+- A 自动构建 image 并推送至 Dockerhub
+- 最后更新 K8S yaml 文件
+
+Nana 说最好将代码源文件和 yaml 文件分别存储，以利于更改代码或部署时，不必检查另一方，最终有单独的 CI 和 CD
+
+yaml 文件、helm 图表、K8S 清单、自定义文件或其它模板文件，所有都会自动转换为纯 K8S yaml 文件
+
+
+
+A 不仅监视存储库更改，还会监视集群中的更改，双方任意一个改变，另一方将自动更改
+
+一个 A 可以同时配置多个集群
+
+# Argo CD Helm
+
+## 项目概述
+
+- **项目来源**：学完 Helm Chart 以后，自己基于项目 Argo CD Git，以 Helm 方式在集群中部署一个应用
+- **文件来源**：[使用项目 Student Spring Boot React Full Stack 的 jerrybaijy/student-springboot-react-frontend:v1.0](https://hub.docker.com/repository/docker/jerrybaijy/student-springboot-react-frontend/general)
+- **概述**：此项目旨在实现通过 Argo CD 以 Helm 方式（区别于 Git 方式）在集群中部署一个应用
+- **存储**：代码存储在 Git 托管平台
+
+## 具体步骤
+
+1. 集群已运行，Argo CD 已安装。
+
+2. UI 界面创建 Git 仓库 argocd-git-helm，clone 至本地
+
+3. 创建 argocd-helm-chart.0.1.0.tgz。
+
+   - deployment.yaml
+
+     ```yaml
+     apiVersion: apps/v1
+     kind: Deployment
+     metadata:
+       name: {{ include "argocd-helm-chart.fullname" . }}
+       labels:
+         {{- include "argocd-helm-chart.labels" . | nindent 4 }}
+     spec:
+       {{- if not .Values.autoscaling.enabled }}
+       replicas: {{ .Values.replicaCount }}
+       {{- end }}
+       selector:
+         matchLabels:
+           {{- include "argocd-helm-chart.selectorLabels" . | nindent 6 }}
+       template:
+         metadata:
+           {{- with .Values.podAnnotations }}
+           annotations:
+             {{- toYaml . | nindent 8 }}
+           {{- end }}
+           labels:
+             {{- include "argocd-helm-chart.labels" . | nindent 8 }}
+             {{- with .Values.podLabels }}
+             {{- toYaml . | nindent 8 }}
+             {{- end }}
+         spec:
+           {{- with .Values.imagePullSecrets }}
+           imagePullSecrets:
+             {{- toYaml . | nindent 8 }}
+           {{- end }}
+           serviceAccountName: {{ include "argocd-helm-chart.serviceAccountName" . }}
+           securityContext:
+             {{- toYaml .Values.podSecurityContext | nindent 8 }}
+           containers:
+             - name: {{ .Chart.Name }}
+               securityContext:
+                 {{- toYaml .Values.securityContext | nindent 12 }}
+               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+               imagePullPolicy: {{ .Values.image.pullPolicy }}
+               ports:
+                 - name: http
+                   containerPort: {{ .Values.service.targetPort }}
+                   protocol: TCP
+               livenessProbe:
+                 {{- toYaml .Values.livenessProbe | nindent 12 }}
+               readinessProbe:
+                 {{- toYaml .Values.readinessProbe | nindent 12 }}
+               resources:
+                 {{- toYaml .Values.resources | nindent 12 }}
+               {{- with .Values.volumeMounts }}
+               volumeMounts:
+                 {{- toYaml . | nindent 12 }}
+               {{- end }}
+           {{- with .Values.volumes }}
+           volumes:
+             {{- toYaml . | nindent 8 }}
+           {{- end }}
+           {{- with .Values.nodeSelector }}
+           nodeSelector:
+             {{- toYaml . | nindent 8 }}
+           {{- end }}
+           {{- with .Values.affinity }}
+           affinity:
+             {{- toYaml . | nindent 8 }}
+           {{- end }}
+           {{- with .Values.tolerations }}
+           tolerations:
+             {{- toYaml . | nindent 8 }}
+           {{- end }}
+     ```
+
+   - service.yaml
+
+     ```yaml
+     apiVersion: v1
+     kind: Service
+     metadata:
+       name: {{ include "argocd-helm-chart.fullname" . }}
+       labels:
+         {{- include "argocd-helm-chart.labels" . | nindent 4 }}
+     spec:
+       type: {{ .Values.service.type }}
+       ports:
+         - port: {{ .Values.service.port }}
+           targetPort: {{ .Values.service.targetPort }}
+           protocol: TCP
+           name: http
+       selector:
+         {{- include "argocd-helm-chart.selectorLabels" . | nindent 4 }}
+     ```
+
+   - values.yaml
+
+     ```yaml
+     replicaCount: 1
+     image:
+       repository: jerrybaijy/student-springboot-react-frontend
+       pullPolicy: IfNotPresent
+       tag: "v1.0"
+     imagePullSecrets: []
+     nameOverride: ""
+     fullnameOverride: ""
+     serviceAccount:
+       create: true
+       automount: true
+       annotations: {}
+       name: ""
+     podAnnotations: {}
+     podLabels: {}
+     podSecurityContext: {}
+     securityContext: {}
+     
+     service:
+       type: LoadBalancer
+       port: 80
+       targetPort: 8080
+     
+     ingress:
+       enabled: false
+       className: ""
+       annotations: {}
+       hosts:
+         - host: chart-example.local
+           paths:
+             - path: /
+               pathType: ImplementationSpecific
+       tls: []
+     resources: {}
+     livenessProbe:
+       httpGet:
+         path: /
+         port: http
+     readinessProbe:
+       httpGet:
+         path: /
+         port: http
+     autoscaling:
+       enabled: false
+       minReplicas: 1
+       maxReplicas: 100
+       targetCPUUtilizationPercentage: 80
+     volumes: []
+     volumeMounts: []
+     nodeSelector: {}
+     tolerations: []
+     affinity: {}
+     ```
+
+4. 建立远程 Helm 仓库
+
+5. 创建 Argo CD 的 application.yaml
+
+   ```yaml
+   apiVersion: argoproj.io/v1alpha1
+   kind: Application
+   metadata:
+     name: argocd-helm
+     namespace: argocd
+   
+   spec:
+     project: default
+     source:
+       repoURL: https://jerrybaijy.github.io/argocd-helm/
+       targetRevision: 0.1.0
+       chart: argocd-helm-chart
+       helm:
+         valueFiles:
+           - values.yaml
+     destination:
+       server: https://kubernetes.default.svc
+       namespace: argocd-helm
+   
+     syncPolicy:
+       syncOptions:
+         - CreateNamespace=true
+       automated:
+         selfHeal: true
+         prune: true
+   ```
+
+6. 部署应用
+
+   ```bash
+   kubectl apply -f application.yaml
+   ```
+
+7. 查看 IP 即可访问应用（如有需要可进行端口转发）
+
+   ```bash
+   kubectl get svc -n argocd-helm
+   ```
+
+## 方法二
+
+1. This method deploy a App manually through a command, including the options instead of YAML file `application.yaml`
+
+2. This method is unverified
+
+3. Creat a new GitHub  repository and clone it to local
+
+4. Create a Helm chart in the local repo and config the YAML file
+
+5. Use the Argo CLI to deploy your chart into your Kubernetes cluster
+
+   ```bash
+   argocd app create $DEPLOYMENT_NAME \
+   	--repo https://github.com/$USERNAME/$REPO.git \
+   	--path $PATH \
+   	--dest-server https://kubernetes.default.svc \
+   	--dest-namespace $NAMESPACE \
+   	--sync-option CreateNamespace=true \
+   	--parameter namespace=$NAMESPACE \
+   ```
+
+6. Config others ...
+
 # Dockerfile Build Image
 
 ## 项目概述
@@ -443,6 +808,48 @@
 - 使用 Postman 模拟前端浏览器与后端交互
 - 调试通过即可转向前端开发
 
+### 构建项目
+
+- 在项目的根目录中运行 Maven 命令来构建项目，将生成的可执行 JAR 文件 `studentsystem-0.0.1-SNAPSHOT.jar` 复制到项目根目录
+
+### 生成 Image
+
+- 使用 GitLab Pipeline 生成 Image
+
+- .gitlab-ci.yml
+
+  ```yaml
+  variables:
+    IMAGE_NAME: jerrybaijy/student-springboot-react-backend
+    IMAGE_TAG: v1.0
+  
+  stages: 
+    - build
+  
+  build_image:
+    stage: build
+    image: docker:20.10.20
+    services:
+      - docker:20.10.20-dind
+    variables:
+      DOCKER_TLS_CERTDIR: "/certs"
+    before_script:
+      - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    script:
+      - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+      - docker push $IMAGE_NAME:$IMAGE_TAG
+  ```
+
+- Dockerfile
+
+  ```bash
+  FROM openjdk:17.0.1-jdk-slim
+  WORKDIR /app
+  COPY studentsystem-0.0.1-SNAPSHOT.jar app.jar
+  EXPOSE 8080
+  CMD ["java", "-jar", "app.jar"]
+  ```
+
 ## 前端
 
 ### 前端环境搭建
@@ -656,19 +1063,41 @@
 
 5. 生成静态文件夹
 
-6. 创建 Dockerfile
+6. 通过 GitLab Pipeline 生成 Image
 
-   ```dockerfile
-   FROM node:latest
-   WORKDIR /app
-   COPY ./build .
-   RUN npm install -g http-server
-   CMD ["http-server", "-p", "8080"]
-   ```
+   - .gitlab-ci.yml
 
-7. 通过 GitLab Pipeline 生成 Image
+     ```yaml
+     variables:
+       IMAGE_NAME: jerrybaijy/student-springboot-react-frontend
+       IMAGE_TAG: v1.0
+     
+     stages: 
+       - build
+     
+     build_image:
+       stage: build
+       image: docker:20.10.20
+       services:
+         - docker:20.10.20-dind
+       variables:
+         DOCKER_TLS_CERTDIR: "/certs"
+       before_script:
+         - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+       script:
+         - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+         - docker push $IMAGE_NAME:$IMAGE_TAG
+     ```
 
+   - Dockerfile
 
+     ```dockerfile
+     FROM node:latest
+     WORKDIR /app
+     COPY ./build .
+     RUN npm install -g http-server
+     CMD ["http-server", "-p", "8080"]
+     ```
 
-
+     
 

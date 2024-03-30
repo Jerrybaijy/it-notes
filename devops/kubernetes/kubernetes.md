@@ -243,10 +243,10 @@
   apiVersion: v1
   kind: Service
   metadata:
-    name: myapp-service
+    name: $SERVICE_NAME
   spec:
     selector:
-      app: myapp
+      $KEY: $VALUE
     type: LoadBalancer
     ports:
       - port: 80
@@ -261,7 +261,7 @@
   spec:
     selector:
       app: myapp
-    type: LoadBalancer            # 服务类型为 LoadBalancer，用于将外部流量引导到 Pod，如本地访问服务类型为 ClusterIP
+    type: LoadBalancer            # 如本地访问服务类型为 ClusterIP
     ports:                        # 服务监听的端口列表
       - port: 80                  # 公网端口 80
         targetPort: 8080          # Pod 端口 8080
@@ -269,18 +269,21 @@
   
 - **port**
 
-  - 在 Kubernetes 集群中创建一个 Service 资源，将其暴露为外部的负载均衡服务
+  - **公开至公网**
 
-    ```bash
-    # `--port` 公网端口 80，`--target-port` 应用端口 8080
-    kubectl expose deployment $DEPLOYMENT_NAME --type LoadBalancer --port 80 --target-port 8080
-    ```
-
+    方法一：将现有服务的类型更改为 LoadBalancer 类型
+  
     ```bash
     kubectl patch svc $SERVICE_NAME -n $NAMESPACE -p '{"spec": {"type": "LoadBalancer"}}'
     ```
   
-  - 在本地计算机和 Kubernetes 集群中的 Pod 之间建立端口转发
+    方法二：为 Deployment 创建一个新的 Service，并将其类型设置为 LoadBalancer
+  
+    ```bash
+    kubectl expose deployment $DEPLOYMENT_NAME --type LoadBalancer --port 80 --target-port 8080
+    ```
+  
+  - **公开至本地**
   
     ```bash
     kubectl port-forward deployment/$DEPLOYMENT_NAME $HOST_PORT:$POD_PORT
@@ -289,6 +292,145 @@
     ```
     
     
+
+# Argo CD
+
+## Argo CD 基础
+
+​	Argo CD 是一个持续部署工具，可以通过修改 yaml 文件，改变应用的运行。
+
+​	![argo-cd](assets/argo-cd.png)
+
+### 环境搭建
+
+1. Linux 系统，Docker 已安装，kubectl 已安装，启动一个集群。
+
+2. 安装 Argo CD
+
+   ```bash
+   kubectl create namespace argocd
+   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+   ```
+
+3. 查看 pod 状态，直到全部运行
+
+   ```bash
+   kubectl get pod -n argocd
+   ```
+
+4. 将端口转发至本地或公网即可查看 Argo CD UI 界面
+
+   ```bash
+   kubectl get svc -n argocd
+   # 本地
+   kubectl port-forward -n argocd svc/argocd-server 8080:443
+   # 公网
+   kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+   ```
+   
+5. 获取密码
+
+   ```bash
+   # 获取密码
+   kubectl get secret argocd-initial-admin-secret -n argocd -o yaml
+   # 解码，PASSWORD为上一步获取到的加密密码
+   echo $PASSWORD== | base64 --decode
+   
+   # 上次密码cwMzqNxdKgnEfBOP
+   ```
+
+6. 在本地或公网通过 IP 访问 Argo CD 页面登录，用户名为admin，公网访问需要科学上网
+
+## 基本流程
+
+1. Argo CD 已安装
+
+2. UI 界面创建 Git 仓库，clone 至本地
+
+3. Repo 根目录创建 dev 目录
+
+4. dev 目录创建 deployment.yaml 和 service.yaml
+
+   1. 注意云上的集群有节点限制，试用时只能创建一个副本
+
+5. Repo 根目录创建 application.yaml
+
+6. 推送仓库
+
+7. 部署应用
+
+   ```bash
+   kubectl apply -f application.yaml
+   ```
+
+8. 在 Argo CD 页面查看应用已启动
+
+9. 查看 IP 即可访问应用（如有需要可进行端口转发）
+
+   ```bash
+   kubectl get svc -n myapp
+   ```
+
+10. 以后若想更改应用，只需需改 yaml 文件并推送至 Git 仓库，Argo CD 可自动识别自动部署。
+
+11. 删除应用
+
+    1. 不要直接在集群删除应用，要先在 Argo CD 页面删除应用（因为已配置自愈，Argo CD 会自动创建应用）
+    2. 再删除应用的命名空间
+
+12. 删除 Argo CD
+
+    1. **删除 ArgoCD 自定义资源定义（CRD）**
+
+       ```bash
+       kubectl delete crd applications.argoproj.io appprojects.argoproj.io argocds.argoproj.io
+       ```
+
+    2. **删除 ArgoCD 的命名空间**
+
+       ```bash
+       kubectl delete namespace 
+       ```
+
+## 相关项目
+
+- Argo CD Git
+- Argo CD Helm
+
+## 解决方案
+
+### OutOfSync
+
+1. 当使用 ArgoCD 部署好应用以后，一切运行正常，但 UI 页面一直显示 OutOfSync，即使状态不同步，应用程序实际上也是同步的，但看到它不同步很烦人。若要消除此问题，有一种解决方案是使用资源排除。
+
+   ![image-20240329143514361](assets/image-20240329143514361.png)
+
+2. 访问 Argo CD 的 configmap
+
+   ```bash
+   KUBE_EDITOR="nano" kubectl edit cm argocd-cm -n argocd
+   ```
+
+   ![image-20240329143851461](assets/image-20240329143851461.png)
+
+3. 使用 nano 编辑器编辑此配置图
+
+   ```bash
+   KUBE_EDITOR="nano" kubectl edit cm argocd-cm -n argocd
+   ```
+
+4. 文末在第一层级添加以下数据并保存
+
+   ```yaml
+   data:
+     resource.exclusions: |
+       - apiGroups:
+         - cilium.io
+         kinds:
+         - CiliumIdentity
+         clusters:
+         - "*"
+   ```
 
 # Helm
 
@@ -315,105 +457,155 @@ Helm 是 Kubernetes 的包管理器，使用 "chart" 的打包格式来描述 Ku
 
 ## Helm 基础
 
-- **常用命令**
+- **命令**
 
   ```bash
   # 查看 helm 版本
   helm version
-  # 创建 chart
-  helm create $CHART_NAME
-  # 查看 chart 信息
-  helm show chart .
+  
   # 查看 chart 配置值（values.yaml 文件中的值）
   helm show values .
-  # 封装 chart（处在包含$CHART_NAME的目录）
-  helm package $CHART_NAME
-  # 发布 chart
-  helm push $CHART_NAME-0.1.0.tgz $REPO_NAME
-  # 部署 chart
-  helm install $RELEASE_NAME $REPO/$CHART_NAME
-  # 删除 release
   
-  # 查看 release
-  helm list
-  # 测试 release
-  helm test $RELEASE
+  # 重置 index
+  helm repo index $CHART_PATH --url https://jerrybaijy.github.io/$REPO/
+  ```
+
+## 基本流程
+
+### 建立远程仓库
+
+1. UI 界面创建 Git 仓库，clone 至本地
+
+2. Repo 根目录创建创建 Chart
+
+   ```bash
+   helm create $CHART_NAME
+   ```
+
+3. 配置 Chart
+   1. 编辑模板 `mychart/templates`
+   2. 编辑 values `mychart/values.yaml`
+
+4. 封装 Chart
+
+   ```bash
+   helm package $CHART_PATH
+   ```
+
+5. 重置 index
+
+   ```bash
+   helm repo index $CHART_PATH
+   ```
+
+6. Git 推送，GitHub 设置 Pages - Branch（一定不要提前设置）
+
+7. 重置 index
+
+   ```bash
+   helm repo index $CHART_PATH --url https://jerrybaijy.github.io/$REPO/
+   ```
+
+8. Git 推送
+
+9. 至此，远程 Helm Chart 仓库已建好，可供其它调用：https://jerrybaijy.github.io/$REPO/
+
+### 使用远程仓库
+
+1. 添加本地 Helm 仓库，与远程仓库关联
+
+   ```bash
+   helm repo add $HELM_REPO https://jerrybaijy.github.io/$REPO
+   ```
+
+2. 使用 Helm Charts
+
+   ```bash
+   helm install $RELEASE $HELM_REPO/$CHART_NAME
+   ```
+
+### 流程实例
+
+- 这是项目 Argo CD Git 的步骤留存，最后两大步取一个操作
+
+  ```bash
+  # UI 界面创建 Git 仓库，clone 至本地，进入 repo 目录
+  
+  helm create argocd-helm-chart
+  helm package argocd-helm-chart
+  helm repo index .
+  
+  # Git 推送，GitHub 设置 Pages - Branch（一定不要提前设置）
+  
+  helm repo index . --url https://jerrybaijy.github.io/argocd-helm/
+  
+  # Git 推送
+  
+  # 1.以下是本地使用远程 Helm Charts
+  helm repo add argocd-helm https://jerrybaijy.github.io/argocd-helm/
+  kubectl create namespace argocd-helm
+  helm install argocd-helm-app argocd-helm/argocd-helm-chart -n argocd-helm
+  kubectl get pod -n argocd-helm
+  kubectl get svc -n argocd-helm
+  kubectl delete namespace argocd-helm
+  
+  # 2.以下是 Argo CD 使用远程 Helm Charts
+  kubectl apply -f application.yaml
+  kubectl get namespace
+  kubectl get pod -n argocd-helm
+  kubectl get svc -n argocd-helm
+  kubectl delete namespace argocd-helm
+  ```
+
+## Helm Repo
+
+- **基础命令**
+
+  ```bash
+  # 查看 Helm Repo
+  helm repo list
+  # 添加 Helm Repo
+  helm repo add $HELM_REPO https://jerrybaijy.github.io/$REPO
+  # 删除 Helm Repo
+  helm repo remove $HELM_REPO
+  # 删除所有 Helm Repo
+  rm ~/.config/helm/repositories.yaml
+  ```
+
+- Helm Repo 实际只是一个 YAML 文件，存储于 `~/.config/helm/repositories.yaml`，里面声明了各个 Helm Repo 与 Remote Repo 的对应关系。
+
+## Chart
+
+- **基础命令**
+
+  ```bash
+  # 查看 chart 信息
+  helm show chart .
+  # 创建 chart
+  helm create $CHART_NAME
+  # 封装 chart
+  helm package $CHART_PATH
+  # 发布 chart，没用过
+  helm push $CHART $CHART_REPO
   # 测试 chart
   helm lint $CHART
   ```
 
-- **流程**
+## Release
+
+- **基础命令**
 
   ```bash
-  创建 Chart
-  定义 Kubernetes 资源模板 `mychart/templates`
-  定义 Chart 配置值 `mychart/values.yaml`
-  封装 Chart
-  发布 Chart
-  部署 chart
-  管理 Chart
+  # 查看 release
+  helm list
+  # 部署 release
+  helm install $RELEASE $HELM_REPO/$CHART_NAME
+  # 删除 release
+  # 测试 release
+  helm test $RELEASE
   ```
 
-- 步骤
-
-  ```bash
-  # ~目录
-  helm create $CHART
-  helm create front-chart
-  
-  helm package $CHART
-  helm package front-chart
-  
-  # UI 创建 repo，并 clone 至本地
-  
-  cd $REPO
-  mv ~/test-app-0.1.0.tgz .
-  
-  cd ..
-  # 在 $REPO_PATH 文件夹中生成 index.yaml，此文件中含有 url 信息
-  # helm repo index $REPO_PATH --url https://jerrybaijy.github.io/$REPO/
-  helm repo index repo5 --url https://jerrybaijy.github.io/repo5/
-  
-  cd $REPO
-  # Git 推送，然后设置 pages branch
-  
-  kubectl create namespace new
-  
-  # 将远程的 $REPO 添加至本地的 $HELM_REPO 配置
-  helm repo add $HELM_REPO https://jerrybaijy.github.io/$REPO
-  helm repo add repo5 https://jerrybaijy.github.io/repo5
-  
-  helm install $RELEASE_NAME $HELM_REP/$CHART -n $NAMESPACE
-  helm install repo5-app repo5/front-chart -n new
-  
-  kubectl get pod -n new
-  kubectl get svc -n new
-  kubectl delete namespace new
-  ```
-
-- Helm 仓库
-
-  ```bash
-  # 查看仓库
-  helm repo list
-  # 删除仓库
-  helm repo remove $REPO_NAME
-  # 删除所有仓库
-  rm ~/.config/helm/repositories.yaml
-  ```
-
-  
-
-## 步骤
-
-1. 创建 chart
-2. 封装 chart
-3. UI 创建 repo，并 clone 至本地
-4. 将 chart 封装文件移动到本地 repo
-5. 
-
-
-## values
+## Values
 
 - values.yaml
 

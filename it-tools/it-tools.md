@@ -16,7 +16,6 @@
 
 ## 欠账
 
-- 
 - 写 Shell Script 脚本
   - Linux 和 Windows
 - docker
@@ -35,9 +34,6 @@
   - 文本编辑
 - configmap
 - 其它
-  - helm  对标docker
-
-  - chart  打包
 
 # Google Cloud
 

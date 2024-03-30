@@ -66,6 +66,60 @@ Linux 是一个开源的类 Unix 操作系统内核。它是一个多用户、�
   - 查看已安装的 Linux 版本  `wsl -l`
   - 升级Linux  `sudo apt update`     `sudo apt upgrade`
 
+## Zsh
+
+- Zsh（Z Shell）是一种命令行解释器，也是一种交互式的 Unix shell，它是 Bash 的替代品。
+
+- 安装 Zsh
+
+  ```bash
+  # 安装
+  sudo apt install zsh
+  # 设置 Zsh 为默认 shell
+  chsh -s $(which zsh)
+  ```
+
+- 安装 Oh-My-Zsh 插件
+
+  ```bash
+  # 下载
+  wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh
+  # 安装
+  sh install.sh
+  ```
+
+
+- 安装 Zsh 主题和插件
+
+  ```bash
+  # PowerLevel10k主题
+  git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+  # zsh-autosuggestions自动提示插件
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  # zsh-syntax-highlighting语法高亮插件
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+  ```
+
+- 编辑 `~/.zshrc` 文件启用插件和主题
+
+  ```shell
+  # 修改主题
+  ZSH_THEME="powerlevel10k/powerlevel10k"
+  
+  # 启用插件
+  plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+  )
+  ```
+
+- 重启终端，启动 PowerLevel10k 配置向导
+
+  ```bash
+  p10k configure
+  ```
+
 ## 系统管理
 
 - **用户**

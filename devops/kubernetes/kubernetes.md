@@ -336,7 +336,7 @@
    # 解码，PASSWORD为上一步获取到的加密密码
    echo $PASSWORD== | base64 --decode
    
-   # 上次密码cwMzqNxdKgnEfBOP
+   # 上次密码OaVoMpufPwfd-X-9
    ```
 
 6. 在本地或公网通过 IP 访问 Argo CD 页面登录，用户名为admin，公网访问需要科学上网
@@ -352,8 +352,35 @@
 4. dev 目录创建 deployment.yaml 和 service.yaml
 
    1. 注意云上的集群有节点限制，试用时只能创建一个副本
+   2. deployment.yaml 和 service.yaml 见 Kubenetes
 
 5. Repo 根目录创建 application.yaml
+
+   ```yaml
+   apiVersion: argoproj.io/v1alpha1
+   kind: Application
+   metadata:
+     name: student-springboot-react-frontend
+     namespace: argocd
+   
+   spec:
+     project: default
+     source:
+       repoURL: https://github.com/Jerrybaijy/student-springboot-react-frontend.git
+       targetRevision: HEAD
+       path: dev
+     
+     destination:
+       server: https://kubernetes.default.svc
+       namespace: student-springboot-react-frontend
+   
+     syncPolicy:
+       syncOptions:
+         - CreateNamespace=true
+       automated:
+         selfHeal: true
+         prune: true
+   ```
 
 6. 推送仓库
 

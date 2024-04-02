@@ -55,96 +55,94 @@
 - 帮助
 
   ```
-  - python已加入环境变量
-  - 进入cmd
+  - python 已加入环境变量
+  - 进入 cmd
   ```
 
   - **列出模块中的函数**
 
   ```python
-  >>> python
-  >>> import urllib
-  >>> dir(urllib)
+  > python
+  > import urllib
+  > dir(urllib)
   ```
 
   - **查看完整的python内置函数清单**
 
   ```python
-  >>> dir(__builtins__)
+  > dir(__builtins__)
   ```
 
   - **查看某个函数的文档帮助信息**
 
   ```python
-  >>> help(sum)
+  > help(sum)
   ```
 
 
 ## 编辑器
 
 ​	编辑器，又称IDE (Integrated Development Environment，集成开发环境)
-​	作用：编写Python代码+调用Python解释器运行代码。
+​	作用：编写 Python 代码 + 调用 Python 解释器运行代码。
 
 ### 交互式环境
 
 - 临时写代码可在交互式环境中进行，但注意此环境不保存。
-- cmd >>> 输入“Python”，回车 >>> 进入交互式环境
+- cmd > 输入“Python”，回车 > 进入交互式环境
 
-- exit() >>> 退出交互式环境
+- exit() > 退出交互式环境
 
-- 交互式环境中可省略print步骤，写入函数后，回车自动显示执行结果
+- 交互式环境中可省略 print 步骤，写入函数后，回车自动显示执行结果
 
 ### IDLE
 
-- IDLE（Integrated Development and Learning Environment，集成开发和学习环境），是一款Python自带的IDE，稳定但界面不好；
-- 打开IDME，新建文件，新窗口编写代码，原窗口运行代码；
+- IDLE（Integrated Development and Learning Environment，集成开发和学习环境），是一款 Python 自带的 IDE，稳定但界面不好；
+- 打开 IDME，新建文件，新窗口编写代码，原窗口运行代码；
 
-- 保存代码为文件，文件后缀名.py，注意先保存后执行；
+- 保存代码为文件，文件后缀名 `.py`，注意先保存后执行；
 
-- 光标在“编写代码”窗口，按F5运行代码，“运行代码”窗口有显示运行结果。
+- 光标在“编写代码”窗口，按 `F5` 运行代码，“运行代码”窗口有显示运行结果。
 
 ### Pycharm
 
-- Pycharm简介
+​	PyCharm 是一个跨平台的全功能 Python 开发工具，是由 JetBrains 打造的一款 Python 集成开发环境（IDE），专为 Python 开发设计。
 
-  ​	PyCharm是一个跨平台的全功能Python开发工具，是由JetBrains打造的一款Python集成开发环境（IDE），专为Python开发设计。
-  
-  ​	PyCharm具有一些可以帮助开发者提高效率的工具，比如智能代码补全、调试、语法高亮、项目管理与导航、代码跳转、智能提示、图形化的调试器和运行器、自动完成、单元测试、版本控制、遵循PEP8规范的代码质量检查、智能重构等。
-  
-  ​	缺点：软件体积大，启动慢。
+​	PyCharm 具有一些可以帮助开发者提高效率的工具，比如智能代码补全、调试、语法高亮、项目管理与导航、代码跳转、智能提示、图形化的调试器和运行器、自动完成、单元测试、版本控制、遵循 PEP8 规范的代码质量检查、智能重构等。
+
+​	缺点：软件体积大，启动慢。
 
 #### 安装
 
-- 官网下载社区免费版Pycharm；
+1. 官网下载社区免费版 Pycharm；
 
-- 勾选如图2项
+2. 勾选如图 2 项
 
-- 继续安装直到finish
+3. 继续安装直到 Finish
 
   ![image-20231026230614766](assets/image-20231026230614766.png)
 
 
 ####  破解
 
-- 官网下载Pycharm Professional；
+1. 官网下载 Pycharm Professional；
 
-- 默认安装，安装完成后不要立即运行；
+2. 默认安装，安装完成后不要立即运行；
 
-- 以下破解方法来源于[《小墨の博客》](https://www.only4.work/blog/?id=473)；
+3. 以下破解方法来源于[《小墨の博客》](https://www.only4.work/blog/?id=473)；
 
-- 博客地址或百度网盘下载并解压激活工具“【请解压】JetBrains 2023.1 永久激活插件”；
+4. 博客地址或百度网盘下载并解压激活工具“【请解压】JetBrains 2023.1 永久激活插件”；
 
-- 为了避免路径问题，请将解压后的文件夹到本地一个没有中文以及特殊符号的路径下，且配置后不能移动和删除；
+5. 为了避免路径问题，请将解压后的文件夹到本地一个没有中文以及特殊符号的路径下，且配置后不能移动和删除；
 
   ![image-20231026232300636](assets/image-20231026232300636.png)
 
-- jetbra >>> scripts >>> 双击运行install-all-users.vbs脚本 >>> 出现 done 弹框，说明成功；
+6. jetbra > scripts > 双击运行 install-all-users.vbs 脚本 > 出现 done 弹框，说明成功；
 
-- 由于存在环境变量配置，插件安装之后，需要重启电脑才会生效。
+7. 由于存在环境变量配置，插件安装之后，需要重启电脑才会生效。
 
-- 重启后，在博客内获取激活码；
+8. 重启后，在博客内获取激活码；
 
-- 最后一次获取到的是：
+9. 最后一次获取到的是：
 
   ```
   # Pycharm
@@ -156,39 +154,39 @@
 
   ![image-20231026232934381](assets/image-20231026232934381.png)
 
-- 此时运行PyCharm Professional，在activation code选项下，填入最新激活码，点击Activate就能完成激活了；
+10. 此时运行PyCharm Professional，在 activation code 选项下，填入最新激活码，点击 Activate 就能完成激活了；
 
-- 注意激活以后，不要移动或删除激活插件文件夹；
+11. 注意激活以后，不要移动或删除激活插件文件夹；
 
-- 查看激活状态：Help >>> About
+12. 查看激活状态：Help > About
 
-  ![image-20231026233121030](assets/image-20231026233121030.png)
+   ![image-20231026233121030](assets/image-20231026233121030.png)
 
 #### 配置
 
 - **设置鼠标滚轮**
 
-  Main menu > Settings >Editor>General> `Mouse Control` 选项：Change font size with Ctrl+Mouse Wheel 打上对勾，All editors 打勾
+  Main menu > Settings >Editor>General> `Mouse Control` 选项：Change font size with Ctrl + Mouse Wheel 打上对勾，All editors 打勾
 
 - **设置代码字体大小**
 
-  - Main menu > Settings > Editor > Font
+  1. Main menu > Settings > Editor > Font
 
-  - Size=24，Line Height=1.2
+  2. Size = 24，Line Height = 1.2
 
-  - 如果设置不生效，Main menu > Settings > Editor > Color Scheme > Color Scheme Font
+  3. 如果设置不生效，Main menu > Settings > Editor > Color Scheme > Color Scheme Font
 
     取消勾选  `Use color scheme font instead of the default`
 
 - **汉化**
 
-  Main menu > Settings > Plugins，搜索“Chinese”，Install安装汉化包。软件重启即汉化版
+  Main menu > Settings > Plugins，搜索“Chinese”，Install 安装汉化包。软件重启即汉化版
 
 - **代码格式化**
 
-  - Main menu > Settings > Editor > Code Style > Python > `Space` 选项卡
-  - “在命名形参中的 = 周围”和“在关键字实参中的 = 周围”两项打勾，保存。
-  - 编辑完代码按Ctrl + Shift + L，可实现自动更正空格格式。注意注释部分不会被更正
+  1. Main menu > Settings > Editor > Code Style > Python > `Space` 选项卡
+  2. “在命名形参中的 = 周围”和“在关键字实参中的 = 周围”两项打勾，保存。
+  3. 编辑完代码按 `Ctrl + Shift + L`，可实现自动更正空格格式。注意注释部分不会被更正
 
 - **安装主题**
 
@@ -196,26 +194,24 @@
 
 - **创建文件**
 
-  - 项目路径右键 >>> New >>> Python Fire >>> 给文件命名>>> 回车；
-
-  - 编写代码，自动保存；
-
-  - 运行：（1、项目栏，2、右键，3、快捷键）快捷键：Ctrl+Shift+F10。
+  1. 项目路径右键 > New > Python Fire > 给文件命名> 回车；
+  2. 编写代码，自动保存；
+  3. 运行：（1、项目栏，2、右键，3、快捷键）快捷键：`Ctrl + Shift + F10`。
 
 - **同一项目添加多个文件夹**
 
-  - Settings >>> Project >>> Project Structure >>>
-  - 右侧Add Content Root >>> 选择要添加的文件夹 >>> OK
+  1. Settings > Project > Project Structure >
+  2. 右侧Add Content Root > 选择要添加的文件夹 > OK
 
 - **将Terminal默认项切换至cmd**
 
-  - Terminal可以模拟cmd
-  - Settings >>> Tools >>> Terminal >>> Shell path下拉菜单，切换至cmd
+  1. Terminal可以模拟cmd
+  2. Settings > Tools > Terminal > Shell path下拉菜单，切换至cmd
 
 - **无法调用第三方模块**
 
-  - Settings >>> Project：当前文件名 >>> Python Interpreter >>> 右侧Add Interpreter >>> Existing >>> 右侧… >>> 
-  - 找到python.exe/将python.exe拖入窗口 >>> OK
+  1. Settings > Project：当前文件名 > Python Interpreter > 右侧Add Interpreter > Existing > 右侧… > 
+  2. 找到python.exe/将python.exe拖入窗口 > OK
 
 
 #### 创建项目
@@ -231,37 +227,37 @@
 
 - **Sublime简介**
 
-  ​	Sublime- Text是一个用 C++ 和 Python 开发的跨平台文本编辑器。除了 Python 之外，它还提供对其他语言的支持。Sublime有自己的包管理器，开发者可以用来安装组件，插件和额外样式。与PyCharm、VS Code不同，Sublime Text并没有集成开发环境（Integrated Development Environment），而是作为一个纯粹的编辑器，提供了快速、便捷的编辑功能。
+  ​	Sublime- Text 是一个用 C++ 和 Python 开发的跨平台文本编辑器。除了 Python 之外，它还提供对其他语言的支持。Sublime 有自己的包管理器，开发者可以用来安装组件，插件和额外样式。与 PyCharm、VS Code 不同，Sublime Text 并没有集成开发环境（Integrated Development Environment），而是作为一个纯粹的编辑器，提供了快速、便捷的编辑功能。
   ​	特点：第三方，轻量化，界面好，支持常见所有语言。
 
 - **Sublime的安装**
 
-  - 默认所有选项安装Sublime
+  - 默认所有选项安装 Sublime
 
-  - Sublime原生环境不支持input语句的执行，所以要安装SublimeREPL插件。
+  - Sublime 原生环境不支持 input 语句的执行，所以要安装 SublimeREPL 插件。
 
 - **SublimeREPL插件的安装**
 
-  - Ctrl+shift+P打开命令面板，输入install，选择Package Control：Install Package
+  - Ctrl+shift+P 打开命令面板，输入 install，选择 Package Control：Install Package
   	
 
   ```
   - 程序包控件，安装程序包，需要等待一下，看左下角有“=”左右动；
-  - 注意，如果没有这个选项，需要先安装Package Control，点击Install Package Control，等待安装，提示安装成功后再重新按Ctrl+shift+P选择Package Control：Install Package；
+  - 注意，如果没有这个选项，需要先安装 Package Control，点击 Install Package Control，等待安装，提示安装成功后再重新按 Ctrl+shift+P选择Package Control：Install Package；
   ```
 
-  - 过一会“=”消失，弹出窗口，搜索SublimeREPL，点击下载；
+  - 过一会“=”消失，弹出窗口，搜索 SublimeREPL，点击下载；
 
-  - 安装成功后，在Tools选项里出现SublimeREPL，表明安装成功；
+  - 安装成功后，在 Tools 选项里出现 SublimeREPL，表明安装成功；
 
   - 设置快捷键
 
 
   ```
-  - 首先点击首选项preference
-  - 其次打开快捷键设置key bindings
+  - 首先点击首选项 preference
+  - 其次打开快捷键设置 key bindings
   - 在两个中括号之间那行，粘贴输入下面代码
-  - 关闭快捷键设置页面，关闭Sublime软件，重新打开即可
+  - 关闭快捷键设置页面，关闭 Sublime 软件，重新打开即可
   ```
 
   ``` json
@@ -273,11 +269,11 @@
   "file": "config/Python/Main.sublime-menu"}}
   ```
 
-  - 关闭快捷键设置页面，关闭Sublime软件，重新打开即可。
+  - 关闭快捷键设置页面，关闭 Sublime 软件，重新打开即可。
 
-  - 需要注意，input语句在Sublime中执行，需要按快捷键F5，并且新跳出一个窗口显示。
+  - 需要注意，input 语句在 Sublime 中执行，需要按快捷键 F5，并且新跳出一个窗口显示。
 
-  - 卸载SublimeREPL插件
+  - 卸载 SublimeREPL 插件
 
   - Ctrl+shift+p，输入框中输入“remove package”；
 
@@ -346,7 +342,7 @@
 
 ## 变量
 
-- Python无需使用关键字声明变量
+- Python 无需使用关键字声明变量
 
 - 可以输出多个变量名，用逗号隔开，可获取多个变量值
 
@@ -369,7 +365,7 @@
 - **input() 输入**
 
   ```
-  input的返回结果为字符串
+  input 的返回结果为字符串
   ```
 
   ```python
@@ -397,7 +393,7 @@
 
 - **算术运算符**
 
-  没有`++`和`--`
+  没有 `++` 和 `--`
 
 - **赋值运算符**
 
@@ -411,7 +407,7 @@
 
   什么都不执行，补充代码完整性。
 
-- Python中二、八、十六进制之间不能直接转换，需通过十进制
+- Python 中二、八、十六进制之间不能直接转换，需通过十进制
 
 # 第三章 数据类型
 
@@ -533,7 +529,7 @@
   	- 去除结尾空格 rstrip()
   ```
   
-  ```javascript
+  ```python
   data = " 中国 联通 "
   
   res1 = data.strip()
@@ -546,7 +542,7 @@
   print(res3)  # " 中国 联通"
   ```
   
-  ```javascript
+  ```python
   data = "中国联通\n"
   print(data)  # 中国联通（后面有换行）
   
@@ -700,13 +696,13 @@
 
 ## 布尔型boolean
 
-- Python 中的布尔型用boolean表示
+- Python 中的布尔型用 boolean 表示
 - 值 True 和 False 首字母大写。
 
 ## 空 None
 
-- 空值表示什么也没有，用None表示；
-- None不能理解为0，0有意义，而None表示特殊的空值。
+- 空值表示什么也没有，用 None 表示；
+- None 不能理解为0，0有意义，而 None 表示特殊的空值。
 
 ## 列表 list
 
@@ -810,7 +806,7 @@
   - 反转列表：将列表里元素的顺序反转
   - 列表名.reverse()
   	- 原数组受影响
-  - Python中没有.toReversed()方法
+  - Python 中没有.toReversed()方法
   ```
 
   ``` python
@@ -826,12 +822,12 @@
   	sorted(列表名)
   	- 对原列表有影响
   - 排序标准
-      - 按首字的ASCII码转十进制的大小排序，如果首字相同，则逐一往后对比
+      - 按首字的 ASCII 码转十进制的大小排序，如果首字相同，则逐一往后对比
       - 字符串与其它类型不能相互比较
           - 字符串一般规律，数字优先，其次英语，最后汉字
-          - 数字按首位数字ASCII码转十进制的大小排序
+          - 数字按首位数字 ASCII 码转十进制的大小排序
           - 英语按字母顺序排序
-      - 汉字按首字的ASCII码转十进制的大小排序
+      - 汉字按首字的 ASCII 码转十进制的大小排序
       - 整型/浮点型按数值大小排序
   - 默认升序排序
   	- 如果想降序排序，应传入 reverse = True 参数
@@ -870,7 +866,7 @@
   ```
   - 将一个列表中所有元素通过分隔符连接成一个字符串
   - 列表名.join(separation)
-  	- 形参separation 分隔符
+  	- 形参 separation 分隔符
   		- 如果不传入指定分隔符，返回结果各个元素将以“,”连接
       - 返回一个字符串
   ```
@@ -887,11 +883,11 @@
 - **列表公共功能**
 
   ```
-  - 获取长度 len(列表名)
+  - 获取长度 len (列表名)
   - 索引
   - 切片
   - 遍历
-  - in包含
+  - in 包含
   ```
 
 ## 元组 tuple
@@ -899,7 +895,7 @@
 - **语法**
 
   ```
-  - 元组tuple是一个有序的序列结构，用在对安全性有一定需求的数据上。
+  - 元组 tuple 是一个有序的序列结构，用在对安全性有一定需求的数据上。
   - 特性：除了元素不支持修改，其它与列表相同。
   ```
 
@@ -933,7 +929,7 @@
 
 - **元组公共功能**
 
-  长度len() 多级索引 切片 for循环 in包含 嵌套
+  长度 len() 多级索引 切片 for 循环 in 包含 嵌套
 
 ## 字典 dict
 
@@ -1511,15 +1507,15 @@
 
 ## 循环结构
 
-- Python中有for循环和while循环两种循环结构。
+- Python 中有 for 循环和 while 循环两种循环结构。
 
-### for循环
+### for 循环
 
-- Python中没有纯粹的 for 循环，只有 for-in 语句。
+- Python 中没有纯粹的 for 循环，只有 for-in 语句。
 
-#### for-in语句
+#### for-in 语句
 
-- for-in语句用于枚举对象，即遍历
+- for-in 语句用于枚举对象，即遍历
 
   ```
   - 语法
@@ -1546,7 +1542,7 @@
 
 #### 循环序列
 
-- range序列，生成一个a到b的序列，左闭右开。
+- range 序列，生成一个 a 到 b 的序列，左闭右开。
 
   ```
   - range(开始值, 结束值, 步长)
@@ -1656,7 +1652,7 @@
 
 ### while循环
 
-- while循环通过判断条件来控制一段代码（循环体）重复执行
+- while 循环通过判断条件来控制一段代码（循环体）重复执行
 
   ```
   - 语法
@@ -1687,7 +1683,7 @@
 
 #### 无限循环
 
-- 如果循环中的循环条件永远为真，且没有break关键字进行终止，就形成了一个无限循环，也叫死循环。
+- 如果循环中的循环条件永远为真，且没有 break 关键字进行终止，就形成了一个无限循环，也叫死循环。
 
 - 用在无限循环操作中，比如超市收银系统。
 
@@ -1729,7 +1725,7 @@
 
 ### 关键字continue、break
 
-- 语法
+- **语法**
 
   ```
   语法
@@ -2443,13 +2439,13 @@
   dict([('a', 1), ('b', 2), ('c', 3)])  # {'a': 1, 'b': 2, 'c': 3}  转字典
   set([1, 4, 2, 4, 3, 5])  # {1, 2, 3, 4, 5}  转集合
   
-  iter(iterable)  # 返回一个可迭代的对象。 iter([1,2,3]) >>> <list_iterator object at 0x0000000003813B00>
+  iter(iterable)  # 返回一个可迭代的对象。 iter([1,2,3]) > <list_iterator object at 0x0000000003813B00>
   enumerate(iterable) : 返回一个枚举对象。
-  bin(int) : 转换为2进制。 bin(1024) >>> '0b10000000000'
-  oct(int) : 转换为8进制。 oct(1024) >>> '0o2000'
-  hex(int) : 转换为16进制。hex(1024) >>> '0x400'
-  chr(int) : 转换数字为相应ASCI码字符。 chr(65) >>> 'A'
-  ord(str) : 转换ASCI字符为相应的数字。 ord('A') >>> 65
+  bin(int) : 转换为2进制。 bin(1024) > '0b10000000000'
+  oct(int) : 转换为8进制。 oct(1024) > '0o2000'
+  hex(int) : 转换为16进制。hex(1024) > '0x400'
+  chr(int) : 转换数字为相应ASCI码字符。 chr(65) > 'A'
+  ord(str) : 转换ASCI字符为相应的数字。 ord('A') > 65
   
   all([0, 11, 22])  # False  检测列表中元素是否全部是True
   any([0, 11, 22])  # True  检测列表中元素是否有True
@@ -2474,17 +2470,17 @@
   print(__file__)  # 获取当前操作文件的路径（此处不是在cmd中）
   hash('python')  # 7070808359261009780  计算一个对象的hash值
   callable(func)  # True/False 判断func是否可执行，即是不是函数
-  eval() : 执行一个表达式，或字符串作为运算。 eval('1+1') >>> 2
-  exec() : 执行python语句。 exec('print("Python")') >>> Python
+  eval() : 执行一个表达式，或字符串作为运算。 eval('1+1') > 2
+  exec() : 执行python语句。 exec('print("Python")') > Python
   
   filter(func, iterable) : 通过判断函数fun，筛选符合条件的元素。
-  filter(lambda x: x>3, [1,2,3,4,5,6]) >>> <filter object at 0x0000000003813828>
+  filter(lambda x: x>3, [1,2,3,4,5,6]) > <filter object at 0x0000000003813828>
   
   map(func, *iterable) : 将func用于每个iterable对象。
-  map(lambda a,b: a+b, [1,2,3,4], [5,6,7]) >>> [6,8,10]
+  map(lambda a,b: a+b, [1,2,3,4], [5,6,7]) > [6,8,10]
   
   zip(*iterable) : 将iterable分组合并。返回一个zip对象。
-  list(zip([1,2,3],[4,5,6])) >>> [(1, 4), (2, 5), (3, 6)]
+  list(zip([1,2,3],[4,5,6])) > [(1, 4), (2, 5), (3, 6)]
   
   help()：调用系统内置的帮助系统。
   isinstance()：判断一个对象是否为该类的一个实例。
@@ -2680,7 +2676,7 @@
 
 - **创建模块**
 
-  项目已创建 >>> 在项目中创建包/py文件，在py文件中写模块
+  项目已创建 > 在项目中创建包/py文件，在py文件中写模块
 
 - **引入和使用模块**
 
@@ -3982,10 +3978,10 @@
   - 创建项目
 
   ```
-  >>>pip install django
-  >>>e:回车   进入E盘
-  >>>cd 文件\工作\Pycharm项目\Web开发\Web开发文件笔记   进入想放项目的文件夹
-  >>>django-admin startproject 项目名
+  >pip install django
+  >e:回车   进入E盘
+  >cd 文件\工作\Pycharm项目\Web开发\Web开发文件笔记   进入想放项目的文件夹
+  >django-admin startproject 项目名
   ```
 
   ```
@@ -4001,8 +3997,8 @@
   - 启动和关闭项目
 
   ```
-  >>>进入项目目录
-  >>>python manage.py runserver
+  >进入项目目录
+  >python manage.py runserver
   
   关闭：Ctrl + c
   ```
@@ -4036,7 +4032,7 @@
     终端terminal
 
   ```
-  >>>python manage.py startapp app名字
+  >python manage.py startapp app名字
   ```
 
   ```
@@ -4214,7 +4210,7 @@
 
   - views.py
 
-    v2[0] >>> v2.0
+    v2[0] > v2.0
 
   ```python
   <div>{{ v2.0 }}</div>

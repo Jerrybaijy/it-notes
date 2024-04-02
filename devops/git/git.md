@@ -12,9 +12,9 @@
 - 官网下载安装包：**[64-bit Git for Windows Setup](https://github.com/git-for-windows/git/releases/download/v2.44.0.windows.1/Git-2.44.0-64-bit.exe)**
 - 安装时注意选择 `main` 分支
 
-#### Linux
+#### Debian
 
-- 目前使用的 Linux 自带 Git
+- `sudo apt-get install git`
 
 #### 配置
 
@@ -161,7 +161,46 @@
   git reset --hard SHA # SHA哈希值
   ```
 
-- 
+# Git Ignore
+
+​	`.gitignore` 文件是一个用来告诉 Git 哪些文件或目录不需要被版本控制的配置文件。通常，这些文件包括编译生成的文件、临时文件、日志文件、依赖库等，因为它们不应该被提交到版本库中，或者它们可以通过其他途径重新生成。创建一个 `.gitignore` 文件可以帮助确保你的代码仓库保持整洁，只包含必要的文件。
+
+## Symbol
+
+- **#**: explanation
+- **\***: style files
+- **!**: negation
+
+## Template
+
+- .gitignore
+
+  ```tex
+  # Ignore compiled files
+  *.class
+  *.o
+  *.pyc
+  
+  # Ignore build output directories
+  build/
+  dist/
+  bin/
+  
+  # Ignore log files
+  *.log
+  
+  # Ignore IDE and editor-specific files
+  .idea/
+  .vscode/
+  
+  # Ignore dependency directories
+  node_modules/
+  venv/
+  
+  # Ignore configuration files with sensitive information
+  config.ini
+  secrets.json
+  ```
 
 # GitHub
 
@@ -195,15 +234,15 @@
 
 # GitLab
 
-## GitLab 基础
+## GitLab Basics
 
 ## GitLab CI
 
-​	目的是根据用户自己编写的应用文件 `main.go`、`Dockerfile`、 `.gitlab-ci.yml`，在将文件 psush 到 Gitlab 时，自动生成 Docker image 并推送到 Dockerhub。
+​	目的是根据用户自己编写的应用文件 `main.go`、`Dockerfile`、 `.gitlab-ci.yml`，在将文件 psush 到 Gitlab 时，通过 Pipeline 自动生成 Docker image 并推送到 Dockerhub。
 
 ### 配置文件
 
-- 示例
+- .gitlab-ci.yml
 
   ```yaml
   variables:

@@ -544,9 +544,10 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
 - **前端**：使用 Java Script 的 React 框架搭建
 - **后端**：使用 Java 的 Spring Boot 框架搭建
 - **数据库**：使用 XAMPP 集成的 MySQL
-- **代码存储**：前后端以两个分项目形式分别存储在托管平台
+- **代码存储**：前后端和数据库以三个分项目形式分别存储在托管平台
   - student-springboot-react-frontend
   - student-springboot-react-backend
+  - student-springboot-react-database
 
 
 ## 后端
@@ -776,7 +777,7 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
   }
   ```
 
-### 数据库
+### 本地数据库
 
 - **工具**：使用 XAMPP 集成的 Apache MySQL Tomcat 创建数据库
 - 启动 XAMPP，创建数据库 fullstack
@@ -791,8 +792,8 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
   # configuration
   spring.jpa.hibernate.ddl-auto=update
   spring.datasource.url=jdbc:mysql://localhost:3306/fullstack
-  spring.datasource.username=root
-  spring.datasource.password=
+  spring.datasource.username=jerry
+  spring.datasource.password=123456
   spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
   ```
 
@@ -811,6 +812,10 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
 ### 构建项目
 
 - 在项目的根目录中运行 Maven 命令来构建项目，将生成的可执行 JAR 文件 `studentsystem-0.0.1-SNAPSHOT.jar` 复制到项目根目录
+
+  ```bash
+  mvn clean package -DskipTests
+  ```
 
 ### 生成 Image
 
@@ -849,6 +854,90 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
   EXPOSE 8080
   CMD ["java", "-jar", "app.jar"]
   ```
+
+### 部署应用
+
+1. 使用 Argo CD 在集群中部署
+
+2. application.yaml
+
+   ```yaml
+   apiVersion: argoproj.io/v1alpha1
+   kind: Application
+   metadata:
+     name: student-springboot-react-backend
+     namespace: argocd
+   
+   spec:
+     project: default
+     source:
+       repoURL: https://gitlab.com/jerrybai/student-springboot-react-backend.git
+       targetRevision: HEAD
+       path: dev
+     
+     destination:
+       server: https://kubernetes.default.svc
+       namespace: student-springboot-react-backend
+   
+     syncPolicy:
+       syncOptions:
+         - CreateNamespace=true
+       automated:
+         selfHeal: true
+         prune: true
+   ```
+
+3. deploymnet.yaml
+
+   ```yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: student-springboot-react-backend
+   spec:
+     selector:
+       matchLabels:
+         app: student-springboot-react-backend
+     replicas: 1
+     template:
+       metadata:
+         labels:
+           app: student-springboot-react-backend
+       spec:
+         containers:
+           - name: student-springboot-react-backend
+             image: jerrybaijy/student-springboot-react-backend:v1.0
+             ports:
+               - containerPort: 8080
+             env:
+               - name: PORT
+                 value: "8080"
+             resources:
+               requests:
+                 memory: "1Gi"
+                 cpu: "500m"
+                 ephemeral-storage: "1Gi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "500m"
+                 ephemeral-storage: "1Gi"
+   ```
+
+4. service.yaml
+
+   ```bash
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: student-springboot-react-backend
+   spec:
+     selector:
+       app: student-springboot-react-backend
+     type: ClusterIP
+     ports:
+       - port: 80
+         targetPort: 8080
+   ```
 
 ## 前端
 
@@ -1099,5 +1188,168 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
      CMD ["http-server", "-p", "8080"]
      ```
 
-     
+7. 使用 Argo CD 在集群中部署
 
+   - application.yaml
+
+     ```yaml
+     apiVersion: argoproj.io/v1alpha1
+     kind: Application
+     metadata:
+       name: student-springboot-react-frontend
+       namespace: argocd
+     
+     spec:
+       project: default
+       source:
+         repoURL: https://gitlab.com/jerrybai/student-springboot-react-frontend.git
+         targetRevision: HEAD
+         path: dev
+       
+       destination:
+         server: https://kubernetes.default.svc
+         namespace: student-springboot-react-frontend
+     
+       syncPolicy:
+         syncOptions:
+           - CreateNamespace=true
+         automated:
+           selfHeal: true
+           prune: true
+     ```
+
+   - deploymnet.yaml
+
+     ```yaml
+     apiVersion: apps/v1
+     kind: Deployment
+     metadata:
+       name: student-springboot-react-frontend
+     spec:
+       selector:
+         matchLabels:
+           app: student-springboot-react-frontend
+       replicas: 1
+       template:
+         metadata:
+           labels:
+             app: student-springboot-react-frontend
+         spec:
+           containers:
+             - name: student-springboot-react-frontend
+               image: jerrybaijy/student-springboot-react-frontend:v1.0
+               ports:
+                 - containerPort: 8080
+               env:
+                 - name: PORT
+                   value: "8080"
+               resources:
+                 requests:
+                   memory: "1Gi"
+                   cpu: "500m"
+                   ephemeral-storage: "1Gi"
+                 limits:
+                   memory: "1Gi"
+                   cpu: "500m"
+                   ephemeral-storage: "1Gi"
+     ```
+
+   - service.yaml
+
+     ```bash
+     apiVersion: v1
+     kind: Service
+     metadata:
+       name: student-springboot-react-frontend
+     spec:
+       selector:
+         app: student-springboot-react-frontend
+       type: LoadBalancer
+       ports:
+         - port: 80
+           targetPort: 8080
+     ```
+
+## 数据库
+
+1. 使用 Argo CD 在集群中部署数据库 MySQL
+
+2. application.yaml
+
+   ```yaml
+   apiVersion: argoproj.io/v1alpha1
+   kind: Application
+   metadata:
+     name: student-springboot-react-database
+     namespace: argocd
+   
+   spec:
+     project: default
+     source:
+       repoURL: https://gitlab.com/jerrybai/student-springboot-react-database.git
+       targetRevision: HEAD
+       path: dev
+     
+     destination:
+       server: https://kubernetes.default.svc
+       namespace: student-springboot-react-database
+   
+     syncPolicy:
+       syncOptions:
+         - CreateNamespace=true
+       automated:
+         selfHeal: true
+         prune: true
+   ```
+
+3. deploymnet.yaml
+
+   ```yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: student-springboot-react-database
+   spec:
+     selector:
+       matchLabels:
+         app: student-springboot-react-database
+     replicas: 1
+     template:
+       metadata:
+         labels:
+           app: student-springboot-react-database
+       spec:
+         containers:
+           - name: student-springboot-react-database
+             image: jerrybaijy/student-springboot-react-database:v1.0
+             ports:
+               - containerPort: 3306
+             env:
+               - name: PORT
+                 value: "3306"
+             resources:
+               requests:
+                 memory: "1Gi"
+                 cpu: "500m"
+                 ephemeral-storage: "1Gi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "500m"
+                 ephemeral-storage: "1Gi"
+   ```
+
+4. service.yaml
+
+   ```bash
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: student-springboot-react-database
+   spec:
+     selector:
+       app: student-springboot-react-database
+     type: ClusterIP
+     ports:
+       - port: 3306
+         targetPort: 3306
+   ```

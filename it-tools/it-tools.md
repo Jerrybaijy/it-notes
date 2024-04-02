@@ -1,39 +1,58 @@
 # 大面
 
-## 问题
+## Task list
 
-- Git 版本回退之后无法 push，即使 --force 也不行
+- **Daily**
+  - [x] Make a real task list
+  - [x] Learn `.gitignore`, then add `git-push.sh`.
+  - [x] Put `typora.md` into `Markdown.md`
+  - [x] Learn markdown
+- **Current project**
+  - [x] Build the image of frontend and backend.
+  - [x] Deploy frontend and backend into a cluster.
+  - [ ] Config the YAML of backend.
+  - [ ] Deploy a database into a cluster.
+  - [ ] Connect them and visit the application in cluster on the internet.
+- **Shell Script**
+  - [ ] Windows
+  - [ ] Linux
 
-- 记笔记时变量的通用 表示法
+- **System**
 
-  `sudo usermod -aG docker $USER` 
+  - [ ] ssh   linux
 
-  USER  [USER]  \<user>  $USER
+  - [ ] rdp   windows
 
-- 路径问题
+- **Net**
 
-  DIR   PATH   URL
+  - [ ] domain name、IP、DNS
 
-## 欠账
+  - [ ] server
+  - [ ] nslookup
 
-- 写 Shell Script 脚本
-  - Linux 和 Windows
-- docker
-  - kubectl login 看 docker 做了什么
-- System
-  - rdp   windows
-  - ssh   linux
-- 网络
-  - 域名、IP、DNS
-  - server
-  - nslookup
-- 浏览器
-  - CS
-  - BS  Java 客户端
-- vi/vim
-  - 文本编辑
-- configmap
-- 其它
+- **Broswer**
+
+  - [ ] CS
+
+  - [ ] BS  Java Client
+
+- **text editing**
+
+  - [ ] Vi/Vim
+
+- **configmap**
+
+  - [ ] 
+
+- **Questions**
+  - [ ] Git 版本回退之后无法 push，即使 --force 也不行
+  
+- **Typora**
+  - [ ] Night theme link color
+  
+- **MySQL**
+  - [ ] Use `statesite`
+  - [ ] stateful app
 
 # Google Cloud
 
@@ -89,13 +108,27 @@
 
    1. 选择第 2 项：Log in with a new account
    2. 点击输出的网址，跳转到网页获取 authorization code，并粘贴回至 bash
-   3. 选择项目，目前项目为 opportune-study-413101
-   4. 选择默认区域：上次选 [7] us-central1-c
+   3. 选择项目，目前项目为 true-oasis-418914
+   4. 选择默认区域：上次选 [48] asia-east2-b
 
 7. 安装 kubectl
 
    ```bash
+   # 成功过的方法一
    gcloud components install kubectl
+   ```
+   
+   ```bash
+   # 成功过的方法二
+   sudo apt-get update
+   # 安装 kubectl
+   sudo snap install kubectl --classic
+   # 添加环境变量
+   export PATH=$PATH:/snap/bin
+   # 验证安装
+   kubectl version --client
+   # 安装插件
+   sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
    ```
 
 ## 常用命令
@@ -107,6 +140,8 @@
   gcloud auth list
   # 切换登录账户
   gcloud config set account YOUR_ACCOUNT
+  # 查看当前区域
+  gcloud config get-value compute/region
   ```
 
 - **项目**
@@ -183,13 +218,13 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
    1. 创建集群
 
       ```bash
-      gcloud container clusters create-auto hello-cluster --location=us-central1
+      gcloud container clusters create-auto jerry-cluster --location=asia-east2
       ```
 
    2. 获取用于集群的身份验证凭据
 
       ```bash
-      gcloud container clusters get-credentials hello-cluster --location us-central1
+      gcloud container clusters get-credentials jerry-cluster --location asia-east2
       ```
 
 6. **部署应用**
@@ -499,31 +534,33 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
 
 1. 安装之前创建一个系统还原点，以防不测
 
-2. [官网下载 MySQL：**Windows (x86, 64-bit), MSI Installer**](https://dev.mysql.com/downloads/mysql/)
+2. 安装之前，要先彻底卸载之前残留的版本
 
-3. 开始安装，安装方式选择 custom
+3. [官网下载 MySQL：**Windows (x86, 64-bit), MSI Installer**](https://dev.mysql.com/downloads/mysql/)
+
+4. 开始安装，安装方式选择 custom
 
    ![image-20240317172713492](assets/image-20240317172713492.png)
 
-4. 安装完成之后会出现 MySQL 配置的引导界面
+5. 安装完成之后会出现 MySQL 配置的引导界面
 
-5. Data Directory：D:\ProgramData\MySQL\MySQL Server 8.3\
+6. Data Directory：D:\ProgramData\MySQL\MySQL Server 8.3\
 
-6. Type and Networking：Config Type 选择 DeveloperMachine
+7. Type and Networking：Config Type 选择 DeveloperMachine
 
    ![image-20240317173419078](assets/image-20240317173419078.png)
 
-7. 创建 root 账户
+8. 创建 root 账户
 
    ![image-20240317174252087](assets/image-20240317174252087.png)
 
-8. Apply Configuration：Execute
+9. Apply Configuration：Execute
 
    ![image-20240317174816106](assets/image-20240317174816106.png)
 
-9. 将 MySQL 加入系统环境变量，详见《Windows 笔记》。
+10. 将 MySQL 加入系统环境变量，详见《Windows 笔记》。
 
-10. 安装完成，检查
+11. 安装完成，检查
 
    ```bash
    # 查看版本
@@ -556,90 +593,54 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
 6. 完全卸载了以后就可以正常重新安装了
 7. 如想彻底删除，记得删除安装时自己配置的系统环境变量
 
-### MySQL 解决方法
+## MySQL Manage
 
-- MySQL 默认端口 3306
-- 关于忘记密码，需先进入无授权模式，改完之后再切换回正常模式。
+- **MySQL Manage**
 
-## 数据类型
-
-- **跳过没详细学**
-- **整型**
-  - int 整型
-  - tinyint 有范围的整型
-  - int/tinyint unsigned 无符号整型，即没有负数
-- 小数
-  - float 单精度
-  - double 双精度
-  - decimal 非常精准
-- **字符串**
-  - varchar 变长字符串，最多65535/3个
-  - varchar(10) 最大长度为10的变长字符串
-  - char 定长字符串
-  - char(11) 长度为11的定长字符串（比如手机号）
-  - text 更长的字符串，最多65535*(2^16^-1)个
-- **时间类型**
-  - datetime 日期时间   2023-10-31 23:23:23
-  - date 日期   2023-10-31
-
-## 指令
-
-- 一行指令完成必须加英文分号，或者\g
-
-- 上下键，翻出历史输入
-
-- Esc键，退出历史输入
-
-- exit;  退出
-
-- set password = password('123456');  设置密码
-
-- 查看数据库编码
-
-  ```sql
-  show variables like '%char%';
+  ```bash
+  # Show MySQL version
+  mysql --version
+  # Login MySQL server
+  mysql -u $USER -p
   ```
 
-## 数据操作
-
-### 数据库
-
-- 查看所有数据库
+- **SQL Manage**
 
   ```sql
+  # A command line must be followed by a ';'，or a '\g'.
+  
+  # Exit MySQL server
+  exit;
+  # Set MySQL server password
+  set password = password('$PASSWORD');
+  # Show database characters
+  show variables like 'character_set_database';
+  # Set characters between client and server
+  set names 'utf8';
+  ```
+
+## Database
+
+- **Basic Commad**
+
+  ```sql
+  # Show all databases in the server
   show databases; 
+  # Enter database
+  use $DATABASE;
+  # Create database
+  create database $DATABASE [default charset=utf8];
+  # delete database
+  drop database $DATABASE;
   ```
 
-- 进入数据库
+- **Other Commad**
 
   ```sql
-  use 数据库名;
+  
   ```
 
-  - 除了查看和创建数据库以外，其余对MySQL操作，必须先进入数据库
-    - Python在连接MySQL时可以指定某个数据库
-
-- 创建数据库
-
-  ```sql
-  create database 数据库名字 default charset=utf8;
-  ```
-
-  - default charset=utf8编码
-
-- 删除数据库
-
-  ```sql
-  drop database 数据库名字;
-  ```
-
-- 查看数据库所有数据表
-
-  ```sql
-  show tables;
-  ```
-
-### 数据表
+## Table
 
 - **查看所有数据表**
 
@@ -737,11 +738,7 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
 
 ### 数据行
 
-- ！！！！！！！！！！没有解决编码问题！！！！！！！！！
-
 - 对数据行操作，必须先进入其所属数据库
-
-  - Python在连接数据库时可以指定某个数据库
 
 - **查询数据行**
 
@@ -837,6 +834,12 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   select id from tb1 where name = 'zhaoliu';
   ```
 
+## 解决方案
+
+### 忘记登录密码
+
+- 关于忘记密码，需先进入无授权模式，改完之后再切换回正常模式。
+
 # Podman
 
 Podman 是一个用于管理容器的工具，类似于 Docker。
@@ -877,6 +880,22 @@ Postman 是一个 API 开发工具，用于创建、测试和调试 API。它可
 - **Body**：即用户要发送的请求内容，以 JSON 格式发送
 
 - 最后一行是反馈结果，类似于 console
+
+# Shell Script
+
+## Script Basics
+
+​	A shell script is a computer program designed to be run by a Unix/Linux shell, such as Bash.It consists of a sequence of shell commands and constructs, just like you would type them at the command line prompt.
+
+## Scripts
+
+- Git push
+
+  ```bash
+  git add .
+  git commit -m "Daily preservation"
+  git push
+  ```
 
 # SSH
 

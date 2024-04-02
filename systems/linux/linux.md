@@ -125,12 +125,14 @@ Linux 是一个开源的类 Unix 操作系统内核。它是一个多用户、�
 - **用户**
 
   ```bash
+  # 查看当前用户
+  whoami
   # 创建用户
-  sudo adduser $NEW_USER_NAME
+  sudo adduser $NEW_USER
   # 将用户添加到 sudo 组
-  sudo usermod -aG sudo $USER_NAME
+  sudo usermod -aG sudo $USER
   # 切换用户
-  su - $USER_NAME
+  su - $USER
   ```
 
 - **包管理器**
@@ -158,7 +160,6 @@ Linux 是一个开源的类 Unix 操作系统内核。它是一个多用户、�
   sudo $COMMAND
   ```
 
-  
 
 ## 操作常识
 

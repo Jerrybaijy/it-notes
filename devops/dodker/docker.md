@@ -161,9 +161,9 @@
 
   ```bash
   # 查看容器日志
-  docker logs [OPTIONS] CONTAINER
+  docker logs [OPTIONS] $CONTAINER
   # 检查容器详细信息
-  docker inspect [OPTIONS] CONTAINER [CONTAINER...]
+  docker inspect [OPTIONS] $CONTAINER [CONTAINER...]
   ```
   
 - **进入容器执行**
@@ -395,6 +395,94 @@
    ```
 
 # 其它
+
+## docker中成功
+
+### 使用link
+
+- mysql
+
+```bash
+docker run -d \
+--name mysql \
+-e MYSQL_ROOT_PASSWORD=123456 \
+-e MYSQL_DATABASE=fullstack \
+-e MYSQL_USER=jerry \
+-e MYSQL_PASSWORD=123456 \
+-p 3306:3306 \
+mysql:8.0 \
+--character-set-server=utf8mb4
+```
+
+- backend
+
+```bash
+docker run -d \
+--name backend \
+-p 8080:8080 \
+--link mysql:mysql \
+jerrybaijy/student-springboot-react-backend:v1.0
+```
+
+```
+docker run -d \
+--name frontend \
+--type LoadBalancer \
+-p 80:8080 \
+--link mysql:mysql \
+jerrybaijy/student-springboot-react-frontend:v1.0
+```
+
+### 加入同一网络
+
+- create network
+
+  ```bash
+  docker network create full-stack
+  ```
+
+- mysql
+
+  ```bash
+  docker run -d \
+  --name mysql \
+  -e MYSQL_ROOT_PASSWORD=123456 \
+  -e MYSQL_DATABASE=fullstack \
+  -e MYSQL_USER=jerry \
+  -e MYSQL_PASSWORD=123456 \
+  -p 3306:3306 \
+  --network full-stack \
+  mysql:8.0 \
+  --character-set-server=utf8mb4
+  ```
+
+- backend
+
+  ```bash
+  docker run -d \
+  --name backend \
+  -p 8080:8080 \
+  --network full-stack \
+  jerrybaijy/student-springboot-react-backend:v1.0
+  ```
+
+- frontend
+
+  ```bash
+  docker run -d \
+  --name frontend \
+  -p 80:8080 \
+  --network full-stack \
+  jerrybaijy/student-springboot-react-frontend:v1.0
+  ```
+
+- 访问
+
+  ```
+  docker exec -it mysql bash
+  ```
+
+  
 
 
 

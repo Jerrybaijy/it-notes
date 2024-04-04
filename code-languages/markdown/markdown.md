@@ -505,7 +505,7 @@ p .md-image:only-child{
 
 ## Edit
 
-​	Typora supports most Markdown HTML CSS syntax.
+​	Typora supports most Markdown HTML CSS syntaxes.
 
 - **Shortcut keys**
   - **Title:** Ctrl + n

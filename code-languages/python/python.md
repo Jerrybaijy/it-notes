@@ -5,52 +5,29 @@
 - B站：银角大王-武沛齐《精品 Python全套教程》
 ```
 
-# 环境搭建
+# Python 基础
 
-## 安装
+## 环境搭建
 
-以Python3.9.2为例
+1. 以 Python3.9.2 为例
 
-### 安装
+2. 双击解压包 python-3.9.2-amd64 运行
 
-- 双击解压包python-3.9.2-amd64运行
-  
-- 勾选Add Python 3.9 to PATH
+3. 勾选 `Add Python 3.9 to PATH`
 
-	- 添加环境变量，cmd运行python和pip时只写软件名字即可
-	
-	![image-20231026224146549](assets/image-20231026224146549.png)
-	
-- 点击Install Now，注意使用默认路径，否则反复安装易出错；
-  
-  ![image-20231026224358758](assets/image-20231026224358758.png)
+  ![image-20231026224146549](assets/image-20231026224146549.png)
 
-- 安装成功，点击Close
-  
+4. 安装成功，点击Close
+
   ![image-20231026224550908](assets/image-20231026224550908.png)
 
-### 配置
+## 配置
 
 - 关于安装目录
 
   - Lib：存放模块
   
   - site-packages：存放第三方模块
-  
-- 配置Python环境变量
-
-  - 详见《Windows笔记》环境变量
-  
-- **pip**
-  
-  ```bash
-  # 查看 pip 版本
-  pip --version
-  # 设置 pip 下载源
-  pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
-  # 查看 pip 下载源
-  pip config get global.index-url
-  ```
   
 - 帮助
 
@@ -79,20 +56,34 @@
   > help(sum)
   ```
 
+## Pip
+
+​	Pip 是 Python 的包管理工具
+
+- **常用命令**
+
+  ```bash
+  # 查看 pip 版本
+  pip --version
+  # 升级 pip
+  python -m pip install --upgrade pip
+  
+  # 查看 pip 下载源
+  pip config get global.index-url
+  # 设置 pip 下载源
+  pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
+  
+  # 查看已经安装的第三方模块
+  pip list
+  # 安装模块（选项为指定下载源）
+  pip install [-i https://pypi.tuna.tsinghua.edu.cn/simple] $MODULE_NAME
+  # 卸载第三方模块
+  pip uninstall $MODULE_NAME
+  # 显示模块信息
+  pip show $MODULE_NAME
+  ```
 
 ## 编辑器
-
-​	编辑器，又称IDE (Integrated Development Environment，集成开发环境)
-​	作用：编写 Python 代码 + 调用 Python 解释器运行代码。
-
-### 交互式环境
-
-- 临时写代码可在交互式环境中进行，但注意此环境不保存。
-- cmd > 输入“Python”，回车 > 进入交互式环境
-
-- exit() > 退出交互式环境
-
-- 交互式环境中可省略 print 步骤，写入函数后，回车自动显示执行结果
 
 ### IDLE
 
@@ -105,15 +96,13 @@
 
 ### Pycharm
 
-​	PyCharm 是一个跨平台的全功能 Python 开发工具，是由 JetBrains 打造的一款 Python 集成开发环境（IDE），专为 Python 开发设计。
+​	PyCharm 是由 JetBrains 开发的一款 Python IDE。它提供了丰富的功能和工具，包括代码编辑器、调试器、版本控制工具、代码分析、自动完成、重构、单元测试等，以帮助开发者提高 Python 开发的效率和质量。
 
-​	PyCharm 具有一些可以帮助开发者提高效率的工具，比如智能代码补全、调试、语法高亮、项目管理与导航、代码跳转、智能提示、图形化的调试器和运行器、自动完成、单元测试、版本控制、遵循 PEP8 规范的代码质量检查、智能重构等。
-
-​	缺点：软件体积大，启动慢。
+​	PyCharm 有商业版和社区版两个版本。
 
 #### 安装
 
-1. 官网下载社区免费版 Pycharm；
+1. [官网下载社区免费版 PyCharm Community Edition](https://www.jetbrains.com/pycharm/download/?section=windows)
 
 2. 勾选如图 2 项
 
@@ -124,7 +113,7 @@
 
 ####  破解
 
-1. 官网下载 Pycharm Professional；
+1. [官网下载商业版 Pycharm Professional](https://www.jetbrains.com/pycharm/download/?section=windows)；
 
 2. 默认安装，安装完成后不要立即运行；
 
@@ -164,9 +153,22 @@
 
 #### 配置
 
+- **Shortcut Keys**
+
+  - `Ctrl + Alt + S`: File > Settings
+  
+- **Autosave**
+
+  1. `Ctrl + Alt + S` > Appearance & Behavior > System Settings > `Autosave`
+
+- **缩进**
+
+  1. Main menu > Settings > Editor > Code Style > Python
+  2. Set `Tab size` `Indent` `Continuation indent` as "2"
+
 - **设置鼠标滚轮**
 
-  Main menu > Settings >Editor>General> `Mouse Control` 选项：Change font size with Ctrl + Mouse Wheel 打上对勾，All editors 打勾
+  Main menu > Settings > Editor > General > `Mouse Control` 选项：Change font size with Ctrl + Mouse Wheel 打上对勾，All editors 打勾
 
 - **设置代码字体大小**
 
@@ -227,7 +229,7 @@
 
 - **Sublime简介**
 
-  ​	Sublime- Text 是一个用 C++ 和 Python 开发的跨平台文本编辑器。除了 Python 之外，它还提供对其他语言的支持。Sublime 有自己的包管理器，开发者可以用来安装组件，插件和额外样式。与 PyCharm、VS Code 不同，Sublime Text 并没有集成开发环境（Integrated Development Environment），而是作为一个纯粹的编辑器，提供了快速、便捷的编辑功能。
+  ​	Sublime- Text 是一个用 C++ 和 Python 开发的跨平台文本编辑器。除了 Python 之外，它还提供对其他语言的支持。Sublime 有自己的包管理器，开发者可以用来安装组件，插件和额外样式。与 PyCharm、VS Code 不同，Sublime Text 并没有集成开发环境，而是作为一个纯粹的编辑器，提供了快速、便捷的编辑功能。
   ​	特点：第三方，轻量化，界面好，支持常见所有语言。
 
 - **Sublime的安装**
@@ -280,16 +282,12 @@
   - 下面会有提示，直接点击或者输入后回车。
 
 - **创建文件**
-
   - 右下角单击选择“Python”；
-
-  - 编写代码，保存：文件名.py；
-
-  - 运行：Ctrl+B（第一次选择“Python”）。
-
   
-
-# 第二章 编程基础
+  - 编写代码，保存：文件名.py；
+  
+  - 运行：Ctrl+B（第一次选择“Python”）。
+  
 
 ## 代码规范
 
@@ -311,7 +309,7 @@
 
   - 只能含有字母、数字、下划线，且不能以数字或下划线开头
 
-    **区别常规**：不含$，不以下划线开头
+  - **区别常规**：不含$，不以下划线开头
 
 - **命名习惯**
   
@@ -321,7 +319,7 @@
 	
 	- **全局变量**：全大写
 	
-	- **文件名**：不使用数字开头，不使用殊符号和关键字，后缀名为.py
+	- **文件名**：不使用数字开头，不使用殊符号和关键字，后缀名为 `.py`
 
 ## 注释
 
@@ -344,22 +342,6 @@
 
 - Python 无需使用关键字声明变量
 
-- 可以输出多个变量名，用逗号隔开，可获取多个变量值
-
-  ``` python
-  a = "张三"
-  b = "李四"
-  c = "王五"
-  print(a, b, c)  # 张三 李四 王五
-  ```
-
-- 多个关系
-
-  ``` python
-  data = 1 == 2  # data = False
-  print(data)  # False
-  ```
-
 ## 输入与输出
 
 - **input() 输入**
@@ -381,7 +363,7 @@
 
   ```
   - 如果输出内容为字符串，加双/单引号。
-  - a可以是拼接数据
+  - a 可以是拼接数据
   - print("内容", end = "")：多行print显示结果不换行
   ```
 
@@ -391,15 +373,8 @@
 
 ## 运算符
 
-- **算术运算符**
+- Python 中没有 `++` 和 `--`
 
-  没有 `++` 和 `--`
-
-- **赋值运算符**
-
-- **关系运算符**
-
-- **逻辑运算符**
 
 ## 其它基础
 
@@ -409,107 +384,198 @@
 
 - Python 中二、八、十六进制之间不能直接转换，需通过十进制
 
-# 第三章 数据类型
+# 数据类型
 
-## 整型 int
+## 数据类型
 
-- 整型表示整数，处理人数、年龄等，用int表示，为变量；
+- Python 常见数据类型有 `整型 int`、`浮点型 float`、`字符串 str`、`布尔型 bool`、`空值 None`、`列表 list`、`字典 dict`、`集合 set`
+- **容器**：在程序里，可以将多个数据通过容器保存在一个变量中，如列表、元组、字典和集合。
 
-- 整型为数值型，可以参与数学运算。
+## 布尔型 bool
 
-  ``` python
-  a = 1
-  b = 2
-  print(a + b)  # 3
-  ```
-
-## 浮点型 float
-
-- 浮点型表示小数，处理金额、身高等，用float表示，为变量；
-
-- 浮点数为数值型，可以参与数学运算，但可能会产生误差。
-
-  ``` python
-  a = 1.5
-  b = 2.2
-  print(a + b)  # 3.7
-  ```
+- Python 中 bool 型值 True 和 False 首字母大写。
 
 ## 字符串 str
 
-- Python 中字符串使用 `str` 表示
-- 字符串作为值，原变量的值不支持修改，处理之后的值可作为新值赋给新的变量，详见数据类型的特殊说明；
+- Python 中字符串作为值，原变量的值不支持修改，处理之后的值可作为新值赋给新的变量，详见数据类型的特殊说明；
+
 - 特性：只可存放普通字符；元素可重复；有序索引（下标）；可切片；元素不支持修改；
 
-### 字符串独有功能
 
-- **切换大小写**
+- **常用功能**
 
+  ```python
+  # 其它公共功能：...
+  
+  list_a = ["中国", ["上海", "北京", "深圳"], 123]
+  str_a = " ad min.123 "
+  
+  len(str_a)  # 获取长度
+  
+  str_a[0]  # 索引
+  
+  list_a[0][1]  # 多级索引
+  
+  str_a[0:6:2]  # 切片
+  
+  if "中国" in str_a:  # in 包含
+    pass
+  
+  str_a.replace("a", "A")  # 替换
+  
+  str_a.split(".", 1)  # 切割
+  
+  str_a.strip()  # 去除空格/换行
+  
+  str_a.upper()  # 转大写
+  
+  str_a.startswith("a")  # 判断开头
+  
+  str_a.isdecimal()  # 判断数字
   ```
-  - 语法
-  	字符串名.方法名()
-  	- data.upper()  转大写
-  	- data.lower()  转小写
-  ```
+
+### 获取长度
+
+- `len($STR)`
 
   ``` python
-  data = "abc"
-  res = data.upper()
-  print(res)  # ABC
+  len_a = len("中国江西联通")
+  print(len_a)  # 6
+  print(type len_a)  # <class 'int'>
   ```
 
-- **startswith 判断以某个字符开头**
 
-  ```
-  - 语法
-  	字符串名.startswith()
-  	- 返回布尔值
-  ```
+### 索引
+
+- **索引**：支持索引的数据类型每个元素都有一个索引号（下标），正序从0开始，逆序从-1开始。
+
+- 一级索引
+
+  `$STR/CONTAINER[$INDEX]`
 
   ``` python
-  data = "中国联通"
-  res = data.startswith("中国")
+  #       0 1 2 3 4 5，正向索引号
+  #      -6-5-4-3-2-1，逆向索引号
+  str_a = "中国江西联通"
+  print(str_a[0])  # 中
+  print(str_a[-6])  # 中
+  print(type(str_a[0]))  # <class 'str'>
+  ```
+
+- 多级索引
+
+  `$STR/CONTAINER[$INDEX][$INDEX]...`
+
+  ``` python
+  list_a = ["中国", ["上海", "北京", "深圳"], 123]
+  data1 = list_a[1][0]
+  data2 = list_a[1][0][0]
+  print(data1)  # 上海
+  print(data2)  # 上
+  ```
+
+- 实际示例
+
+  ``` python
+  str_a = "中国江西联通"
+  index = 0  # index为索引号
+  while index < len(str_a):
+    data = str_a[index]
+    print(data)
+    index += 1
+  # 依次打印“中国江西联通”
+  ```
+
+### 切片
+
+- **切片**：切片是为了截取某一部分元素
+
+  - 索引号左闭右开
+
+  - 原字符串不受影响
+
+  - 返回新字符串
+
+- `$STR[$INDEX_START:$INDEX_END:$STEP_VALUE]`
+
+  ``` python
+  #      0 1 2 3 4 5，正向索引号
+  str_a = "中国江西联通"
+  print(str_a[2:4])  # 江西
+  print(str_a[0:6:2])  # 中江联
+  print(str_a[2:])  # 江西联通
+  print(str_a[:4])  # 中国江西
+  ```
+
+### 遍历
+
+详见 for 循环
+
+### in 包含
+
+- `$ELEMENT in $STR`
+
+  ``` python
+  str_a = "中国联通"
+  res = "中国" in str_a
   print(res)  # True
+  
+  # use
+  if "中国" in str_a:
+  	pass
   ```
 
-- **isdecimal 判断字符串字符串是不是数字（并非数值）**
+### 替换
+
+- `$STR.replace("$ELEMENT_OLD", "$ELEMENT_NEW")`
 
   ``` python
-  data = "中国联通"
-  res = data.isdecimal()
-  print(res)  # False
-  ```
-
-- **replace 替换**
-
-  ```
-  - 语法
-  	字符串名.replace("旧元素", "新元素")
-  	- Python中，replace能替换所有符合要求元素
-  ```
-
-  ``` python
-  data = " 中国 联通 联通 "
-  res = data.replace("联通", "移动")
+  str_a = " 中国 联通 联通 "
+  res = str_a.replace("联通", "移动")
   print(res)  # " 中国 移动 移动 "
   ```
 
-- **split 切割**
+### 去空格换行符
 
+- 去除字符串开头和结尾的空格以及结尾的换行符，不能去除中间的空格
+
+  - 去除中间空格应使用 `str_a.replace(" ", "")`，将空格替换成空白
+
+- `$STR.strip()` `$STR.lstrip()` `$STR.rstrip()`
+
+  ```python
+  str_a = " 中国 联通 "
+  
+  res1 = str_a.strip()  # 去除开头和接尾空格
+  print(res1)  # "中国 联通"
+  
+  res2 = str_a.lstrip()  # 去除开头空格
+  print(res2)  # "中国 联通 "
+  
+  res3 = str_a.rstrip()  # 去除接尾空格
+  print(res3)  # " 中国 联通"
   ```
-  - 将一个字符串按切割标识分成几个子字符串，放入一个元组
-  - 字符串名.split(separator, maxsplit)
-      - 形参separator 切割标识
-      - 形参maxsplit 子字符串数限制，可省略
-      - 返回一个数组
+
+  ```python
+  str_a = "中国联通\n"
+  print(str_a)  # 中国联通（后面有换行）
+  
+  res4 = str_a.strip()
+  print(res4)  # 中国联通（后面没有换行）
   ```
+
+### 切割
+
+- `$STR.split("$SEPARATOR", [$MAX_SPLIT])`
 
   ``` python
-  data = "马化腾,40,XXXX@qq.com"
-  res1 = data.split(",")  # 把所有序列都切割，分别放入子字符串，逗号是切割标识依据
-  res2 = data.split(".")  # "."为切割标识
-  res3 = data.split(",", 1)  # 从左到右，保留几个单独子字符串，剩余放进另一个子字符串
-  res4 = data.rsplit(",", 1)  # 从右到左，保留几个单独元素，剩余放进另一个子字符串
+  # 切割后会得到一个列表
+  
+  str_a = "马化腾,40,XXXX@qq.com"
+  res1 = str_a.split(",")  # 把所有序列都切割，分别放入子字符串，逗号是切割标识依据
+  res2 = str_a.split(".")  # "."为切割标识
+  res3 = str_a.split(",", 1)  # 从左到右，保留几个单独子字符串，剩余放进另一个子字符串
+  res4 = str_a.rsplit(",", 1)  # 从右到左，保留几个单独元素，剩余放进另一个子字符串
   
   print(res1)  # ['马化腾', '40', 'XXXX@qq.com']
   print(res1[1])  # 40  # 拿到单独一个元素
@@ -518,321 +584,167 @@
   print(res4)  # ['马化腾,40', 'XXXX@qq.com']
   ```
 
-- **strip 去除空格、去除换行**
+### 转大小写
 
-  ```
-  - 去除字符串开头和结尾的空格以及结尾的换行符，不能去除中间的空格
-  	- 去除中间空格应使用data.replace(" ", "")，将空格替换成空白
-  - 语法
-  	字符串名.strip()
-  	- 去除开头空格 lstrip()
-  	- 去除结尾空格 rstrip()
-  ```
-  
-  ```python
-  data = " 中国 联通 "
-  
-  res1 = data.strip()
-  print(res1)  # "中国 联通"
-  
-  res2 = data.lstrip()
-  print(res2)  # "中国 联通 "
-  
-  res3 = data.rstrip()
-  print(res3)  # " 中国 联通"
-  ```
-  
-  ```python
-  data = "中国联通\n"
-  print(data)  # 中国联通（后面有换行）
-  
-  res4 = data.strip()
-  print(res4)  # 中国联通（后面没有换行）
-  ```
-
-### 字符串公共功能
-
-- **len() 获取长度**
-
-  ```
-  字符串名.length
-  	- 返回字符串长度
-  ```
+- `$STR.upper()` `$STR.lower()`
 
   ``` python
-  res = len("中国江西联通")
-  print(res)  # 6
-  print(type res)  # <class 'int'>
+  str_a = "abc"
+  res = str_a.upper()
+  print(res)  # ABC
   ```
 
-- **索引**
 
-  ```
-  - 支持索引的数据类型每个元素都有一个序号，正序从0开始，逆序从-1开始。
-  - 获取某个序号的值用中括号
-  - 多维容器可以用多级索引
-  ```
+### 判断起始
 
-  - 一级索引
+- `$STR.startswith()`
 
   ``` python
-  #      0 1 2 3 4 5，正向索引号
-  #      -6-5-4-3-2-1，逆向索引号
-  name = "中国江西联通"
-  print(name[0])  # 中
-  print(name[-6])  # 中
-  print(type(name[0]))  # <class 'str'>
-  ```
-
-  - 多级索引
-
-  ``` python
-  data_list = ["中国", ["上海", "北京", "深圳"], 123]
-  data = data_list[1][0]
-  data1 = data_list[1][0][0]
-  print(data)  # 上海
-  print(data1)  # 上
-  ```
-
-  - 实际示例
-
-  ``` python
-  name = "中国江西联通"
-  index = 0  # index为索引号
-  while index < len(name):
-      data = name[index]
-      print(data)
-  	index += 1
-  # 依次打印“中国江西联通”
-  ```
-
-- **切片**
-
-  切片是为了截取某一部分元素
-
-  ```
-  - 字符串名[索引号1:索引号2]
-      - 不包含索引号2，即左闭右开
-      - 原字符串不受影响
-      - 返回新字符串
-      - 特殊切片
-      	- [起始索引:终结索引:步长值]  按步长值间隔索取
-      	- [起始索引:]  从起始索引截取到最后
-      	- [:终结索引]  从开始截取到终结索引
-  ```
-
-  ``` python
-  #      0 1 2 3 4 5，正向索引号
-  name = "中国江西联通"
-  print(name[2:4])  # 江西
-  print(name[0:6:2])  # 中江联
-  print(name[2:])  # 江西联通
-  print(name[:4])  # 中国江西
-  ```
-
-- **遍历**
-
-  详见for循环
-
-- **in包含**
-
-  ```
-  in包含：判断字符串中是否含有某个元素
-  - 元素 in 字符串名
-  	- 返回布尔值
-  ```
-
-  ``` python
-  data = "中国联通"
-  res = "中国" in data  # True
+  str_a = "中国联通"
+  res = str_a.startswith("中国")
   print(res)  # True
-  
-  if "中国" in data_list:
-  	pass
   ```
 
-### 转义字符
+### 判断数字
 
-​	转义字符是字符串中一些表达特殊意义的字符
-
-- **换行符**
-
-  可以实现一个字符串分两行输出
+- `$STR.isdecimal()`
 
   ``` python
-  data = "这是第一行！\n这是第二行！"  # \n换行符
-  print(data)
-  
-  # 这是第一行！
-  # 这是第二行！
+  str_a = "中国联通"
+  res = str_a.isdecimal()
+  print(res)  # False
   ```
-
-- **制表符**
-
-  可以实现字符串中相邻两个字符距离远一些
-
-  ``` python
-  data = "你是谁？\t离我远一点！"  # \t制表符
-  print(data2)  # 你是谁？	离我远一点！
-  ```
-
-- **取消转义**
-
-  ```
-  - 某些字符串中掺杂转义字符，比如路径、网址等，导致高亮报错无法获取结果，此时需要取消转义。
-  - 取消转义方式
-  	- r"字符串"
-  	- 转义字符"\"
-  ```
-
-  ``` python
-  data1 = r" E:\文件\python\python2021资料和练习\test "  # 路径中的\t就是转义字符，最前面的“r”即为取消方式
-  data2 = "E:\\文件\\python\\python2021资料和练习\\test"  # 两个“\”代表双重转义=不转义
-  print(data1)  # E:\文件\python\python2021资料和练习\python2021课程源码\test
-  print(data2)  # E:\文件\python\python2021资料和练习\python2021课程源码\test
-  ```
-
-  
-
-## 布尔型boolean
-
-- Python 中的布尔型用 boolean 表示
-- 值 True 和 False 首字母大写。
-
-## 空 None
-
-- 空值表示什么也没有，用 None 表示；
-- None 不能理解为0，0有意义，而 None 表示特殊的空值。
 
 ## 列表 list
 
-- **容器**
+- Python 中字符串也是一种特殊的列表
 
-  在程序里，可以将多个数据通过容器保存在一个变量中，如列表、元组、字典和集合。
+- 特性：可存放多种数据类型；元素可重复；有序索引（下标）；可切片；元素支持修改。
 
-- **语法**
+- 基本示例
 
+  ``` python
+  list_a = ["中国", "上海", 123]
+  print(list_a)  # ['中国', '上海', 123]
+  print(type(list_a))  # <class 'list'>
   ```
-  - 列表list是一个有序的序列结构。字符串也是一种特殊的列表。
-  - 特性：可存放多种数据类型；元素可重复；有序索引（下标）；可切片；元素支持修改。
-  ```
+
+- 功能
+
+  ```python
+  # 其它公共功能：获取长度；多级索引；for 循环；in 包含；嵌套
   
-  ``` python
-  data_list = ["中国", "上海", 123]
-  print(data_list)  # ['中国', '上海', 123]
-  print(type(data_list))  # <class 'list'>
+  list_a = ["中国", "上海", 123]
+  
+  list_a[0] = "北京"  # 修改
+  
+  list_a.append("北京")  # 追加
+  
+  list_a.insert(1, "北京")  # 插入
+  
+  list_a.remove("上海")  # 删除
+  
+  list_a.clear()  # 清空
+  
+  list_a.reverse()  # 反转
+  
+  sorted(list_a)  # 排序
+  
+  str_a = "_".join(list_a)  # join 连接
   ```
 
-### 列表独有功能
+### 修改元素
 
-- **修改元素**
-
-  ``` python
-  data_list = ["中国", "上海", 123]
-  data_list[0] = "北京"
-  print(data_list)  # ['北京', '上海', 123]
-  ```
-
-- **追加元素**
-
-  ```
-  - 语法
-  	列表名.append(追加元素)
-  		- 在列表末尾追加
-  		- Python中每次只能追加1个元素
-  		- 原列表受影响
-  ```
+- `$LIST[$INDEX] = $ELEMENT_NEW`
 
   ``` python
-  data_list = ["上海", 123]
-  data_list.append("北京")
-  data_list.append(456)
-  print(data_list)  # ['上海', 123, '北京', 456]
+  list_a = ["中国", "上海", 123]
+  list_a[0] = "北京"
+  print(list_a)  # ['北京', '上海', 123]
   ```
 
-- **插入元素**
 
-  .insert(n, 元素)  在第n序列号插入
+### 追加元素
+
+- 说明
+
+  - 在列表末尾追加
+  - Python中每次只能追加1个元素
+  - 原列表受影响
+
+- `$LIST.append($ELEMENT_NEW)`
 
   ``` python
-  data_list = ["中国", "上海", 123]
-  data_list.insert(1, "北京")
-  print(data_list)  # ['中国', '北京', '上海', 123]
+  list_a = ["上海", 123]
+  list_a.append("北京")
+  list_a.append(456)
+  print(list_a)  # ['上海', 123, '北京', 456]
   ```
 
-- **删除元素**
+### 插入元素
 
-  .remove(元素)
+- `$LIST.insert($INDEX, $ELEMENT_NEW)`
 
   ``` python
-  data_list = ["中国", "上海", 123]
-  data_list.remove("上海")
-  print(data_list)  # ['中国', 123]
+  list_a = ["中国", "上海", 123]
+  list_a.insert(1, "北京")  # 在第n序列号插入
+  print(list_a)  # ['中国', '北京', '上海', 123]
   ```
 
-- **删除元素**
+### 删除元素
 
-  .pop(索引号)
+- `$LIST.remove($ELEMENT)`
 
   ``` python
-  data_list = ["中国", "上海", 123]
-  data_list.pop(0)
-  print(data_list)  # ['上海', 123]
+  list_a = ["中国", "上海", 123]
+  list_a.remove("上海")
+  print(list_a)  # ['中国', 123]
   ```
 
-- **删除元素**
-
-  del 列表[索引号]
+- 其它方法
 
   ``` python
-  data_list = ["中国", "上海", 123]
-  del data_list[0]
-  print(data_list)  # ['上海', 123]
+  # .pop(索引号)
+  list_a = ["中国", "上海", 123]
+  list_a.pop(0)
+  print(list_a)  # ['上海', 123]
+  
+  # del 列表[索引号]
+  list_a = ["中国", "上海", 123]
+  del list_a[0]
+  print(list_a)  # ['上海', 123]
   ```
 
-- **clear 清空**
+### 清空
 
-  .clear()
+- `$LIST.clear()`
 
   ``` python
-  data_list = ["中国", "上海", 123]
-  data_list.clear()
-  print(data_list)  # []
+  list_a = ["中国", "上海", 123]
+  list_a.clear()
+  print(list_a)  # []
   ```
 
-- **reverse 反转**
+### 反转
 
-  ```
-  - 反转列表：将列表里元素的顺序反转
-  - 列表名.reverse()
-  	- 原数组受影响
-  - Python 中没有.toReversed()方法
-  ```
+- 反转列表：将列表里元素的顺序反转
+
+  - Python 中没有 `.toReversed()` 方法
+  - 原列表受影响
+
+- `$LIST.reverse()`
 
   ``` python
-  data_list = ["中国", "上海", 123]
-  data_list.reverse()
-  print(data_list)  # [123, '上海', '中国']
+  list_a = ["中国", "上海", 123]
+  list_a.reverse()
+  print(list_a)  # [123, '上海', '中国']
   ```
 
-- **sorted() 排序**
+### 升序
 
-  ```
-  - 语法
-  	sorted(列表名)
-  	- 对原列表有影响
-  - 排序标准
-      - 按首字的 ASCII 码转十进制的大小排序，如果首字相同，则逐一往后对比
-      - 字符串与其它类型不能相互比较
-          - 字符串一般规律，数字优先，其次英语，最后汉字
-          - 数字按首位数字 ASCII 码转十进制的大小排序
-          - 英语按字母顺序排序
-      - 汉字按首字的 ASCII 码转十进制的大小排序
-      - 整型/浮点型按数值大小排序
-  - 默认升序排序
-  	- 如果想降序排序，应传入 reverse = True 参数
-  	- sorted(列表名, reverse = True)
-  ```
+- 对原列表有影响
+
+- `sorted($LIST, [OPTION])`
 
   ```python
   # 升序
@@ -844,8 +756,18 @@
   lista = [21, 21, 31, 32, 33, 5454, 46, 65, 6]
   newList = sorted(lista, reverse = True)  # 降序，增加反转为真
   print(newList)  # [5454, 65, 46, 33, 32, 31, 21, 21, 6]
-  
   ```
+
+- **排序标准**：按首字的 ASCII 码转十进制的大小排序，如果首字相同，则逐一往后对比
+
+  - 字符串与其它类型不能相互比较
+  - 字符串一般规律，数字优先，其次英语，最后汉字
+  - 数字按首位数字 ASCII 码转十进制的大小排序
+  - 英语按字母顺序排序
+      - 汉字按首字的 ASCII 码转十进制的大小排序
+      - 整型/浮点型按数值大小排序
+
+- 自定义排序标准
 
   ```
   - 自定义排序标准
@@ -861,60 +783,45 @@
   print(sorted_list)  # ['1.基础', '2.提升', '3.高阶', '10.总结']  否则正常排序10应在2前面
   ```
 
-- **join 连接**
+### join 连接
 
-  ```
-  - 将一个列表中所有元素通过分隔符连接成一个字符串
-  - 列表名.join(separation)
-  	- 形参 separation 分隔符
-  		- 如果不传入指定分隔符，返回结果各个元素将以“,”连接
-      - 返回一个字符串
-  ```
+- **join 连接**：将一个列表中所有元素通过分隔符连接成一个字符串
+
+- 如果不传入指定分隔符，返回结果各个元素将以 “,” 连接
+
+- `$SEPARATOR.join($LIST)`
 
   ``` python
-  data_list = ["张三", "李四", "王五"]
-  data_string = "_".join(data_list)  # "_"为连接符，可替换，可不填
-  print(data_string)  # 张三_李四_王五
-  print(type(data_string))  # <class 'str'>
-  ```
-
-### 列表公共功能
-
-- **列表公共功能**
-
-  ```
-  - 获取长度 len (列表名)
-  - 索引
-  - 切片
-  - 遍历
-  - in 包含
+  list_a = ["张三", "李四", "王五"]
+  str_a = "_".join(list_a)  # "_"为连接符，可替换，可不填
+  print(str_a)  # 张三_李四_王五
+  print(type(str_a))  # <class 'str'>
   ```
 
 ## 元组 tuple
 
-- **语法**
+- 元组 tuple 是一个有序的序列结构，用在对安全性有一定需求的数据上。
 
-  ```
-  - 元组 tuple 是一个有序的序列结构，用在对安全性有一定需求的数据上。
-  - 特性：除了元素不支持修改，其它与列表相同。
-  ```
+- 特性：除了元素不支持修改，其它与列表相同。
+
+- 基本示例
 
   ``` python
-  data_tuple = ("中国", "上海", 123)
-  print(data_tuple)  # ('中国', '上海', 123)
-  print(type(data_tuple))  # <class 'tuple'>
+  tuple_a = ("中国", "上海", 123)
+  print(tuple_a)  # ('中国', '上海', 123)
+  print(type(tuple_a))  # <class 'tuple'>
   ```
-
+  
 - **元组特殊格式**
 
   如果元组中只有一个元素，应该在后面多加一个逗号，否则会等同于给变量赋值，得到的结果就不是元组了
 
   ``` python
-  data_tuple1 = ("中国")
-  print(data_tuple1)  # 中国
+  tuple_a1 = ("中国")
+  print(tuple_a1)  # 中国
   
-  data_tuple2 = ("中国",)
-  print(data_tuple2)  # ('中国',)
+  tuple_a2 = ("中国",)
+  print(tuple_a2)  # ('中国',)
   ```
 
 - **元组不支持修改的特殊情况**
@@ -927,206 +834,221 @@
   print(v1)  # ('中国', ['深圳', '上海'], 123)
   ```
 
-- **元组公共功能**
-
-  长度 len() 多级索引 切片 for 循环 in 包含 嵌套
+- **元组公共功能**：获取长度；多级索引；for 循环；in 包含；嵌套
 
 ## 字典 dict
 
-- **语法**
+- 字典是一种键值对结构的序列结构，一对键值对被视为一个元素，用在高速查找的地方。
 
-  ```
-  - 字典是一种键值对结构的序列结构，使用键获取值，用在高速查找的地方；
-  - 特性：只能存放键值对结构；键不可重复；无序不可通过索引号索引（可通过键索引值）；不可切片；支持修改。
-  - 键必须是哈希类型：int、bool、str、tuple
-  - 一般用字符串作为键
-  ```
+- 键必须是哈希类型：int、bool、str、tuple，一般用字符串作为键，不可重复。
+
+- 基本示例
 
   ```python
-  data_dict = { "A":1,"B":2,"C":3}  # "A"为键，1为值，"A":1为一个键值对；
-  print(data_dict)  # {'A': 1, 'B': 2, 'C': 3}
-  print(type(data_dict))  # <class 'dict'>
+  dict_a = { "A":1,"B":2,"C":3}  # "A"为键，1为值，"A":1为一个键值对；
+  print(dict_a)  # {'A': 1, 'B': 2, 'C': 3}
+  print(type(dict_a))  # <class 'dict'>
   ```
 
-
-### 字典独有功能
-
-#### 通过键查找值
-
-- **索引**
-
-  - 传统方法，字典使用键作为索引标识，可能报错不推荐。
-
-    字典名["键名"]
+- **常用功能**
 
   ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  v1 = dicta["name"]
+  # 其它公共功能：获取长度；多级索引（用键作索引）；for 循环；in 包含（判断键）；嵌套
+  
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  
+  v1 = dict_a.get("name")  # 获取值
+  
+  dict_a["hobby"] = "reading"  # 修改值
+  
+  dict_a["gender"] = "male"  # 增加元素，就是给一个原本不存在的键赋值
+  
+  dict_a.pop("hobby")  # 删除元素
+  
+  for x in dict_a.keys():  # 获取所有键
+    print(x)
+  
+  for data in dict_a.values():  # 获取所有值
+    print(data)
+  
+  for k, v in dict_a.items():  # 获取所有键和值
+    print(k, v)
+  ```
+
+### 获取值
+
+- `$DICT.get("$KEY")`
+
+  ```python
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  v1 = dict_a.get("name")
   print(v1)  # ZhangSan
   
-  v2 = dicta["XXXX"]  # 输入不存在的键
+  v2 = dict_a.get("XXXX")  # 输入不存在的键
+  print(v2)  # None
+  ```
+  
+  ```python
+  # 索引
+  
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  v1 = dict_a["name"]
+  print(v1)  # ZhangSan
+  
+  v2 = dict_a["XXXX"]  # 输入不存在的键
   print(v2)  # 报错
   ```
 
-- **.get()**
+### 修改值
 
-  - 函数方法，不易报错，推荐。
-  
-    .get("键名")
-  
+- `$DICT[$KEY] = "$VALUE"`
+
   ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  v1 = dicta.get("name")
-  print(v1)  # ZhangSan
-  
-  v2 = dicta.get("XXXX")  # 输入不存在的键
-  print(v2)  # None
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  dict_a["hobby"] = "reading"
+  print(dict_a)  # {'name': 'ZhangSan', 'age': 18, 'hobby': '看书'}
   ```
 
-#### 获取键 .keys()
+### 增加元素
 
-- **索引+遍历  传统方法**
+- `$DICT[$KEY] = "$VALUE"`
+
+  就是给一个原本不存在的键赋值
 
   ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  for x in dicta:
-      print(x)  # 依次打印name age hobby 
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  dict_a["gender"] = "male"
+  print(dict_a)  # {'name': 'ZhangSan', 'age': 18, 'hobby': 'playBall', 'gender': 'male'}
   ```
 
-- **.keys()  函数方法***
+### 删除元素
+
+- `$DICT.pop("$KEY")`
 
   ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  for x in dicta.keys():
-      print(x)  # 依次打印name age hobby
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  dict_a.pop("hobby")  # 注意字典不能直接用remove删除
+  print(dict_a)  # {'name': 'ZhangSan', 'age': 18}
+  ```
+
+- `del $DICT["$KEY"]`
+
+  ```python
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  del dict_a["hobby"]
+  print(dict_a)  # {'name': 'ZhangSan', 'age': 18}
+  ```
+
+### 获取所有键
+
+- `$DICT.keys()`
+
+  ```python
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  for x in dict_a.keys():
+    print(x)  # 依次打印name age hobby
   
-  # v = dicta.keys()
+  # v = dict_a.keys()
   # print(v)  # dict_keys(['name', 'age', 'hobby'])
   # print(type(v))  # <class 'dict_keys'>
   ```
 
-
-#### 获取值 .values() 
-
-- **索引+遍历  传统方法**
-
   ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  for x in dicta:
-      print(dicta[x])   
+  # 索引 + 遍历
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  for x in dict_a:
+    print(x)  # 依次打印name age hobby
   ```
 
-- **.values()  函数方法***
+### 获取所有值
+
+- `$DICT.values()`
 
   ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  for data in dicta.values():
-      print(data)  # 依次打印ZhangSan 18 playBall
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  for data in dict_a.values():
+    print(data)  # 依次打印ZhangSan 18 playBall
   
-  # v = dicta.keys()
+  # v = dict_a.keys()
   # print(v)  # dict_keys(['name', 'age', 'hobby'])
   # print(type(v))  # <class 'dict_keys'>
   ```
 
-
-#### 获取键和值 .items()
-
-- **索引+遍历  传统方法**
-
   ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  for x in dicta:
-      print(x, dicta[x])    
+  # 索引 + 遍历
+  
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  for x in dict_a:
+    print(dict_a[x])
   ```
 
-- **.items()  函数方法***
+### 获取所有键和值
+
+- `$DICT.items()`
 
   ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  for k, v in dicta.items():
-      print(k, v)  # name ZhangSan  age 18  hobby playBall
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  for k, v in dict_a.items():
+    print(k, v)  # name ZhangSan  age 18  hobby playBall
   
-  
-  # v = dicta.items()
+  # v = dict_a.items()
   # print(v)  # dict_items([('name', 'ZhangSan'), ('age', 18), ('hobby', 'playBall')])
   # print(type(v))  # <class 'dict_items'>
   ```
 
-#### 增加字典的元素
-
-- 就是给一个原本不存在的键赋值
-
   ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  dicta["gender"] = "male"
-  print(dicta)  # {'name': 'ZhangSan', 'age': 18, 'hobby': 'playBall', 'gender': 'male'}
+  # 索引 + 遍历
+  
+  dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
+  for x in dict_a:
+    print(x, dict_a[x])
   ```
 
-#### 删除字典的元素  del
+### 构造字典
 
-- **通过del***
-
+- 构造字典
+  
   ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  del dicta["hobby"]
-  print(dicta)  # {'name': 'ZhangSan', 'age': 18}
-  ```
-
-- **通过.pop()**
-
-  ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  dicta.pop("hobby")  # 注意字典不能直接用remove删除
-  print(dicta)  # {'name': 'ZhangSan', 'age': 18}
-  ```
-
-#### 修改某个键的值
-
-- ```python
-  dicta = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
-  dicta["hobby"] = "看书"
-  print(dicta)  # {'name': 'ZhangSan', 'age': 18, 'hobby': '看书'}
-  ```
-
-#### 构造字典
-
-- ```python
   name = "ZhangSan"
   age = 18
   hobby = "playBall"
-  info = {"name": name, "age": age, "hobby": hobby}
-  print(info)  # {'name': 'ZhangSan', 'age': 18, 'hobby': 'playBall'}
+  dict_a = {"name": name, "age": age, "hobby": hobby}
+  print(dict_a)  # {'name': 'ZhangSan', 'age': 18, 'hobby': 'playBall'}
+  print(type(dict_a))  # <class 'dict'>
   ```
 
-### 字典公共功能
-
-- 长度len() 多级索引（用键作索引） for循环 in包含 嵌套
+### 索引
 
 ## 集合 set
 
-- **语法**
+- **集合**：集合是一种无序的序列结构。用来去重复值和进行数学集合运算。
 
-  ```
-  - 集合是一种无序的序列结构。用来去重复值和进行数学集合运算。
-  - 特性：集合本质上是只有键的字典；无序；元素不重复。
-  ```
+- 无序；元素不重复。
+
+- 基本示例
 
   ```python
   data_seta = {1, 2, 2, 3, 3, 3, 4, 5, "hello"}
   print(data_seta)  # {1, 2, 3, 4, 5, 'hello'}
   print(type(data_seta))  # <class 'seta'>
   ```
+  
 
-- **去重复值**
+### 去重复值
 
-  将其它类型序列去除重复值
+- `set($CONTAINER)`
 
   ```python
-  lista = [1, 2, 1, 1323, 2121, 2, 32323, 23, 23, 23]
-  data = set(lista)  # 将其他序列转换成set
-  newList = list(data)  # 将其他序列转换成list
-  print(newList)  # [1, 2, 32323, 2121, 1323, 23]
+  list_a = [1, 2, 1, 1323, 2121, 2, 32323, 23, 23, 23]
+  set_a = set(list_a)  # 将 list 转换成 set
+  list_b = list(set_a)  # 将 set 转换成 list
+  print(list_a)  # [1, 2, 1, 1323, 2121, 2, 32323, 23, 23, 23]
+  print(set_a)  # {1, 2, 32323, 2121, 1323, 23}
+  print(list_b)  # [1, 2, 32323, 2121, 1323, 23]
   ```
+
+
+### 集合运算
 
 - **集合运算**
 
@@ -1138,7 +1060,7 @@
   print(set1 - set2)  # 获取差集，获取结果为：{1, 2, 3}
   ```
 
-## 多维容器
+## 嵌套
 
 ​	容器与容器之间可相互嵌套，得到多维容器。
 
@@ -1153,14 +1075,14 @@
   ```
 
   ```
-  - 北京在listb中，所以第一个索引为1
-  - 北京在元组(1,23,2,"北京",535,4,)中，此元组在listb中索引号为5，所以第二个索引号为5
+  - 北京在 listb 中，所以第一个索引为1
+  - 北京在元组(1,23,2,"北京",535,4,)中，此元组在 listb 中索引号为5，所以第二个索引号为5
   - 北京在元组(1,23,2,"北京",535,4,)中的索引号为3，所以第三个索引号为3。
   ```
 
 ## 数据类型的转换
 
-### 整型转换 int()
+### int()
 
 - 将字符串转换成整型
 
@@ -1178,7 +1100,7 @@
   print(type(v))  # <class 'int'>
   ```
 
-### 浮点型转换 float()
+### float()
 
 - 将字符串转换成浮点型
 
@@ -1196,7 +1118,7 @@
   print(type(v))  # <class 'float'>
   ```
 
-### 字符串转换 str()
+### str()
 
 - 将其他类型转换成字符串
 
@@ -1206,11 +1128,11 @@
   print(type(v))  # <class 'str'>
   ```
 
-### 布尔值转换 bool()
+### bool()
 
 - 将其他类型转成布尔值
 
-- 表示空意义的数据（0、None、空字符串和空容器）将被转成False，其他数据都会转成True。
+- 表示空意义的数据（0、None、空字符串和空容器）将被转成 False，其他数据都会转成 True。
 
   ```python
   v1 = bool(12)
@@ -1229,15 +1151,12 @@
 
 - **数据的拼接**
 
-  数据的拼接就是通过拼接方式，将多个数据拼接成一整个数据。
-
-  ```
+  - 数据的拼接就是通过拼接方式，将多个数据拼接成一整个数据。
   - 相同类型数据可以用逗号和加号拼接；
   - 不同数据类型只能用逗号拼接；
-  - 字符串的拼接效率很低，尽量将字符串加到空列表，再通过"".join(列表)拼接。
-  ```
+  - 字符串的拼接效率很低，尽量将字符串加到空列表，再通过"".join($LIST)拼接。
 
-- **使用“+”拼接**
+- **`+` 拼接**
 
   “+”只能拼接字符串，且拼接结果仍是字符串，显示结果无间隔
 
@@ -1248,7 +1167,7 @@
   print(c)  # 张三爱李四
   ```
 
-- **使用“,”拼接**
+- **`,` 拼接**
 
   用“,”拼接实质不是拼接，只是用在将多个数据打印在一句话内，拼接结果是一个元组，直接打印拼接内容显示结果有间隔。
 
@@ -1260,39 +1179,22 @@
   print("我叫", name,"今年",age,"岁") # 我叫 张三 今年 22 岁
   ```
 
-### 字符串格式化
-
-​	使用特殊方式进行拼接，使多个不同类型的数据进行拼接，且输出结果格式为一个字符串。
-
-- **使用format函数拼接，推荐**
+- **`format` 函数拼接，推荐**
 
   ```python
+  # 函数拼接时，拼接的数据可以是数值666，并且获取的结果666就变成了字符串。
   s1 = "hello!{}{}{}".format("张三","李四",666)
-  s1 = "hello!{0}{1}{2}".format("张三","李四",666)
-  s1 = "hello!{a}{b}{c}".format(a = "张三", b = "李四", c = 666)
   print(s1)  # hello!张三李四666
   ```
-
-  ```
-  - 拼接方式，三种方式都可，推荐第一种；
-  - 其中{}、{0}、{a}为占位符；
-  - 函数拼接时，拼接的数据可以是数值666，并且获取的结果666就变成了字符串。
-  ```
-
-- **使用%拼接**
-
-  Python早期的拼接方式，类似于C语言的方式。
+  
+- **其它拼接方式**
 
   ```python
+  # 使用 % 拼接
   s1 = "hello!%s%s%s"%("张三", "李四", 666)
   print(s1)  # hello!张三李四666
-  ```
-
-- **使用f-string拼接**
-
-  从Python3.6开始支持
-
-  ```python
+  
+  # 使用 f-string 拼接
   name = "张三"
   age = 22
   hobby = "看书"
@@ -1315,68 +1217,61 @@
 
   ```python
   name = "root"
-  name.upper()  # 将name大写
-  print(name)  # root  获取原name结果仍为小写
-  
+  name.upper()  # 将 name 大写
+  print(name)  # root  获取原 name 结果仍为小写
   ```
-
+  
   ```python
   name = "root"
-  name = name.upper()  # 将name大写并赋值给新变量name
-  print(name)  # ROOT  获取新name结果为大写
-  
+  name = name.upper()  # 将 name 大写并赋值给新变量 name
+  print(name)  # ROOT  获取新 name 结果为大写
   ```
-
-  ```python
-  name = "root"
-  def func():
-      global name  # 此例有没有此行效果一样
-      name.upper()
-  func()
-  print(name)  # root  由于字符串“root”不支持修改，故获取原name结果仍为小写
   
-  ```
-
   ```python
   name = "root"
   def func():
-      global name
-      name = name.upper()  # 相当于在全局又定义了一遍name，效果等同于示例2
+    global name  # 此例有没有此行效果一样
+    name.upper()
   func()
-  print(name)  # ROOT  获取新name结果为大写
-  
+  print(name)  # root  由于字符串 “root” 不支持修改，故获取原 name 结果仍为小写
   ```
-
+  
+  ```python
+  name = "root"
+  def func():
+    global name
+    name = name.upper()  # 相当于在全局又定义了一遍 name，效果等同于示例 2
+  func()
+  print(name)  # ROOT  获取新 name 结果为大写
+  ```
+  
 - 列表示例区分
 
   ```python
   name = ["Jerry", "Peter"]
   name.append("Andy")  # 添加andy
-  print(name)  # ['Jerry', 'Peter', 'Andy']  获取原name列表增加Andy
-  
+  print(name)  # ['Jerry', 'Peter', 'Andy']  获取原 name 列表增加 Andy
   ```
-
+  
   ```python
   name = ["Jerry", "Peter"]
   def func():
-      name.append("Andy")  # 添加Andy
+    name.append("Andy")  # 添加Andy
   func()
-  print(name)  # ['Jerry', 'Peter', 'Andy']  # 由于列表支持修改，故获取原name结果添加Andy
-  
+  print(name)  # ['Jerry', 'Peter', 'Andy']  # 由于列表支持修改，故获取原 name 结果添加 Andy
   ```
-
+  
   ```python
   name = [11, 22]
   def func():
-      name = []
-      name.append(666)  # 函数内部已经定义name，所以此处append作用于局部变量
-      print(name)  # [666]  此处的name是函数内部的name
+    name = []
+    name.append(666)  # 函数内部已经定义 name，所以此处 append 作用于局部变量
+    print(name)  # [666]  此处的 name 是函数内部的 name
   func()
-  print(name)  # [11, 22]  函数内部已经定义name，此处的name是函数外部的name
-  
+  print(name)  # [11, 22]  函数内部已经定义 name，此处的 name 是函数外部的 name
   ```
 
-# 第四章 控制结构
+# 控制结构
 
 ## 选择结构
 
@@ -1391,9 +1286,9 @@
       if 条件表达式:
       	执行语句
   - 执行流程
-  	if语句在执行时，会先对条件表达式判断
-  		- 如果结果为true，则执行语句
-  		- 如果结果为false，则不执行语句
+  	if 语句在执行时，会先对条件表达式判断
+  		- 如果结果为 True，则执行语句
+  		- 如果结果为 False，则不执行语句
   ```
 
 - 示例
@@ -1401,16 +1296,16 @@
   ```python
   money = 120
   if money >= 100:  # 等同于如果
-      print("恭喜你！可以买宝马了！")  # print前默认空出一个tap键的距离（不能用空格键），表示与if的从属关系
-      print("真开心！")  # 注意同一条件下的所有print缩进要统一
-  else:  # 等同于否则，else后面没有条件
-      print("努力赚钱吧！")  # print前默认空出一个tap键的距离
-  print("程序结束!")  # 此处print前与if缩进一致，不受条件限制一定会执行
+    print("恭喜你！可以买宝马了！")  # print 前默认有一个缩进，表示与 if 的从属关系
+    print("真开心！")  # 注意同一条件下的所有 print 缩进要统一
+  else:  # 等同于否则，else 后面没有条件
+    print("努力赚钱吧！")  # print 前默认有一个缩进
+  print("程序结束!")  # 此处 print 前与 if 缩进一致，不受条件限制一定会执行
   ```
 
 ### if-elif-else
 
-- 用elif判断，等同于“如果不是，那么如果”，既如果不是if的条件，那么如果是elif的条件。
+- 用 elif 判断，等同于“如果不是，那么如果”，既如果不是 if 的条件，那么如果是 elif 的条件。
 
   ```
   - 语法
@@ -1423,27 +1318,27 @@
       else:
       	执行语句D		
   - 执行流程
-  	- if-elif-else语句在执行时，会先对条件表达式1进行判断
-  		- 如果结果为true，则执行语句A
-  		- 如果结果为false，则判断条件表达式2
-  			- 如果结果为true，则执行语句B
-  			- 如果结果为false，则判断条件表达式3
-  				- 如果结果为true，则执行语句C
-  				- 如果条件表达式1、2、3...都为false，则执行语句D
+  	- if-elif-else 语句在执行时，会先对条件表达式 1 进行判断
+  		- 如果结果为 True，则执行语句A
+  		- 如果结果为 False，则判断条件表达式2
+  			- 如果结果为 True，则执行语句B
+  			- 如果结果为 False，则判断条件表达式3
+  				- 如果结果为 True，则执行语句C
+  				- 如果条件表达式1、2、3...都为 False，则执行语句D
   ```
 
   ```
-  - 如果if的条件成立了，那么后面的elif就都不执行了。
+  - 如果 if 的条件成立了，那么后面的 elif 就都不执行了。
   
-  - if在开头，只有一个，不可省略
+  - if 在开头，只有一个，不可省略
   
-  - elif可以有任意个
+  - elif 可以有任意个
   
-  - elif多条件判断中，只执行第一个满足条件的语句，不必考虑前面的if是否会执行
+  - elif 多条件判断中，只执行第一个满足条件的语句，不必考虑前面的 if 是否会执行
   
-  - 在Python中，elif缩进与同级别if相同，将多个条件构成一个整体
+  - 在 Python 中，elif 缩进与同级别 if 相同，将多个条件构成一个整体
   
-  - else只有末尾一个，可以省略
+  - else 只有末尾一个，可以省略
   ```
 
 - **无elif示例**
@@ -1451,30 +1346,29 @@
   ```python
   money = 120
   if money >= 100:
-      print("可以买宝马了！")
-      print("真开心！")
-  if money >= 50 and money < 100:  # 多个条件的if缩进相同
-      print("买丰田！")
+    print("可以买宝马了！")
+    print("真开心！")
+  if money >= 50 and money < 100:  # 多个条件的 if 缩进相同
+    print("买丰田！")
   if money >= 20 and money < 50:
-      print("二手车！")
+    print("二手车！")
   else:
-      print("骑共享单车")  # 此处else只与最近的if起作用，即当money=120的时候，获取结果既有买宝马又有骑共享单车。
-  
+    print("骑共享单车")  # 此处 else 只与最近的 if 起作用，即当 money = 120 的时候，获取结果既有买宝马又有骑共享单车。
   ```
-
+  
 - **有elif示例**
 
   ```python
   money = 120
   if money >= 100:
-      print("可以买宝马了！")
-      print("真开心！")
-  elif money >= 50:  # 缩进与同级别if相同，将多个条件构成一个整体
-      print("买丰田！")
+    print("可以买宝马了！")
+    print("真开心！")
+  elif money >= 50:  # 缩进与同级别 if 相同，将多个条件构成一个整体
+    print("买丰田！")
   elif money >= 20:
-      print("二手车！")
+    print("二手车！")
   else:
-      print("骑共享单车")
+    print("骑共享单车")
   
   # 此程序运行结果为：
   可以买宝马了
@@ -1491,18 +1385,95 @@
   money = int(input("请输入存款金额（万）？"))
   day = int(input("今天是星期几（1-7）？"))
   if money >= 100:
-  	print("可以买宝马了！")
-      print("真开心！")
-      if day <= 5:  # 此处的if在第一个if与其它elif的基础下，所以缩进要降一个等级
-          print("周末去提车！")
-      else:  # 此处的else在第一个if与其它elif的基础下，与第二个if同级
-          print("今天下午就去提车！")
+    print("可以买宝马了！")
+    print("真开心！")
+    if day <= 5:  # 此处的 if 在第一个 if 与其它 elif 的基础下，所以缩进要降一个等级
+      print("周末去提车！")
+    else:  # 此处的 else 在第一个 if 与其它 elif 的基础下，与第二个 if 同级
+      print("今天下午就去提车！")
   elif money >= 50:
-      print("买丰田！")
+    print("买丰田！")
   elif money >= 20:
-      print("二手车！")
+    print("二手车！")
   else:
-      print("骑共享单车")
+    print("骑共享单车")
+  ```
+
+### 练习
+
+#### 特价菜
+
+- 根据用户输入星期几，输出特价菜是什么？
+
+  ```
+  星期一特价菜：水煮鱼
+  星期二特价菜：烧排骨
+  星期三，四特价菜：宫爆鸡丁
+  星期五，六特价菜：清蒸鲈鱼
+  其它：干锅肥肠
+  ```
+
+  ```python
+  day = int(input("请输入星期几？（1-7）"))
+  if day == 1:
+    print("星期一特价菜：水煮鱼")
+  elif day == 2:
+    print("星期二特价菜：烧排骨")
+  elif day == 3 or day == 4:
+    print("星期三、四特价菜：宫爆鸡丁")
+  elif day == 5 or day == 6:
+    print("星期五、六特价菜：清蒸鲈鱼")
+  else:
+    print("星期日特价菜：干锅肥肠")
+  ```
+
+#### 成绩单
+
+- 根据输入判断学生的成绩等级
+
+  ```
+  如果成绩>=90分，则输出“优秀”;
+  如果成绩>=80分，则输出“良好”;
+  如果成绩>=60分，则输出“中等”;
+  否则，输出“差”
+  ```
+
+  ```python
+  score = int(input("请输入考生成绩："))
+  if score >= 90:
+    print("优秀")
+  elif score >= 80:
+    print("良好")
+  elif score >= 60:
+    print("中等")
+  else:
+    print("差")
+  ```
+
+#### 保险柜
+
+- 现在有一个银行保险柜，有两道密码。想拿到里面的钱必须两次输入的密码都要正确。
+
+  ```
+  如果第一道密码都不正确，那直接把你拦在外面；
+  如果第一道密码输入正确，才能有权输入第二道密码。
+  只有当第二道密码也输入正确，才能拿到钱！(两道密码自己设)(嵌套 if)
+  ```
+
+  ```python
+  password1 = "123"
+  password2 = "abc"
+  
+  pwd1 = input("请输入第一道密码：")
+  if pwd1 == password1:
+    print("第一道密码输入正确！")
+    pwd2 = input("请输入第二道密码：")
+    if pwd2 == password2:
+      print("恭喜你，输入正确！拿到5毛钱！")
+    else:
+      print("很遗憾！第二道密码错误！")
+  else:
+    print("第一道密码输入错误，请出去吧！")
   ```
 
 ## 循环结构
@@ -1527,17 +1498,17 @@
   ```
 
   ```python
-  str = ["中国", "上海", 123]
-  for data in str:
-      print(data)
+  str_a = ["中国", "上海", 123]
+  for data in str_a:
+    print(data)
   ```
 
 - 还可用索引思想遍历
 
   ```python
-  str = ["中国", "上海", 123]
-  for i in range(len(str)):
-      print(str[i])
+  str_a = ["中国", "上海", 123]
+  for i in range(len(str_a)):
+    print(str[i])
   ```
 
 #### 循环序列
@@ -1545,27 +1516,27 @@
 - range 序列，生成一个 a 到 b 的序列，左闭右开。
 
   ```
-  - range(开始值, 结束值, 步长)
+  - range (开始值, 结束值, 步长)
   - 包含开始值，不包含结束值，即左闭右开；
-  - 步长可省略，默认为1，步长不可为0。
+  - 步长可省略，默认为 1，步长不可为 0。
   ```
 
 - 示例
 
   ```python
-  for i in range(0, 10, 1):  # 开始值为0时，可简化为for s in range(0, 10)/(10)
+  for i in range(0, 10, 1):  # 开始值为 0 时，可简化为 for i in range(0, 10)/(10)
   	print(i)  # 依次打印从0到9
   ```
   
   ```python
   for i in range(10):
-  print("Hello world!")  # 依次输出10次 Hello world!
+  	print("Hello world!")  # 依次输出 10 次 Hello world!
   ```
   
   ```python
   for i in range(10):
   	pass
-  print(i)  # 9  i最后一次的值为9
+  print(i)  # 9  i 最后一次的值为 9
   ```
 
 
@@ -1577,9 +1548,9 @@
   - 遍历集合无序输出
 
   ```python
-  info_list = ["a", "b", "c"]
-  for info in info_list:
-      print(info)  # a b c
+  list_a = ["a", "b", "c"]
+  for info in list_a:
+    print(info)  # a b c
   ```
 
 - 索引遍历
@@ -1587,9 +1558,9 @@
   - 字符串和元组同理
 
   ```python
-  info_list = ["a", "b", "c"]
-  for i in range(len(info_list)):
-      print(info_list[i])  # a b c
+  list_a = ["a", "b", "c"]
+  for i in range(len(list_a)):
+    print(list_a[i])  # a b c
   ```
 
 #### 遍历嵌套容器
@@ -1598,10 +1569,10 @@
 
   ```python
   reward_list = [
-      ("三等奖", 5, "ipad"),
-      ("二等奖", 3, "iPhone"),
-      ("一等奖", 1, "马尔代夫"),
-      ("特等奖", 1, "一套房")
+    ("三等奖", 5, "ipad"),
+    ("二等奖", 3, "iPhone"),
+    ("一等奖", 1, "马尔代夫"),
+    ("特等奖", 1, "一套房")
   ]
   
   for title, count, detail in reward_list:  # 元素可写成 (title, count, detail)
@@ -1614,20 +1585,20 @@
 - 对于字典而言，直接遍历的是字典的键；关于函数获取键值，详见字典。
 
   ```python
-  dicta = {"name": "Jerry", "age": 18, "hobby": "football"}
-  for key in dicta:
+  dict_a = {"name": "Jerry", "age": 18, "hobby": "football"}
+  for key in dict_a:
       print(key)  # 依次输出name  age  hobby
-  print(key, dicta[key])  # 依次输出name Jerry  age 18  hobby football
+  print(key, dict_a[key])  # 依次输出name Jerry  age 18  hobby football
   ```
 
 - 函数获取键值，详见字典
 
   ```python
-  for key in dicta.keys():  # 获取键
+  for key in dict_a.keys():  # 获取键
       print(key)
-  for values in dicta.values():  # 获取值
+  for values in dict_a.values():  # 获取值
       print(values)
-  for k, v in dicta.items():  # 获取键和值
+  for k, v in dict_a.items():  # 获取键和值
   print(k, v)
   ```
 
@@ -1657,13 +1628,13 @@
   ```
   - 语法
       while 条件表达式:
-            循环体
+      	循环体
   
   - 执行流程
       while循环在执行时，会先对条件表达式进行判断
-          - 如果结果为true，则执行循环体
-              - 执行完毕，继续判断条件表达式，直到判断结果为false
-          - 如果结果为false，则循环结束
+          - 如果结果为True，则执行循环体
+              - 执行完毕，继续判断条件表达式，直到判断结果为False
+          - 如果结果为False，则循环结束
   ```
 
   ```python
@@ -1677,8 +1648,8 @@
   ```python
   i = 100
   while i <= 200:
-      print(i)
-      i += 2  # 100-200之间的偶数
+    print(i)
+    i += 2  # 100-200之间的偶数
   ```
 
 #### 无限循环
@@ -1723,15 +1694,15 @@
   		print(s)  # 获取结果为：各个列表的各个值
   ```
 
-### 关键字continue、break
+### Continue、Break
 
 - **语法**
 
   ```
   语法
-  	- break执行后，终止当前循环，程序向下执行当前循环以外内容
-  	- continue执行后，跳过本次循环，程序继续执行下次该循环
-  	- break和continue只会作用于离它最近的循环
+  	- break 执行后，终止当前循环，程序向下执行当前循环以外内容
+  	- continue 执行后，跳过本次循环，程序继续执行下次该循环
+  	- break 和 continue 只会作用于离它最近的循环
   ```
 
 - **具体示例**
@@ -1740,9 +1711,8 @@
   for year in range(1, 11):
       if year == 5:
           print("第5年疫情原因，今年不用还款了！")
-          continue  # 第5年不用还，但从第6年继续还款
-      	# 此处如果没有continue，会同时正常显示：第五年到了，还款1.2万
-      
+          # 此处如果没有continue，会同时正常显示：第五年到了，还款1.2万
+          continue  # 第5年不用还，但从第6年继续还款 
       if year == 6:
           print("第", year, "年到了！还款2.4万！")
           continue
@@ -1752,89 +1722,60 @@
       print("第", year, "年到了！还款1.2万！")
   ```
 
-# 第五章 文件读写
+# 文件读写
 
 ## 文件读写基础
 
-- **文件**
-
-  分为文本文件和二进制文件。
-
-- **文本文件**
-
-  也称字符型文件，只保存字符串的文本文档，如txt，json，css等。文本文件从本质上也是二进制文件。
-
-- **二进制文件**
-
-  也称字节型文件，可以保存任意格式的多媒体数据，如图片，音频，视频等。
-
-- **格式**
+- **基础步骤**
 
   ```python
-  # 确认内容及编码
-  data = "青海联通"  # 确认要写入的内容并用data接收
+  data = "Hello world!"  # 确认要写入的内容并用data接收
   data = data.encode(utf-8)  # 将“青海联通”编码，转为字节型数据
-  
-  # 获取文件对象
-  f = open (r"文件路径", "a")  
-  
-  # 操作
+  f = open (r"demo.txt", "a")  # 获取文件对象
   f.write(data)  # 写入
   # f.flush()  # 将数据强刷进硬盘，防止关闭文件前电脑死机数据不保存
   f.close()  # 关闭文件，不关不影响程序运行，但会耗内存
   ```
 
+- **文件**
+
+  - **文本文件**：也称字符型文件，只保存字符串的文本文档，如 txt，json，css 等。文本文件从本质上也是二进制文件。
+
+  - **二进制文件**：也称字节型文件，可以保存任意格式的多媒体数据，如图片，音频，视频等。
+
 - **文件路径**
 
-  ```
-  - 路径加r取消转义
+  - 路径加 r 取消转义
   - 绝对/相对路径
   - 路径可以是变量，尤其是以文件名的相对路径
-  ```
 
 - **访问模式**
 
-  ```
-  - 文本文件：读r--read，写w--write，追加a--append
-  - 二进制文件：读rb--read，写wb--write，追加ab—append
-  - 追加写入时，也是f.write()，只在获取文件对象时将w改为a
-  ```
+  - 读：r / rb
+  - 写：w / wb
+  - 追加：a
+  - 文本文件为 r / w，二进制文件为 rb / wb。
 
 ## 读文件
 
-- **简写模式***
-
-  二进制文件访问模式为rb，不解码
+- **基本示例**
 
   ```python
-  f = open(r"file.txt", "r", encoding = "utf-8")  # encoding  解码
-  content = f.read()
+  f = open(r"demo.txt", "r", encoding = "utf-8")  # 二进制文件访问模式为 rb，不解码
+  data = f.read()
   f.close()
   ```
-
-- **分步写**
-
-  ```python
-  f = open(r"abc.txt", "r")  # r为访问模式read
-  data = f.read()  # 获取到文件的原始编码数据
-  f.close()
-  content = data.decode("utf-8")  # 将获取到的原始编码数据进行解码，获取到内容
-  ```
-
+  
 - **读大体积文本文件**
 
-  防止一次性读完，内存不够，所以逐行读
-
   ```python
-  f = open(r"file.txt", "r", encoding = "utf-8")  # encoding  解码
-  for line in f:  # 逐行读
+  f = open(r"demo.txt", "r", encoding = "utf-8")
+  for line in f:  # 防止一次性读完，内存不够，所以逐行读
       data = line
   f.close()
   ```
-
+  
 - **读大体积二进制文件**
-
-  每次读3个字节，防止一次性读完，内存不够
 
   ```python
   import os
@@ -1843,185 +1784,161 @@
   f = open(r"英雄.mp4", "rb")
   has_read_size = 0
   while has_read_size < total_size:
-      chunk = f.read(3)  # 每次读3个字节
-      print(chunk)
-      has_read_size += len(chunk)
+    chunk = f.read(3)  # 每次读3个字节，防止一次性读完，内存不够
+    print(chunk)
+    has_read_size += len(chunk)
   f.close()
   ```
 
 ## 写文件
 
-- 覆盖写入w/wb（write）
+- 如果文件不存在，则创建新文件再写入；如果存在，则直接写入。
 
-  如果文件不存在，则创建新文件再写入；如果存在，则覆盖写入。
+  - 覆盖写入 `w/wb`
 
-- 追加写入a/ab（append）
+  - 追加写入 `a/ab`
 
-  如果文件不存在，则创建新文件再写入；如果存在，则追加写入。
-
-- **简单写***
-
-  二进制文件：访问模式为wb/ab，不解码
+- **基本示例**
 
   ```python
-  content = "你好，长春！" 
-  data = content.encode("utf-8")  # 将content编码
-  f = open(r"hello0402.txt", "w"或"a")  # w/a为访问模式write
-  f.write(data) # 将data覆盖/追加写入文件
-  f.close()
-  ```
-
-- **分步写**
-
-  ```python
-  content = "你好，长春！" 
-  f = open(r"hello0402.txt", "w"或"a", encoding = "utf-8")  # encoding 编码
+  data = "你好，长春！" 
+  f = open(r"demo.txt", "w"或"a", encoding = "utf-8")
   f.write(data)
   f.close()
   ```
 
-## with open()语句
+## `with open()` 语句
 
-- 使用with open()语句简化读写操作，且不必关闭
-
-- 格式
-
-  二进制文件：访问模式为rb/wb/ab，不解码
+- 使用 `with open()` 语句简化读写操作，且不必关闭
 
   ```python
-  with open(r"file.txt", "r", encoding = "utf-8") as f:
-      content = f.read()
+  # 读
+  with open(r"demo.txt", "r", encoding = "utf-8") as f:
+    data = f.read()
   
-  with open(r"file.txt", "a", encoding = "utf-8") as f:
-  	line = "{}|{}\n".format(user, pwd_md5)
-  	f.write(line)
-  ```
-
-- 复制粘贴示例
-
-  ```python
-  with open(r"G:\python教程2021\python2021资料和练习\file\aaa\cat.jpg", "rb") as file1, open(
-          r"G:\python教程2021\python2021资料和练习\file\bbb\cat-2.jpg", "wb") as file2:  # 用逗号连接，同时执行两次读写
-      data = file1.read()
-      file2.write(data)
+  # 写
+  with open(r"demo.txt", "a", encoding = "utf-8") as f:
+    f.write("Hello world!")
   ```
 
 ## 文件处理
 
-### 处理txt文件
+### 批量写入
 
-- 要求：得到一个txt文件，把文件名和网址作为键值对放入一个字典中
+- 批量写入示例
 
-  - csv文件同理
+  ```python
+  dict_a = {"zhangsan": 111, "lisi": 222, "wangwu": 333}
+  for user, pwd in dict_a.items():
+    with open(r"demo.txt", "a", encoding="utf-8") as f:
+      line = "{}-{}\n".format(user, pwd)
+      f.write(line)
+  ```
 
-  -  file.txt内容如下
+### 复制粘贴
+
+- 复制粘贴示例
+
+  ```python
+  with open(r"cat.jpg", "rb") as file1, open(r"cat-2.jpg", "wb") as file2:  # 用逗号连接，同时执行两次读写
+    data = file1.read()
+    file2.write(data)
+  ```
+
+### 处理 TXT 文件
+
+- 要求：得到一个 TXT 文件，把文件名和网址作为键值对放入一个字典中
 
   ```
+  # file.txt
+  # 开头多个换行
   123.jpg,汽车,https://club2.autoimg.cn/album/g26/M0A/2C/E9/userphotos/2023/09/03/22/820_ChxkjmT0lFqAcBBbAAvcbidXiqQ277.jpg
   
   456.jpg,卡车,https://club2.autoimg.cn/album/g26/M0A/2C/E9/userphotos/2023/09/03/22/820_ChxkjmT0lFqAcBBbAAvcbidXiqQ277.jpg
   
   789.jpg,轿车,https://club2.autoimg.cn/album/g26/M0A/2C/E9/userphotos/2023/09/03/22/820_ChxkjmT0lFqAcBBbAAvcbidXiqQ277.jpg
+  # 结尾多个换行
   ```
-
-  ```python
-  f = open(r" file.txt", "rb")
-  content = f.read()
-  f.close()
   
-  # 解码，获取到有换行的字符串
-  data_string = content.decode("utf-8")
+  ```py
+  with open(r"file.txt", "r", encoding="utf-8") as f:
+    # 获取到去除首尾空白行的文件内容
+    data = f.read().strip()
   
-  # 去除首尾空白行
-  data_string = data_string.strip()
-  
-  # 去换行符，获取到一个列表
-  # 每一行字符串作为列表的一个元素
-  data_list = data_string.split("\n")
-  
-  result = {}
-  
-  # 遍历列表，获取没有换行符的分行字符串
-  for row in data_list:
-  	
-      # 切割字符串，切割后的每部分作为新列表的元素
-      group = row.split(",")
-  	
-      # 构造字典
-    	result[group[0]] = group[1]
-  print(result)
+  # 根据"\n"切割，获取到一个列表，文件每行内容为列表的一个元素
+  list_a = data.split("\n")
+  dict_a = {}
+  for line in list_a:
+    # 去除中间空白行
+    if not line:
+      continue
+    # 根据","切割原列表的元素，切割之后的部分组成一个新列表，每个信息为新列表的一个元素
+    list_new = line.split(",")  # ['zhangsansan', '123', '19999999999'] for 循环3次，分别得到3个列表
+    # 向字典添加键值对
+    dict_a[list_new[0]] = list_new[2]
+  print(dict_a)
   ```
 
 ### 下载图片
 
-- **格式**
+- **语法**
 
   ```python
   import requests
-  url = "网址"  # 注意https:和http:
-  res = requests. get (url)  # 发送请求并用res接收数据
+  res = requests. get("$URL")  # 发送请求并用res接收数据
   data = res.content  # content解码
   # 接下来进行文件读写处理数据
   ```
-
-- **下载一张图片示例**
-
-  要求：爬取汽车之家图片并下载到本地
+  
+- **下载图片示例**
 
   ```python
   import requests
   
   url = " https://club2.autoimg.cn/album/g26/M0A/2C/E9/userphotos/2023/09/03/22/820_ChxkjmT0lFqAcBBbAAvcbidXiqQ277.jpg"
-  res = requests.get(url)
-  data = res.content
+  data = requests.get(url)
+  image = data.content
   
-  f = open("Benz.png", "wb")
-  f.write(data)
-  f.close()
+  with open("Benz.png", "wb") as f:
+    f.write(image)
   ```
 
 - **批量下载图片示例**
 
-  - 要求：得到一个txt文件，把里面的信息将图片批量下载到本地
-
-  - 步骤：先用文件名和网址构造字典，再遍历字典下载
-
-  - file.txt内容如下
-
   ```
+  # file.txt
+  # 开头多个换行
   123.jpg,汽车,https://club2.autoimg.cn/album/g26/M0A/2C/E9/userphotos/2023/09/03/22/820_ChxkjmT0lFqAcBBbAAvcbidXiqQ277.jpg
-  
   456.jpg,卡车,https://club2.autoimg.cn/album/g26/M0A/2C/E9/userphotos/2023/09/03/22/820_ChxkjmT0lFqAcBBbAAvcbidXiqQ277.jpg
-  
   789.jpg,轿车,https://club2.autoimg.cn/album/g26/M0A/2C/E9/userphotos/2023/09/03/22/820_ChxkjmT0lFqAcBBbAAvcbidXiqQ277.jpg
+  # 接尾多个换行
   ```
-
+  
   ```python
   import requests
   
-  # 将文件名和网址信息放入字典，详见《文件处理_txt》
-  f = open(r"file.txt", "rb")
-  content = f.read()
-  f.close()
-  data_string = content.decode("utf-8")
-  data_string = data_string.strip()
-  data_list = data_string.split("\n")
-  result = {}
-  for row in data_list:
-      group = row.split(",")
-      result[group[0]] = group[2]
+  # 处理文件，详见处理 txt 文件
+  with open(r"file.txt", "r", encoding="utf-8") as f:
+    data = f.read()
+  data = data.strip()
+  list_a = data.split("\n")
+  dict_a = {}
+  for row in list_a:
+    list_new = row.split(",")
+    dict_a[list_new[0]] = list_new[2]
   
-      # 批量下载 下载图片详见《文件处理_下载图片》
-      res = requests.get(group[2])  # group[2]为之前获取到的url
-      data = res.content
-      f = open(group[0], "wb")  # group[0]为之前获取到的文件名
-      f.write(data)
-      f.close()
+    # 详见下载图片
+    # 批量下载，list_new[2]为之前获取到的 url
+    data = requests.get(list_new[2])
+    image = data.content
+    # list_new[0]为之前获取到的文件名
+    with open(list_new[0], "wb") as f:
+    	f.write(image)
   ```
 
-# 第六章 函数
+# 函数
 
-​	函数是实现某个功能的业务代码，定义好可以重复使用。Python中有内置函数和自定义函数。
+​	函数是实现某个功能的业务代码，定义好可以重复使用。Python 中有内置函数和自定义函数。
 
 ## 自定义函数
 
@@ -2614,8 +2531,8 @@
 - 格式
 
   ```python
-  data_list = ["a" for i in range(1, 51)]
-  print(data_list)  # 生成一个含有50个a的列表
+  list_a = ["a" for i in range(1, 51)]
+  print(list_a)  # 生成一个含有50个a的列表
   ```
 
   ```
@@ -2626,8 +2543,8 @@
 - 示例
 
   ```python
-  data_list = ["用户_{}".format(i) for i in range(1, 51) if i > 10]
-  print(data_list)  # [用户_11, 用户12, … , 用户50]
+  list_a = ["用户_{}".format(i) for i in range(1, 51) if i > 10]
+  print(list_a)  # [用户_11, 用户12, … , 用户50]
   ```
 
 ### 字典推导式
@@ -2666,7 +2583,7 @@
   print(result)  # {'name': '武沛齐', 'email': 'xxx@163.com', 'gender': '男'}
   ```
 
-# 第七章 模块
+# 模块
 
 ​	模块是Python中最高级别组织单元，它将程序代码和数据封装起来以便重复使用。
 
@@ -3030,7 +2947,6 @@
   	f.write(res)  # 将data获取到的数据写到f中
   ```
 
-  
 
 ### json 数据
 
@@ -3249,38 +3165,12 @@
 
 ​	第三方模块存放路径：C:\Users\39331\AppData\Local\Programs\Python\Python311\Lib \site-packages
 
-- **pip工具**
+- **pip 安装**
 
+  ```bash
+  pip install $MODULE_NAME
   ```
-  - 实际pip工具也是一个第三方模块
-      - 如果系统未集成，可以使用其它第三方模块安装pip工具
-      - 国外服务器，下载较慢
-  - 第一次使用pip工具，应该先升级
-      - 打开cmd，输入命令：python -m pip install --upgrade pip
-      - 回车，等待安装成功。
-  - 修改pip下载源：
-  	- 确保已配置Python环境变量
-  		- 详见《Windows笔记》环境变量
-  	- pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
-  		- https://pypi.tuna.tsinghua.edu.cn/simple/ 为清华镜像，可替换为其它镜像
-  - 安装第三方模块
-  	- pip install 模块名
-  - 卸载第三方模块
-  	- pip uninstall 模块名
-  - 查看已经安装的第三方包
-  	- pip list
-  - 显示模块信息
-  	- pip show 模块名
-  ```
-
-- **清华镜像**
-
-  ```
-  - 从镜像网站下载，速度较快。
-  - 安装第三方模块：
-      - pip install -i https://pypi.tuna.tsinghua.edu.cn/simple 模块名
-  ```
-
+  
 - **网上下载**
 
   ```
@@ -3350,7 +3240,7 @@
 
   
 
-# 第八章 面向对象
+# 面向对象
 
 ​	面向对象(Object Oriented)是软件开发方法，一种编程范式，面向对象是相对于面向过程来讲的。面向对象方法，把相关的数据属性和方法组织为一个整体来看待，从更高的层次来进行系统建模，更贴近事物的自然运行模式。
 
@@ -3570,87 +3460,85 @@
   obj() #获取结果为：1111。
   ```
 
-# 第九章 异常处理
+# 异常处理
 
-# 第十章 操作MySQL
+# Operate MySQL
 
-- Python中的sql语句
-  
-  ```
-  - Python中sql语句结尾分号可加可不加
-  - 整个sql语句用双引号包围
-  - 在Python中，sql语句作为数据的值时，应该使用单引号
-  ```
-  
-- Python操作MySQL格式
+
+## Operate MySQL
+
+- 通过引入 DictCursor，查询结果为：每行数据都放在各自字典中，所有行都放在一个列表中，即列表嵌套字典，列名为字典的键，数据为字典的值。否则查询结果为：每行数据都放在各自元组中，所有行都放在一个大元组中，即元组嵌套元组。
+
+- 此例作为 Python 操作 MySQL 的样板文件，可以替换中间 `文件处理` 和 `执行sql` 部分。
 
   ```python
-  sql = "sql语句"
-  cursor.execute(sql)
-  result = cursor.fetchall()  # 查询业务，接收查询结果
-  conn.commit()  # 增伤改业务，执行conn，提交数据
-  ```
-
-
-## 连接MySQL
-
-- **连接MySQL**
-
-  ``` python
-  # 1.引入pymysql
-  # 确保第三方模块pymysql已添加
+  # 1.引入 pymysql 和 DictCursor
+  # 确保第三方模块 pymysql、DictCursor 已安装
   import pymysql
+  from pymysql.cursors import DictCursor
   
-  # 2.连接数据库
-  # 确保已使用其它工具创建数据库
+  # 2.连接 MySQL 服务器
+  # 将连接部分写在循环以外，防止频繁连接
+  # 确保已创建数据库 db_test 和数据表 tb_test (四列：id, username, password, mobile)
   conn = pymysql.Connect(
-      host = "localhost",  # 主机地址，如果要连接远程数据库，需填写对应数据库地址
-      port = 3306,  # 端口号，注意数字是整型
-      user = "root",
-      password = "123456",
-      charset = "utf8",  # 文件编码
-      database = "db1"  # 可提前连接某个特定数据库，以减少后期进入数据库的步骤
+    host="localhost",  # 主机地址，如果要连接远程数据库，需填写对应数据库地址
+    port=3306,  # 端口号，注意数字是整型
+    user="root",
+    password="123456",
+    charset="utf8",  # 文件编码
+    database="db_test"  # 可提前连接某个特定数据库，以减少后期进入数据库的步骤
   )
   print("MySQL已连接.....")
-  cursor = conn.cursor()  # 创建游标对象（1.执行sql语句，2.处理数据查询结果）
+  cursor = conn.cursor(cursor=DictCursor)  # 创建游标对象（1.执行sql语句，2.处理数据查询结果）
+  
+  # 3.增删改查（以导入数据为例）
+  # 3.文件处理
+  # 确保已创建 users.txt 文件（zhangsan,123,19999999999...）
+  # 关于文件处理，详见：处理 TXT 文件
+  with open('users.txt', 'r', encoding='utf-8') as f:
+    data = f.read().strip()
+  list_a = data.split("\n")
+  for line in list_a:
+    if not line:
+      continue
+    list_new = line.split(",")  # ['zhangsansan', '123', '19999999999'] for 循环3次，分别得到3个列表
+  
+    # 4.执行sql
+    # 不要直接将用户输入的值直接写入 sql 语句，防止 SQL 注入攻击。
+    sql = "insert into tb_test(username, password, mobile) values(%s, %s, %s)"  # %s 占位符
+    cursor.execute(sql, list_new)  # 将用户输入的值以列表的形式传递给 cursor.execute() 方法
+    conn.commit()
+    print("导入数据成功！")
+  
+  # 5.关闭游标对象和连接
+  # 将关闭连接部分写在循环以外，防止频繁连接
+  cursor.close()
+  conn.close()
+  print("MySQL 已断开连接！")
   ```
 
-  - 此种方法查询结果为：每行数据都放在各自元组中，所有行都放在一个大元组中，即元组嵌套元组。
-  
-  - 通过引入DictCursor，可以转换为每行数据都放在各自字典中，所有行都放在一个列表中，即列表嵌套字典，列名为字典的键，数据为字典的值。
-  
-    ```bash
-    # 修改如下
-    # 引入DictCursor
-    from pymysql.cursors import DictCursor
-    
-    # 创建游标对象
-    cursor = conn.cursor(cursor = DictCursor)
-    ```
-  
-    ```bash
-    # 1.引入pymysql
-    # 确保第三方模块pymysql、DictCursor已添加
-    import pymysql
-    from pymysql.cursors import DictCursor
-    
-    
-    # 2.连接MySQL
-    # 确保已使用其它工具创建数据库
-    conn = pymysql.Connect(
-        host = "localhost",  # 主机地址，如果要连接远程数据库，需填写对应数据库地址
-        port = 3306,  # 端口号，注意数字是整型
-        user = "root",
-        password = "123456",
-        charset = "utf8",  # 文件编码
-        database = "db1"  # 可提前连接某个特定数据库，以减少后期进入数据库的步骤
-    )
-    print("MySQL已连接.....")
-    cursor = conn.cursor(cursor = DictCursor)  # 创建游标对象（1.执行sql语句，2.处理数据查询结果）
-    ```
-  
+## Syntax
 
-## 数据库
+- SQL syntax in Python
+
+  - 结尾不加分号也行
+  - 整个 sql 语句用双引号包围
+  - 作为数据的值时，应该使用单引号
+
+- Template
+
+  ```python
+  cursor.execute("$SQL_STATEMENT")
+  
+  # 1. 如果是查询业务，则执行 fetchall
+  result = cursor.fetchall()
+  print(result)
+  
+  # 2. 如果是增删改业务，则执行 commit
+  conn.commit()
+  ```
+
+## Database
 
 - **查询所有数据库**
 
@@ -3663,18 +3551,13 @@
 - **进入数据库**
 
   ``` python
-  cursor.execute("use db1;")
-  ```
-
-  ```
-  - 除了查询和创建数据库以外，其余对MySQL操作，必须先进入数据库
-    - Python在连接MySQL时可以指定某个数据库
+  cursor.execute("use $DATABASE;")
   ```
 
 - **创建数据库**
 
   ``` python
-  cursor.execute("create database db2 default charset=utf8;")
+  cursor.execute("create database $DATABASE default charset=utf8;")
   conn.commit()  # 执行conn，提交数据
   print("创建数据库成功！")
   ```
@@ -3682,13 +3565,13 @@
 - **删除数据库**
 
   ``` python
-  cursor.execute("drop database db2;")
+  cursor.execute("drop database $DATABASE;")
   conn.commit()
   print("删除成功！")
   ```
 
 
-## 数据表
+## Table
 
 - **查询所有数据表**
 
@@ -3701,13 +3584,14 @@
 - **创建数据表**
 
   ``` python
+  # 一般以id作为主键
   sql = """
   create table tb2(
-  	id bigint unsigned primary key auto_increment not null,  # 一般以id作为主键
+  	id bigint unsigned primary key auto_increment not null,
   	name varchar(16),
-      mobile char(11),
-      email varchar(128),
-      salary decimal(10, 2),
+    mobile char(11),
+    email varchar(128),
+    salary decimal(10, 2),
   	ctime datetime
   )default charset=utf8;"""
   cursor.execute(sql)
@@ -3718,12 +3602,12 @@
 - **删除数据表**
 
   ``` python
-  cursor.execute("drop table tb2")
+  cursor.execute("drop table $TABLE")
   conn.commit()
   print("删除数据表成功！")
   ```
 
-## 数据行
+## Row
 
 - **增加数据行**
 
@@ -3734,9 +3618,9 @@
   print("增加数据行成功！")
   ```
 
-  - **增加多行数据行**
-
   ``` python
+  # 增加多行数据行
+  
   sql = """insert into tb1(name, mobile, email, salary, ctime) values
       ('mayun', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30'),
       ('zhangsan', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30'),
@@ -3763,12 +3647,12 @@
   print("删除所有数据行成功！")
   ```
 
-## 数据
+## Data
 
 - **查询所有数据**
 
   ``` python
-  cursor.execute("select * from tb1;")
+  cursor.execute("select * from tb_test;")
   result = cursor.fetchall()
   print(result)
   ```
@@ -3822,11 +3706,160 @@
   print("修改某列数据成功！")
   ```
 
-# 第十一章 了解网络编程
+## Instance
 
-# 第十二章 了解多线程
+### Add Data Manually
 
-# 第十三章 Flask框架
+- 在程序中循环手动输入数据，添加至数据库
+
+  ```python
+  # 1.引入 pymysql 和 DictCursor
+  import pymysql
+  from pymysql.cursors import DictCursor
+  
+  # 2.连接 MySQL 服务器
+  # 确保已创建数据库 db_test 和数据表 tb_test (四列：id, username, password, mobile)
+  conn = pymysql.Connect(
+    host="localhost",
+    port=3306,
+    user="root",
+    password="123456",
+    charset="utf8",
+    database="db_test"
+  )
+  print("MySQL 已连接.....")
+  cursor = conn.cursor(cursor=DictCursor)
+  
+  # 3.文件处理
+  # 关于文件处理，详见：处理 TXT 文件
+  while True:
+    user = input("请输入用户名：")
+    if user.upper() == "Q":
+      break
+    pwd = input("请输入密码：")
+    phone = input("请输入手机号：")
+  
+    # 4.执行 sql
+    # 关于执行 sql，详见操作 MySQL
+    sql = "insert into tb_test(username, password, mobile) values(%s, %s, %s)"
+    cursor.execute(sql, [user, pwd, phone])
+    conn.commit()
+    print("添加数据成功！")
+  
+  # 5.关闭游标对象和连接
+  cursor.close()
+  conn.close()
+  print("MySQL 已断开连接！")
+  ```
+
+### Import Data
+
+- 在程序中从文件获取数据，导入至数据库
+
+  ```
+  # users.txt
+  # 开头多个换行
+  zhangsansan,123,19999999999
+  
+  lisisi,123,18888888888
+  
+  wangwuwu,123,16666666666
+  # 结尾多个换行
+  ```
+
+  ```python
+  # 1.引入 pymysql 和 DictCursor
+  import pymysql
+  from pymysql.cursors import DictCursor
+  
+  # 2.连接 MySQL 服务器
+  # 确保已创建数据库 db_test 和数据表 tb_test (四列：id, username, password, mobile)
+  # 确保已创建 users.txt 文件（zhangsan,123,19999999999...）
+  conn = pymysql.Connect(
+    host="localhost",
+    port=3306,
+    user="root",
+    password="123456",
+    charset="utf8",
+    database="db_test"
+  )
+  print("MySQL 已连接.....")
+  cursor = conn.cursor(cursor=DictCursor)
+  
+  # 3.文件处理
+  # 确保已创建 users.txt 文件（zhangsan,123,19999999999...）
+  # 关于文件处理，详见：处理 TXT 文件
+  with open('users.txt', 'r', encoding='utf-8') as f:
+    data = f.read().strip()
+  
+  list_a = data.split("\n")
+  for line in list_a:
+    if not line:
+      continue
+    list_new = line.split(",")  # ['zhangsansan', '123', '19999999999'] for 循环3次，分别得到3个列表
+  
+    # 4.执行sql
+    # 关于执行 sql，详见操作 MySQL
+    sql = "insert into tb_test(username, password, mobile) values(%s, %s, %s)"
+    cursor.execute(sql, list_new)
+    conn.commit()
+    print("导入数据成功！")
+  
+  # 5.关闭游标对象和连接
+  cursor.close()
+  conn.close()
+  print("MySQL 已断开连接！")
+  ```
+
+### Export Data
+
+- 在程序中从数据库获取数据（列表嵌套字典），导出至文件
+
+  ```python
+  # 1.引入 pymysql 和 DictCursor
+  import pymysql
+  from pymysql.cursors import DictCursor
+  
+  # 2.连接 MySQL 服务器
+  # 确保已创建数据库 db_test 和数据表 tb_test (四列：id, username, password, mobile)
+  conn = pymysql.Connect(
+    host="localhost",
+    port=3306,
+    user="root",
+    password="123456",
+    charset="utf8",
+    database="db_test"
+  )
+  print("MySQL 已连接.....")
+  cursor = conn.cursor(cursor=DictCursor)
+  
+  # 3.执行sql
+  # 关于执行 sql，详见操作 MySQL
+  sql = "select id, username, password, mobile from tb_test"
+  cursor.execute(sql)
+  user_list = cursor.fetchall()  # [{},{}...]
+  
+  # 4.关闭游标对象和连接
+  cursor.close()
+  conn.close()
+  print("获取数据成功！")
+  print("MySQL 已断开连接！")
+  
+  # 5.文件处理
+  for user in user_list:
+    line = "{}, {}, {}\n".format(user['username'], user['password'], user['mobile'])
+    with open('users.txt', 'a', encoding='utf-8') as f:
+      f.write(line)
+  print("导出数据成功！")
+  ```
+
+  
+
+# 了解网络编程
+
+# 了解多线程
+
+# Flask框架
 
 ​	Flask 是一个轻量级的 Python Web 框架，用于构建 Web 应用程序。它由 Armin Ronacher 创建，基于 Werkzeug 和 Jinja2。Flask 的设计目标是简单而灵活，使得开发者能够快速地构建 Web 应用。
 
@@ -3963,7 +3996,7 @@
    1. 程序会自动在项目根目录创建一个 users.txt 文件，并将用户提交信息存储在文件中。
    2. 页面自动跳转至 login 页面。
 
-# 第十四章 Django框架
+# Django框架
 
 ​	Django 是一个用于构建 Web 应用程序的高级 Python Web 框架。它由 Adrian Holovaty 和 Simon Willison 创建，遵循了“Don't repeat yourself”（不要重复你自己）和“Convention over Configuration”（约定大于配置）等软件设计原则。Django 提供了一套功能强大而完整的工具，使得开发者能够更快速地构建复杂的 Web 应用。
 
@@ -4186,8 +4219,8 @@
 
   ```python
   def index(request):
-      data_list = ["张三", "李四", "王五"]
-      return render(request, 'index.html', {"v1": data, "v2": data_list})
+      list_a = ["张三", "李四", "王五"]
+      return render(request, 'index.html', {"v1": data, "v2": list_a})
   ```
 
   - index.html
@@ -4707,8 +4740,8 @@
   from django.shortcuts import redirect
   
   def user_list(request):
-      data_list = models.UserInfo.objects.all()
-      return render(request, "user_list.html", {"data_list": data_list})
+      list_a = models.UserInfo.objects.all()
+      return render(request, "user_list.html", {"list_a": list_a})
   
   def user_delete(request):
       uid = request.GET.get('uid')
@@ -4741,7 +4774,7 @@
           </tr>
           </thead>
           <tbody>
-          {% for obj in data_list %}
+          {% for obj in list_a %}
               <tr>
                   <td>{{ obj.id }}</td>
                   <td>{{ obj.username }}</td>

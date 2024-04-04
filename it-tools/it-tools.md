@@ -1,4 +1,4 @@
-# 大面
+# General
 
 ## Task list
 
@@ -10,48 +10,38 @@
 - **Current project**
   - [x] Build the image of frontend and backend.
   - [x] Deploy frontend and backend into a cluster.
-  - [ ] Config the YAML of backend.
+  - [x] Config the YAML of backend.
   - [ ] Deploy a database into a cluster.
   - [ ] Connect them and visit the application in cluster on the internet.
 - **Shell Script**
   - [ ] Windows
   - [ ] Linux
-
 - **System**
 
   - [ ] ssh   linux
 
   - [ ] rdp   windows
-
 - **Net**
 
   - [ ] domain name、IP、DNS
 
   - [ ] server
   - [ ] nslookup
-
 - **Broswer**
 
   - [ ] CS
 
   - [ ] BS  Java Client
-
 - **text editing**
 
   - [ ] Vi/Vim
-
 - **configmap**
 
   - [ ] 
-
 - **Questions**
   - [ ] Git 版本回退之后无法 push，即使 --force 也不行
-  
-- **Typora**
-  - [ ] Night theme link color
-  
 - **MySQL**
-  - [ ] Use `statesite`
+  - [ ] Use `stateset`
   - [ ] stateful app
 
 # Google Cloud
@@ -522,13 +512,17 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
    gcloud artifacts repositories delete hello-repo --location=us-central1 --project=opportune-study-413101
    ```
 
+# JSON
+
+
+
 # MySQL
 
 ​	MySQL 是一个关系型数据库管理系统，由瑞典 MySQL AB 公司开发，属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一。MySQL 使用  C 和 C++ 编写，使用标准的 SQL 数据语言形式是用于访问数据库的最常用标准化语言。MySQL 支持多线程。
 
-## 环境搭建
+## Build ENV
 
-### MySQL 安装
+### Install
 
 ​	详见《我要自学网Python课程》软件安装包说明
 
@@ -569,7 +563,7 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
    mysql -u root -p
    ```
 
-### MySQL 卸载
+### Uninstall
 
 ​	详见《我要自学网Python课程》软件安装包说明
 
@@ -642,164 +636,68 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
 
 ## Table
 
-- **查看所有数据表**
+- **Basic command**
 
   ```sql
+  # show all tables in the database
   show tables;
+  # show table head
+  desc $TABLE
+  # del table
+  drop table $TABLE
+  # clear table
+  delete from $TABLE
   ```
 
-- **创建数据表**
+- **Create table**
 
   ```
-  use 数据库名;
-  create table 表名(
-  	列名 类型,
-  	列名 类型,
-  	列名 类型
+  create table $TABLE(
+  	$COLUMN $CONDITION,
+  	$COLUMN $CONDITION,
+  	$COLUMN $CONDITION,
+  	$COLUMN $CONDITION
   )default charset=utf8;
   ```
 
   ``` sql
-  create table day15(
-      id int, 
-      name varchar(16), 
-      age int
+  create table tb_test(
+  	id int primary key auto_increment not null,  # 主键，自增，不准为空
+  	username varchar(16),  # 最长16个字符
+    password varchar(16),
+  	age int [default 3]  # 选项：不填默认为3
   )default charset=utf8;
-  ```
+```
 
-- **表头属性**
+## Row
 
-  - 显示表头属性
-
-  ``` sql
-  desc 表名；
-  ```
-
-  ``` 
-  mysql> desc tb2;
-  +-------+-------------+------+-----+---------+----------------+
-  | Field | Type        | Null | Key | Default | Extra          |
-  +-------+-------------+------+-----+---------+----------------+
-  | id    | int(11)     | NO   | PRI | NULL    | auto_increment |
-  | name  | varchar(16) | NO   |     | NULL    |                |
-  | age   | int(11)     | YES  |     | 3       |                |
-  +-------+-------------+------+-----+---------+----------------+
-  3 rows in set (0.02 sec)
-  ```
-
-  - 是否为空
+- **Basic command**
 
   ```sql
-  create table tb2(
-  	id int,  # 默认可以为空
-  	name varchar(16) not null,  # 不准为空
-  	age int
-  )default charset=utf8;
+  # show row
+  select * from $TABLE [where id=1];
+  # del row
+  delete from $TABLE [where $CONDITION];
+  # add row
+  insert into $TABLE[($COLUMN1, $COLUMN2)] values("$VALUE1", "$VALUE2");
   ```
 
-  - 默认值
-
-  ```sql
-  create table tb2(
-  	id int,
-  	name varchar(16),
-  	age int default 3  # 给值就为给的值，不给值就默认为3
-  )default charset=utf8;
-  ```
-
-  - 自增
+- **Add many rows**
 
   ``` sql
-  create table tb2(
-  	id int auto_increment,  # 自增
-  	name varchar(16),
-  	age int
-  )default charset=utf8;
-  ```
-
-  - 主键
-    - 值不能重复
-    - 值不为空
-    - 查询速度非常快
-
-  ```sql
-  create table tb2(
-  	id int primary key auto_increment not null,  # 一般以id作为主键
-  	name varchar(16),
-  	age int
-  )default charset=utf8;
-  ```
-
-- **删除数据表**
-
-  ```sql
-  drop table 表名
-  ```
-
-### 数据行
-
-- 对数据行操作，必须先进入其所属数据库
-
-- **查询数据行**
-
-  ```sql
-  select * from 表名 where 条件;
-  ```
-
-  - 查询所有数据行
-
-  ``` sql
-  select * from 表名;
-  ```
-
-- **增加数据行**
-
-  ``` 
-  insert into 表名(列名1, 列名2...) values("值1", "值2"...);
-  ```
-
-  ``` sql
-  insert into tb1(name, mobile, email, salary, ctime) values('mayun', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30');
-  ```
-
-  - 增加多行数据行
-
-  ``` 
-  insert into 表名(列名1, 列名2...) values("值1", "值2"...), values("值1", "值2"...)...;
-  ```
-
-  ``` sql
+  # 增加多行数据行
   insert into tb1(name, mobile, email, salary, ctime) values
   	('mayun', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30'),
   	('mayun', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30'),
   	('mayun', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30');
   ```
 
-- **删除数据行**
+## Data
 
-  ``` 
-  delete from 表名 where 条件;
-  ```
+- **Update data**
 
   ``` sql
-  delete from tb1 where id = 4;
-  delete from tb1 where id > 4;
-  delete from tb1 where id in (1, 3);
-  delete from tb1 where id = 4 and name = 'jerry';
-  ```
-
-  - 删除所有数据行
-
-  ``` 
-  delete from 表名;
-  ```
-
-### 数据
-
-- **修改数据**
-
-  ``` 
-  update 表名 set 列名1 = 值1, 列名2 = 值2... where 条件;
+  update $TABLE set $COLUMN = $VALUE[, $COLUMN2 = $VALUE2...] [where $CONDITION];
   ```
 
   ``` sql
@@ -811,32 +709,17 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   where name = 'zhaoliu';
   ```
 
-  - 修改整列数据
-
-  ``` 
-  update 表名 set 列名1 = 值1;
-  update 表名 set 列名1 = 值1, 列名2 = 值2...;
-  ```
-
-- **查询数据**
-
-  ``` 
-  select * from 表名;  # 查询所有列数据
-  select 列名1 from 表名;  # 查询某列数据
-  select 列名1, 列名2... from 表名;  # 查询某几列数据
-  select 列名1 from 表名 where 条件;  # 查询符合条件某列数据
-  ```
+- **Show data**
 
   ``` sql
-  select * from tb1;
-  select id from tb1;
-  select id, name from tb1;
-  select id from tb1 where name = 'zhaoliu';
+  select * from $TABLE [where $CONDITION];
+  select $COLUMN[, $COLUMN2...] from $TABLE [where $CONDITION];
   ```
+  
 
-## 解决方案
+## Solutions
 
-### 忘记登录密码
+### Forget PWD
 
 - 关于忘记密码，需先进入无授权模式，改完之后再切换回正常模式。
 
@@ -1082,7 +965,73 @@ Postman 是一个 API 开发工具，用于创建、测试和调试 API。它可
 
     - 单击访达，弹出光驱，虚拟机设置，将光驱定位至darwin.iso文件，在虚拟机右下角右键光驱，连接，mac系统自动弹出VM tools安装，双击安装并授权允许安装。安装完会重启。
 
-# 阿里云
+# VS Code
+
+## Install
+
+1. [Download installing file.This version allows installation on D drive.](https://code.visualstudio.com/Download)
+
+   ![image-20240403064749602](assets/image-20240403064749602.png)
+
+## Config
+
+### Config File
+
+- `Ctrl + ,` > `Open Settings (JSON)` in the top right corner
+
+- Last config
+
+  ```json
+  {
+      "editor.mouseWheelZoom": true, // Ctrl + 鼠标滚轮 对编辑器字体大小缩放
+      "open-in-browser.default": "chrome", // 默认浏览器
+      "files.autoSave": "afterDelay", // 实时自动保存
+      // 编辑器颜色
+      "workbench.colorCustomizations": {
+          // "editor.background": "#3B4352", // 编辑器背景色
+          // "editorGutter.background": "#3B4352", // 导航线背景色
+          // "editor.selectionHighlightBackground": "#4C4A48", // 选中代码高亮背景色
+          "editor.selectionBackground": "#000000", // 选中区域背景色
+      },
+      "editor.tokenColorCustomizations": {
+          // "comments": "#519657",  // 注释
+          // "strings": "#7e3648",  // 字符串
+          // "functions": "#1c7887",  // 函数
+          "keywords": "#a207fc", // 关键字
+          // "variables": "#0720fc",  // 变量
+          // "numbers": "#e21d1d"   // 数字
+      },
+      "editor.fontFamily": "Consolas, '微软雅黑'",
+      "editor.fontSize": 24, // 编辑器字体大小
+      "workbench.iconTheme": "vscode-icons",
+      "editor.guides.bracketPairs": true,
+      "editor.semanticTokenColorCustomizations": {},
+      "liveServer.settings.CustomBrowser": "chrome",
+      "workbench.colorTheme": "One Dark Pro",
+      "workbench.startupEditor": "none",
+      "vsicons.dontShowNewVersionMessage": true,
+      "liveServer.settings.donotVerifyTags": true,
+      "git.autofetch": true,
+      "redhat.telemetry.enabled": true,
+      "java.configuration.runtimes": [
+          {
+              "name": "JavaSE-17",
+              "path": "/path/to/jdk-17",
+              "default": true
+          },
+      ],
+      "editor.tabSize": 2,
+      "window.confirmSaveUntitledWorkspace": false
+  }
+  ```
+
+## Solutions
+
+### Default Indent
+
+1. `Ctrl + ,` to open settings
+2.  Search "tab size"
+3. "Editor: Tab Size" set "2"
 
 # Windows Terminal
 

@@ -1,1 +1,0 @@
-[{"uname": "zhangsan", "upwd": "123"}, {"uname": "lisi", "upwd": "123"}, {"uname": "wangwu", "upwd": "123"}, {"uname": "baijinyu", "upwd": "123"}, {"uname": "shaodianzhi", "upwd": "123"}, {"uname": "baiyanqing", "upwd": "123"}]

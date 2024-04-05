@@ -17,7 +17,7 @@
 
   ![image-20231026224146549](assets/image-20231026224146549.png)
 
-4. 安装成功，点击Close
+4. 安装成功，点击 Close
 
   ![image-20231026224550908](assets/image-20231026224550908.png)
 
@@ -304,21 +304,15 @@
 ## 标识符
 
 - 除以下规范，其余同编程语言通用规范。
-
 - **规范**
 
   - 只能含有字母、数字、下划线，且不能以数字或下划线开头
 
   - **区别常规**：不含$，不以下划线开头
-
 - **命名习惯**
-  
-    - **变量名**：使用小写英文单词，多个单词时，用下划线间隔
-    
-	  在 Python 3 中，可以用中文作为变量名，非 ASCII 标识符也是允许的了
-	
-	- **全局变量**：全大写
-	
+  - **变量名**：使用小写英文单词，多个单词使用下划线连接
+    - **函数名**：使用小写英文单词，多个单词使用下划线连接
+    - **类名**：大驼峰
 	- **文件名**：不使用数字开头，不使用殊符号和关键字，后缀名为 `.py`
 
 ## 注释
@@ -419,7 +413,7 @@
   str_a[0:6:2]  # 切片
   
   if "中国" in str_a:  # in 包含
-    pass
+      pass
   
   str_a.replace("a", "A")  # 替换
   
@@ -480,9 +474,9 @@
   str_a = "中国江西联通"
   index = 0  # index为索引号
   while index < len(str_a):
-    data = str_a[index]
-    print(data)
-    index += 1
+      data = str_a[index]
+      print(data)
+      index += 1
   # 依次打印“中国江西联通”
   ```
 
@@ -522,7 +516,7 @@
   
   # use
   if "中国" in str_a:
-  	pass
+      pass
   ```
 
 ### 替换
@@ -866,13 +860,13 @@
   dict_a.pop("hobby")  # 删除元素
   
   for x in dict_a.keys():  # 获取所有键
-    print(x)
+      print(x)
   
   for data in dict_a.values():  # 获取所有值
-    print(data)
+      print(data)
   
   for k, v in dict_a.items():  # 获取所有键和值
-    print(k, v)
+      print(k, v)
   ```
 
 ### 获取值
@@ -946,7 +940,7 @@
   ```python
   dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
   for x in dict_a.keys():
-    print(x)  # 依次打印name age hobby
+      print(x)  # 依次打印name age hobby
   
   # v = dict_a.keys()
   # print(v)  # dict_keys(['name', 'age', 'hobby'])
@@ -957,7 +951,7 @@
   # 索引 + 遍历
   dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
   for x in dict_a:
-    print(x)  # 依次打印name age hobby
+      print(x)  # 依次打印name age hobby
   ```
 
 ### 获取所有值
@@ -967,7 +961,7 @@
   ```python
   dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
   for data in dict_a.values():
-    print(data)  # 依次打印ZhangSan 18 playBall
+      print(data)  # 依次打印ZhangSan 18 playBall
   
   # v = dict_a.keys()
   # print(v)  # dict_keys(['name', 'age', 'hobby'])
@@ -979,7 +973,7 @@
   
   dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
   for x in dict_a:
-    print(dict_a[x])
+      print(dict_a[x])
   ```
 
 ### 获取所有键和值
@@ -989,7 +983,7 @@
   ```python
   dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
   for k, v in dict_a.items():
-    print(k, v)  # name ZhangSan  age 18  hobby playBall
+      print(k, v)  # name ZhangSan  age 18  hobby playBall
   
   # v = dict_a.items()
   # print(v)  # dict_items([('name', 'ZhangSan'), ('age', 18), ('hobby', 'playBall')])
@@ -1001,7 +995,7 @@
   
   dict_a = {"name": "ZhangSan", "age": 18, "hobby": "playBall"}
   for x in dict_a:
-    print(x, dict_a[x])
+      print(x, dict_a[x])
   ```
 
 ### 构造字典
@@ -1230,8 +1224,8 @@
   ```python
   name = "root"
   def func():
-    global name  # 此例有没有此行效果一样
-    name.upper()
+      global name  # 此例有没有此行效果一样
+      name.upper()
   func()
   print(name)  # root  由于字符串 “root” 不支持修改，故获取原 name 结果仍为小写
   ```
@@ -1239,8 +1233,8 @@
   ```python
   name = "root"
   def func():
-    global name
-    name = name.upper()  # 相当于在全局又定义了一遍 name，效果等同于示例 2
+      global name
+      name = name.upper()  # 相当于在全局又定义了一遍 name，效果等同于示例 2
   func()
   print(name)  # ROOT  获取新 name 结果为大写
   ```
@@ -1256,7 +1250,7 @@
   ```python
   name = ["Jerry", "Peter"]
   def func():
-    name.append("Andy")  # 添加Andy
+      name.append("Andy")  # 添加Andy
   func()
   print(name)  # ['Jerry', 'Peter', 'Andy']  # 由于列表支持修改，故获取原 name 结果添加 Andy
   ```
@@ -1264,9 +1258,9 @@
   ```python
   name = [11, 22]
   def func():
-    name = []
-    name.append(666)  # 函数内部已经定义 name，所以此处 append 作用于局部变量
-    print(name)  # [666]  此处的 name 是函数内部的 name
+      name = []
+      name.append(666)  # 函数内部已经定义 name，所以此处 append 作用于局部变量
+      print(name)  # [666]  此处的 name 是函数内部的 name
   func()
   print(name)  # [11, 22]  函数内部已经定义 name，此处的 name 是函数外部的 name
   ```
@@ -1296,10 +1290,10 @@
   ```python
   money = 120
   if money >= 100:  # 等同于如果
-    print("恭喜你！可以买宝马了！")  # print 前默认有一个缩进，表示与 if 的从属关系
-    print("真开心！")  # 注意同一条件下的所有 print 缩进要统一
+      print("恭喜你！可以买宝马了！")  # print 前默认有一个缩进，表示与 if 的从属关系
+      print("真开心！")  # 注意同一条件下的所有 print 缩进要统一
   else:  # 等同于否则，else 后面没有条件
-    print("努力赚钱吧！")  # print 前默认有一个缩进
+      print("努力赚钱吧！")  # print 前默认有一个缩进
   print("程序结束!")  # 此处 print 前与 if 缩进一致，不受条件限制一定会执行
   ```
 
@@ -1346,14 +1340,14 @@
   ```python
   money = 120
   if money >= 100:
-    print("可以买宝马了！")
-    print("真开心！")
+      print("可以买宝马了！")
+      print("真开心！")
   if money >= 50 and money < 100:  # 多个条件的 if 缩进相同
-    print("买丰田！")
+      print("买丰田！")
   if money >= 20 and money < 50:
-    print("二手车！")
+      print("二手车！")
   else:
-    print("骑共享单车")  # 此处 else 只与最近的 if 起作用，即当 money = 120 的时候，获取结果既有买宝马又有骑共享单车。
+      print("骑共享单车")  # 此处 else 只与最近的 if 起作用，即当 money = 120 的时候，获取结果既有买宝马又有骑共享单车。
   ```
   
 - **有elif示例**
@@ -1361,14 +1355,14 @@
   ```python
   money = 120
   if money >= 100:
-    print("可以买宝马了！")
-    print("真开心！")
+      print("可以买宝马了！")
+      print("真开心！")
   elif money >= 50:  # 缩进与同级别 if 相同，将多个条件构成一个整体
-    print("买丰田！")
+      print("买丰田！")
   elif money >= 20:
-    print("二手车！")
+      print("二手车！")
   else:
-    print("骑共享单车")
+      print("骑共享单车")
   
   # 此程序运行结果为：
   可以买宝马了
@@ -1385,18 +1379,18 @@
   money = int(input("请输入存款金额（万）？"))
   day = int(input("今天是星期几（1-7）？"))
   if money >= 100:
-    print("可以买宝马了！")
-    print("真开心！")
-    if day <= 5:  # 此处的 if 在第一个 if 与其它 elif 的基础下，所以缩进要降一个等级
-      print("周末去提车！")
-    else:  # 此处的 else 在第一个 if 与其它 elif 的基础下，与第二个 if 同级
-      print("今天下午就去提车！")
+      print("可以买宝马了！")
+      print("真开心！")
+      if day <= 5:  # 此处的 if 在第一个 if 与其它 elif 的基础下，所以缩进要降一个等级
+          print("周末去提车！")
+      else:  # 此处的 else 在第一个 if 与其它 elif 的基础下，与第二个 if 同级
+          print("今天下午就去提车！")
   elif money >= 50:
-    print("买丰田！")
+      print("买丰田！")
   elif money >= 20:
-    print("二手车！")
+      print("二手车！")
   else:
-    print("骑共享单车")
+      print("骑共享单车")
   ```
 
 ### 练习
@@ -1416,15 +1410,15 @@
   ```python
   day = int(input("请输入星期几？（1-7）"))
   if day == 1:
-    print("星期一特价菜：水煮鱼")
+      print("星期一特价菜：水煮鱼")
   elif day == 2:
-    print("星期二特价菜：烧排骨")
+      print("星期二特价菜：烧排骨")
   elif day == 3 or day == 4:
-    print("星期三、四特价菜：宫爆鸡丁")
+      print("星期三、四特价菜：宫爆鸡丁")
   elif day == 5 or day == 6:
-    print("星期五、六特价菜：清蒸鲈鱼")
+      print("星期五、六特价菜：清蒸鲈鱼")
   else:
-    print("星期日特价菜：干锅肥肠")
+      print("星期日特价菜：干锅肥肠")
   ```
 
 #### 成绩单
@@ -1441,13 +1435,13 @@
   ```python
   score = int(input("请输入考生成绩："))
   if score >= 90:
-    print("优秀")
+      print("优秀")
   elif score >= 80:
-    print("良好")
+      print("良好")
   elif score >= 60:
-    print("中等")
+      print("中等")
   else:
-    print("差")
+      print("差")
   ```
 
 #### 保险柜
@@ -1466,14 +1460,14 @@
   
   pwd1 = input("请输入第一道密码：")
   if pwd1 == password1:
-    print("第一道密码输入正确！")
-    pwd2 = input("请输入第二道密码：")
-    if pwd2 == password2:
-      print("恭喜你，输入正确！拿到5毛钱！")
-    else:
-      print("很遗憾！第二道密码错误！")
+      print("第一道密码输入正确！")
+      pwd2 = input("请输入第二道密码：")
+      if pwd2 == password2:
+          print("恭喜你，输入正确！拿到5毛钱！")
+      else:
+          print("很遗憾！第二道密码错误！")
   else:
-    print("第一道密码输入错误，请出去吧！")
+      print("第一道密码输入错误，请出去吧！")
   ```
 
 ## 循环结构
@@ -1500,7 +1494,7 @@
   ```python
   str_a = ["中国", "上海", 123]
   for data in str_a:
-    print(data)
+      print(data)
   ```
 
 - 还可用索引思想遍历
@@ -1508,7 +1502,7 @@
   ```python
   str_a = ["中国", "上海", 123]
   for i in range(len(str_a)):
-    print(str[i])
+      print(str[i])
   ```
 
 #### 循环序列
@@ -1525,17 +1519,17 @@
 
   ```python
   for i in range(0, 10, 1):  # 开始值为 0 时，可简化为 for i in range(0, 10)/(10)
-  	print(i)  # 依次打印从0到9
+  	  print(i)  # 依次打印从0到9
   ```
   
   ```python
   for i in range(10):
-  	print("Hello world!")  # 依次输出 10 次 Hello world!
+  	  print("Hello world!")  # 依次输出 10 次 Hello world!
   ```
   
   ```python
   for i in range(10):
-  	pass
+  	  pass
   print(i)  # 9  i 最后一次的值为 9
   ```
 
@@ -1550,7 +1544,7 @@
   ```python
   list_a = ["a", "b", "c"]
   for info in list_a:
-    print(info)  # a b c
+      print(info)  # a b c
   ```
 
 - 索引遍历
@@ -1560,7 +1554,7 @@
   ```python
   list_a = ["a", "b", "c"]
   for i in range(len(list_a)):
-    print(list_a[i])  # a b c
+      print(list_a[i])  # a b c
   ```
 
 #### 遍历嵌套容器
@@ -1569,15 +1563,15 @@
 
   ```python
   reward_list = [
-    ("三等奖", 5, "ipad"),
-    ("二等奖", 3, "iPhone"),
-    ("一等奖", 1, "马尔代夫"),
-    ("特等奖", 1, "一套房")
+      ("三等奖", 5, "ipad"),
+      ("二等奖", 3, "iPhone"),
+      ("一等奖", 1, "马尔代夫"),
+      ("特等奖", 1, "一套房")
   ]
   
   for title, count, detail in reward_list:  # 元素可写成 (title, count, detail)
-  print(title)  # 三等奖  二等奖  一等奖  特等奖
-  print(title, count)  # 三等奖 5  二等奖 3  一等奖 1  特等奖 1
+      print(title)  # 三等奖  二等奖  一等奖  特等奖
+      print(title, count)  # 三等奖 5  二等奖 3  一等奖 1  特等奖 1
   ```
 
 #### 遍历字典
@@ -1599,7 +1593,7 @@
   for values in dict_a.values():  # 获取值
       print(values)
   for k, v in dict_a.items():  # 获取键和值
-  print(k, v)
+      print(k, v)
   ```
 
 #### 冒泡排序
@@ -1612,7 +1606,7 @@
   lista = [5, 2, 3, 4, 1]
   for x in range(1, len(lista)):  # x是比较的轮数，从1到4
       for y in range(0, len(lista) - x):  # y是每轮每次比较的前一位索引号
-          if lista[y] > lista[y + 1]: #通过比较大小判断两个数是否交换
+          if lista[y] > lista[y + 1]:  # 通过比较大小判断两个数是否交换
               # 两个数交换
               c = lista[y]  # 引入第三方变量
               lista[y] = lista[y + 1]
@@ -1640,16 +1634,16 @@
   ```python
   i = 1
   while i <= 10:
-  	print("第", i, "次打印：hello world!")
-  	i = i + 1  # 条件迭代
+      print("第", i, "次打印：hello world!")
+      i = i + 1  # 条件迭代
   # 依次打印第几次打印：hello world!
   ```
 
   ```python
   i = 100
   while i <= 200:
-    print(i)
-    i += 2  # 100-200之间的偶数
+      print(i)
+      i += 2  # 100-200之间的偶数
   ```
 
 #### 无限循环
@@ -1675,23 +1669,23 @@
   ```
 
   ```python
-  for year in range(1,11):
-  	print("----------第", year, "年到了！")
-  	for month in range(1,13):
-  		print("第", year, "年，第", month, "月，还款1000元！")
+  for year in range(1, 11):
+      print("----------第", year, "年到了！")
+      for month in range(1, 13):
+          print("第", year, "年，第", month, "月，还款1000元！")
   ```
 
 - 遍历多维容器
 
   ```python
-  lista=[1,213,13,232,3,43,3,3]
-  listb=[21,13,243,4,54,6]
-  listc=[23,545,465,65,6565,76]
-  listx=[lista,listb,listc]
+  lista = [1, 213, 13, 232, 3, 43, 3, 3]
+  listb = [21, 13, 243, 4, 54, 6]
+  listc = [23, 545, 465, 65, 6565, 76]
+  listx = [lista, listb, listc]
   
   for x in listx:
-  	for s in x:
-  		print(s)  # 获取结果为：各个列表的各个值
+      for s in x:
+          print(s)  # 获取结果为：各个列表的各个值
   ```
 
 ### Continue、Break
@@ -1739,7 +1733,7 @@
 
 - **文件**
 
-  - **文本文件**：也称字符型文件，只保存字符串的文本文档，如 txt，json，css 等。文本文件从本质上也是二进制文件。
+  - **文本文件**：也称字符型文件，只保存字符串的文本文档，如 txt，JSON，css 等。文本文件从本质上也是二进制文件。
 
   - **二进制文件**：也称字节型文件，可以保存任意格式的多媒体数据，如图片，音频，视频等。
 
@@ -1784,9 +1778,9 @@
   f = open(r"英雄.mp4", "rb")
   has_read_size = 0
   while has_read_size < total_size:
-    chunk = f.read(3)  # 每次读3个字节，防止一次性读完，内存不够
-    print(chunk)
-    has_read_size += len(chunk)
+      chunk = f.read(3)  # 每次读3个字节，防止一次性读完，内存不够
+      print(chunk)
+      has_read_size += len(chunk)
   f.close()
   ```
 
@@ -1813,12 +1807,12 @@
 
   ```python
   # 读
-  with open(r"demo.txt", "r", encoding = "utf-8") as f:
-    data = f.read()
+  with open(r"demo.txt", "r", encoding="utf-8") as f:
+      data = f.read()
   
   # 写
-  with open(r"demo.txt", "a", encoding = "utf-8") as f:
-    f.write("Hello world!")
+  with open(r"demo.txt", "a", encoding="utf-8") as f:
+      f.write("Hello world!")
   ```
 
 ## 文件处理
@@ -1830,9 +1824,9 @@
   ```python
   dict_a = {"zhangsan": 111, "lisi": 222, "wangwu": 333}
   for user, pwd in dict_a.items():
-    with open(r"demo.txt", "a", encoding="utf-8") as f:
-      line = "{}-{}\n".format(user, pwd)
-      f.write(line)
+      with open(r"demo.txt", "a", encoding="utf-8") as f:
+          line = "{}-{}\n".format(user, pwd)
+          f.write(line)
   ```
 
 ### 复制粘贴
@@ -1841,8 +1835,8 @@
 
   ```python
   with open(r"cat.jpg", "rb") as file1, open(r"cat-2.jpg", "wb") as file2:  # 用逗号连接，同时执行两次读写
-    data = file1.read()
-    file2.write(data)
+      data = file1.read()
+      file2.write(data)
   ```
 
 ### 处理 TXT 文件
@@ -1862,20 +1856,20 @@
   
   ```py
   with open(r"file.txt", "r", encoding="utf-8") as f:
-    # 获取到去除首尾空白行的文件内容
-    data = f.read().strip()
+      # 获取到去除首尾空白行的文件内容
+      data = f.read().strip()
   
   # 根据"\n"切割，获取到一个列表，文件每行内容为列表的一个元素
   list_a = data.split("\n")
   dict_a = {}
   for line in list_a:
-    # 去除中间空白行
-    if not line:
-      continue
-    # 根据","切割原列表的元素，切割之后的部分组成一个新列表，每个信息为新列表的一个元素
-    list_new = line.split(",")  # ['zhangsansan', '123', '19999999999'] for 循环3次，分别得到3个列表
-    # 向字典添加键值对
-    dict_a[list_new[0]] = list_new[2]
+      # 去除中间空白行
+      if not line:
+          continue
+      # 根据","切割原列表的元素，切割之后的部分组成一个新列表，每个信息为新列表的一个元素
+      list_new = line.split(",")  # ['zhangsansan', '123', '19999999999'] for 循环3次，分别得到3个列表
+      # 向字典添加键值对
+      dict_a[list_new[0]] = list_new[2]
   print(dict_a)
   ```
 
@@ -1900,7 +1894,7 @@
   image = data.content
   
   with open("Benz.png", "wb") as f:
-    f.write(image)
+      f.write(image)
   ```
 
 - **批量下载图片示例**
@@ -1919,21 +1913,21 @@
   
   # 处理文件，详见处理 txt 文件
   with open(r"file.txt", "r", encoding="utf-8") as f:
-    data = f.read()
+      data = f.read()
   data = data.strip()
   list_a = data.split("\n")
   dict_a = {}
   for row in list_a:
-    list_new = row.split(",")
-    dict_a[list_new[0]] = list_new[2]
+      list_new = row.split(",")
+      dict_a[list_new[0]] = list_new[2]
   
-    # 详见下载图片
-    # 批量下载，list_new[2]为之前获取到的 url
-    data = requests.get(list_new[2])
-    image = data.content
-    # list_new[0]为之前获取到的文件名
-    with open(list_new[0], "wb") as f:
-    	f.write(image)
+      # 详见下载图片
+      # 批量下载，list_new[2]为之前获取到的 url
+      data = requests.get(list_new[2])
+      image = data.content
+      # list_new[0]为之前获取到的文件名
+      with open(list_new[0], "wb") as f:
+          f.write(image)
   ```
 
 # 函数
@@ -1942,50 +1936,39 @@
 
 ## 自定义函数
 
-​	自定义函数是开发人员自己编写的函数，可以在项目中的多个地方调用。
+### 语法
 
-### 自定义函数的语法
-
-- 语法
-
-  ```
-  - 定义
-      def 函数名(形参):
-          函数体
-          
-  - 调用
-  	函数名(实参)
-  ```
+- 自定义函数是开发人员自己编写的函数，可以在项目中的多个地方调用。
 
   ```python
   def get_sum(a, b):  # 定义函数格式
       result = a + b  # 定义函数规则
       print("相加的结果是：", result)  # 定义函数结果
   
+  
   get_sum(4, 5)  # 9  调用函数
   print(type(get_sum))  # <class 'function'>
   ```
-
-  ```
-  - def为关键字，get_sum为函数名，a和b为形参，4和5为实参；
-  - 函数里面定义的变量result，在函数外面无法不经全局化直接访问到；
-  ```
+  
+  解释：
+  
+  - `def` 为关键字，`get_sum` 为函数名，`a` 和 `b` 为形参，`4` 和 `5` 为实参；
+  - 函数里面定义的变量 result，在函数外面无法不经全局化直接访问到；
 
 ### 函数名
 
-- 在Python中，函数名通常使用小写单词，多个单词使用下划线连接；
+- 在 Python 3 中，可以用中文作为变量名，非 ASCII 标识符也是允许的了
 
-- 函数名的巧用  函数名也是变量
+- 函数名的巧用：函数名也是变量
 
   - **函数名重复**
 
   ```python
   def func():
-    	print(1)
+      print(1)
   def func():
-    	print(2)
-  
-  func() # 2 执行最后一个func()
+      print(2)
+  func()  # 2 执行最后一个func()
   ```
 
   - **函数名可用其它变量代替**
@@ -1998,9 +1981,9 @@
   f1 = f
   f1()  # 123 f1 = f, 故f1() = f()
   
-  user_list = [11, "中国联通", (11, 22), f, f()]
-  user_list[-2]()  # 123  user_list[-2]索引到函数名f，后面加()，整体作为函数名，相当于f()
-  user_list[-1]  # 123  user_list[-1]索引到函数名f()
+  list_a = [11, "中国联通", (11, 22), f, f()]
+  list_a[-2]()  # 123  user_list[-2]索引到函数名f，后面加()，整体作为函数名，相当于f()
+  list_a[-1]  # 123  user_list[-1]索引到函数名f()
   ```
 
   - **变量接收函数**
@@ -2011,8 +1994,8 @@
       value = 999
       return value
   
-  res = func()  # 123 此时res == value
-  print(res)  # 999 
+  res = func()  # 123  此时 res 等同于执行 func()
+  print(res)  # 999  此时 res 接收 func() 的返回值 value
   ```
 
   - **for循环一次性调用多个函数**
@@ -2030,7 +2013,7 @@
   def send_wechat():
       print("发送微信")
   
-  func_list = [send_sms, send_email, send_dingding, send_wechat]  # 注意此处元素没有引号
+  func_list = [send_sms, send_email, send_dingding, send_wechat]  # 注意此处元素为变量，没有引号
   
   for func in func_list:
       func()  # 发送短信 发送邮件 发送钉钉 发送微信
@@ -2059,8 +2042,8 @@
   print("2.登录")
   print("3.查看用户信息")
   
-  choice = input("请选择业务编号")
-  func = mapping.get(choice)  # func将变为register/login/user_info
+  choice = input("请选择业务编号：")
+  func = mapping.get(choice)  # func 将变为 register/login/user_info
   if func:
       func()
   ```
@@ -2165,9 +2148,7 @@
 
 ### 匿名函数
 
-- 匿名函数，即lambda表达式，用在简单的地方。
-
-- 匿名函数语法
+- **匿名函数**：即 lambda 表达式，用在简单的地方。
 
   ```python
   func = lambda x, y: x + y  # func为函数名, x/y为形参，x + y为返回值
@@ -2181,30 +2162,28 @@
       return res
   ```
 
-  ```
+- **扩展**
+
   - 支持没有参数，只有返回值
   - 支持动态参数
   - 支持没有函数名
-  ```
 
 ### 返回值
 
 - **语法**
 
-  ```
   - 返回值就是函数执行后返回的结果
-  - 函数内部遇到return，函数立即终止；
+  - 函数内部遇到 return，函数立即终止；
   - 返回值可以是任意类型；
-  - 函数末尾没有return或return没有赋值，则默认返回None；
-  ```
-
+  - 函数末尾没有 return 或 return 没有赋值，则默认返回 None；
+  
 - **基础示例**
 
   ```python
   def get_sum(a, b):
       result = a + b
       return result  # 函数的输出结果返回result，函数停止
-  	print("求和：", result)  # 由于前面有return，所以此行代码不执行
+      print("求和：", result)  # 由于前面有return，所以此行代码不执行
   
   res = get_sum(4, 5)  # 调用函数并接收返回值
   print(res)  # 9
@@ -2227,45 +2206,52 @@
   print(type(r4))  # <class 'tuple'>
   ```
 
-### 作用域global
+### 作用域
 
-- 作用域分全局作用域和局部作用域，分别对应全局变量和局部变量
+- **概念**
 
-  - 全局变量一般用全大写
-  - 局部变量一般用全小写
+  - **全局作用域**：在整个程序中定义的变量和函数所具有的作用域范围
+  - **局部作用域**：在函数内部定义的变量和函数所具有的作用域范围
+  - **全局变量**：作用于全局作用域的变量
+  - **局部变量**：只作用于局部作用域的变量
 
-- 函数内部优先使用局部变量，如果没有，再使用全局变量，函数外部不能直接调用未经全局化局部变量。
+- 函数内部使用全局变量
 
-- 局部变量可以与全局变量重名
-	- 如果函数内部未定义局部变量，则函数内部可以对全局变量做修改并作用到全局，从执行函数开始，同时原全局变量将更改，前提是全局变量值支持修改；
-	- 如果函数内部定义局部变量，且局部变量与原全局变量重名，局部变量未经global全局化，则局部变量只作用于函数内部，全局变量作用于函数外部；
-	- 如果函数内部定义局部变量，且局部变量与原全局变量重名，局部变量经global全局化，则局部变量作用于全局和局部，同时原全局变量将更改，前提是全局变量值支持修改；
-	- 以上信息结合以下示例和数据类型特殊说明共同参考。
-	
-- 关键字global的作用就是将局部变量作用到全局
+  - 函数内部优先使用局部变量，如果没有，再使用全局变量
 
-- 示例
+- 函数外部使用局部变量
+
+  - 函数外部不能直接使用未经 global 的局部变量
+
+- global
+
+  - 关键字 global 的作用就是将局部变量作用到全局
+  - 如果局部变量和全局变量重名，经 global 后，原全局变量的值将更改
+
+- **示例**
 
   ```python
-  v1 = 1
-  v2 = 2
-  v3 = 3
+  v1 = 1  # 全局变量
+  v2 = 2  # 全局变量
+  v3 = 3  # 全局变量
+  
   
   def func():
-      v2 = 3
-      global v3
-      v3 = 4  # 通过global，将全局变量v3的值改为4
-      v4 = 4
-      print(v1)  # 1  获取全局变量v1的值
-      print(v2)  # 3  获取局部变量v2的值
-      print(v3)  # 4  获取全局变量v3的新值
-      print(v4)  # 4  取局部变量v4的值
+      v2 = 3  # 与全局变量同名的局部变量
+      global v3  # 通过global，将局部变量 v3 改为全局变量
+      v3 = 4  # 通过global，将全局变量 v3 的值改为 4
+      v4 = 4  # 局部变量
+      print(v1)  # 1  获取全局变量 v1 的值
+      print(v2)  # 3  优先获取局部变量 v2 的值
+      print(v3)  # 4  获取全局变量 v3 的新值
+      print(v4)  # 4  取局部变量 v4 的值
+  
   
   func()  # 1 3 4 4
-  print(v1)  # 1  获取全局变量v1的值
-  print(v2)  # 2  获取全局变量v2的值
-  print(v3)  # 4  获取全局变量v3的新值
-  print(v4)  # 报错  全局不能直接调用未经全局化的局部变量
+  print(v1)  # 1  获取全局变量 v1 的值
+  print(v2)  # 2  获取全局变量 v2 的值
+  print(v3)  # 4  获取全局变量 v3 的新值
+  print(v4)  # 报错  函数外部不能直接调用未经 global 的局部变量
   ```
 
 ## 内置函数
@@ -2303,9 +2289,8 @@
   # 求平均数
   listb = [21, 21, 31, 32, 33, 5454, 46, 65, 6]
   print(sum(listb) / len(listb))
-  
   ```
-
+  
 - **round() 保留小数位**
 
   ```python
@@ -2404,9 +2389,8 @@
   issubclass()：判断一个类是否为另一个类的子类。
   globals() : 返回当前全局变量的字典。
   next(iterator[, default]) : 接收一个迭代器，返回迭代器中的数值，如果设置了default，则当迭代器中的元素遍历后，输出default内容。
-  
   ```
-
+  
 - **id() 获取id**
 
   获取一个数据的id，判断两个变量是不是同一个变量
@@ -2585,7 +2569,7 @@
 
 # 模块
 
-​	模块是Python中最高级别组织单元，它将程序代码和数据封装起来以便重复使用。
+​	模块是 Python 中最高级别组织单元，它将程序代码和数据封装起来以便重复使用。
 
 ​	模块中包含了某一类业务中多个函数和属性。模块也称包或者库。
 
@@ -2593,11 +2577,11 @@
 
 - **创建模块**
 
-  项目已创建 > 在项目中创建包/py文件，在py文件中写模块
+  项目已创建 > 在项目中创建包/py文件，在 `.py文件` 中写模块
 
 - **引入和使用模块**
 
-  引入模块本质上就是在一个Python文件中引入另一个Python文件
+  引入模块本质上就是在一个 Python 文件中引入另一个 Python 文件
 
   -  模块文件在以下目录时，调用和使用方法
 
@@ -2658,27 +2642,43 @@
 
 ## 内置模块
 
-- 内置模块就是Python自带的模块。
+- 内置模块就是 Python 自带的模块。
 
 - 内置模块存放路径：C:\Users\39331\AppData\Local\Programs\Python\Python311\Lib
 
 ### random 生成随机数
-
-- **引入方式**
-
-  import random
 
 - **抽取**
 
   抽取原则：随机抽取对原数据没有影响，原数据不会更改
 
   ```python
+  import random
+  
   random(a, b)  左闭右闭
   random.randint(1, 10)  # 随机抽取整数
   random.uniform(1, 10)  # 随机抽取浮点数
   random.random()  # 随机抽取0到1的浮点数
   random.choice([1, 132, 32, 43, 43, 454])  # 随机抽取一个元素
   random.sample([1, 132, 32, 43, 43, 454], 2)  # [1, 43]  随机抽取2个元素
+  ```
+
+  ```python
+  # 抽奖实例
+  
+  import random  # 引入随机数模块
+  
+  print("正在抽奖.......")
+  r = random.randint(1, 1000)
+  print("----------您的抽奖号码是：", r)
+  if r == 1:
+    print("*******恭喜你，获得一等奖笔记本电脑！")
+  elif 10 <= r <= 19:
+    print("*******恭喜你，获得二等奖 冰箱！")
+  elif 100 <= r <= 149:
+    print("*******恭喜你，获得三等奖 音响！")
+  else:
+    print("******* 谢谢惠顾！")
   ```
 
 - **打乱次序**
@@ -2694,11 +2694,18 @@
 
 ### time 时间处理
 
+- Basic func
+
+  ```python
+  ```
+  
+  
+  
 - **获取时间戳**
 
   time.time()
 
-  表示当前时间距离1970年元旦0时的秒数
+  表示当前时间距离 1970 年元旦 0 时的秒数
 
   ```python
   import time
@@ -2788,14 +2795,13 @@
 
 ### 时间格式的转换
 
-- ```
-  - 三种时间格式：时间戳time.time()、当前时间datetime.now()、字符串
-  - 三种格式以datetime为核心相互转换
-  ```
+- 三种时间格式：时间戳 time.time()、当前时间 datetime.now()、字符串
 
-- **datetime和字符串的转换**
+- 三种格式以 datetime 为核心相互转换
 
-  - **datetime转字符串**
+#### datetime 和字符串
+
+- **datetime 转字符串**
 
   ```python
   from datetime import datetime
@@ -2805,7 +2811,7 @@
   print(type(time_string))  # <class 'str'>
   ```
 
-  - **字符串转datetime**
+- **字符串转 datetime**
 
   ```python
   from datetime import datetime
@@ -2816,9 +2822,9 @@
   print(type(time_date))  # <class 'datetime.datetime'>
   ```
 
-- **datetime和时间戳的转换**
+#### datetime 和时间戳
 
-  - **datetime转时间戳**
+- **datetime 转时间戳**
 
   ```python
   from datetime import datetime
@@ -2828,7 +2834,7 @@
   print(type(time_stamp))  # <class 'float'>
   ```
 
-  - 时间戳转datetime
+- 时间戳转 datetime
 
   ```python
   from datetime import datetime
@@ -2926,35 +2932,27 @@
 
 ### urllib 爬虫
 
-- **引入方式**
-
-  from urllib import request
-
-#### request
-
-- **.urlopen(url)**
-
-  爬取网页并存入本地html文件
+- **`request.urlopen($URL)`**
 
   ```python
+  # 爬取网页并存入本地 html 文件
+  
   from urllib import request
   
-  url = "http://www.baidu.com"
-  res = request.urlopen(url).read()  # 发送请求并读取数据
-  print(res.decode())  # decode()解码，此行可以没有
+  url = "http://www.baidu.com"  # 注意 https: 和 http:
+  data = request.urlopen(url).read()  # data 为变量，发送请求并读取数据
+  print(data.decode())  # decode()解码：将二进制转换成字符，此行可以没有
   
-  with open(r"8888.html", "wb") as f: 
-  	f.write(res)  # 将data获取到的数据写到f中
+  with open(r"8888.html", "wb") as f:  # f 为变量，创建一个文件，等待写入
+      f.write(data)  # 将 data 获取到的数据写到 f 中
   ```
 
 
-### json 数据
+### JSON 数据
 
-​	JSON（JavaScript Object Notation， JS对象简谱）是一种轻量级的数据交换格式。json可以实现不同平台的数据交换，也可以使用它保存业务数据。
+#### JSON 语法
 
-#### json语法
-
-​	json数据本质上是一个固定格式的字符串。使用键值对的方式表示一个业务对象（类似于字典）。
+​	在 Python 中 JSON 数据本质上是一个固定格式的字符串。使用键值对的方式表示一个业务对象（类似于字典）。
 
 - 保存一个对象
 
@@ -2964,12 +2962,11 @@
 
   ```
   - a = '{"键1": "值1", "键2": "值2", ....}'
-  - a为接收变量，整个json数据用单引号包围，但不包含单引号；
-  - 键必须是字符串，必须使用双引号； 
-  	- 如果Python数据键是单引号，转换后会自动变成双引号。
+  - a为接收变量，整个 json 数据用单引号包围，但不包含单引号；
+  - 如果 Python 数据键是单引号，转换后会自动变成双引号。
   - 序列化支持以下类型
   ```
-
+  
   |   Python    | JSON     |
   | :---------: | -------- |
   |    dict     | object   |
@@ -2980,91 +2977,84 @@
   |    False    | false    |
   |    None     | null     |
   |  '单引号'   | "双引号" |
-
+  
 - 保存多个对象
 
   ```json
   '[{"键1": 值1, "键2": 值2}, {"键1": 值1, "键2": 值2}, …]'
   ```
 
-#### json与Python数据转换
+#### Python 转 JSON
 
-- **Python转json**
+- 即序列化，实际就是将字典或者列表嵌套字典转成字符串。
 
-  ```
-  - 即序列化，实际就是将字典或者列表嵌套字典转成字符串。
-  - 禁止使用str() 将Python数据转换成字符串，否则获取结果花括号里面会变单引号。
-  - ensure_ascii=False 表示禁止ascii转换，就是禁止将中文的“张三”转换成字节。
-  ```
-
-  json.dumps()
+- **`json.dumps($DATA_PYTHON)`**
 
   ```python
   import json
   
-  data_python = {"user": "张三", "pwd": "123", "num": 100}  # Python格式的字典
-  data_json = json.dumps(data_python, ensure_ascii = False)  # 将Python格式转换成json格式
+  data_python = {"user": "张三", "pwd": "123", "num": 100}  # Python 格式的字典
+  data_json = json.dumps(data_python, ensure_ascii = False)  # 将 Python 格式转换成 JSON 格式
   print(data_json)  # {"user": "张三", "pwd": "123", "num": 100}, 但注意这是一个字符串。
   print(type(data_json))  # <class 'str'>
   ```
 
-- **json转Python**
+  解释：
 
-  ```
-  即反序列化，实际就是将字符串转成字典或者列表嵌套字典。
-  ```
+  - 禁止使用 `str()` 将 Python 数据转换成字符串，否则获取结果花括号里面会变单引号。
+  - `ensure_ascii=False` 表示禁止 Ascii 转换，就是禁止将中文的“张三”转换成字节。
 
-  json.loads()
+
+#### JSON 转 Python
+
+- 即反序列化，实际就是将字符串转成字典或者列表嵌套字典。
+
+- **`json.loads($DATA_JSON)`**
 
   ```python
   import json
   
-  data_json = '{"user": "张三", "pwd": "123", "num": 100}'  # json格式的字符串
-  data_python = json.loads(data_json)  # 将json格式转换成Python格式
+  data_json = '{"user": "张三", "pwd": "123", "num": 100}'  # JSON 格式的字符串
+  data_python = json.loads(data_json)  # 将 JSON 格式转换成 Python 格式
   print(data_python)  # {'user': '张三', 'pwd': '123', 'num': 100}
   print(type(data_python))  # <class 'dict'>
   ```
 
-#### json模拟数据库
+#### JSON 模拟数据库
 
-- 说明
-
-  ```
-  - 在文本文件中保存json字符，通过文件读写来操作数据。
-  - 此示例只做保存，没验证，可能有bug。
-  ```
+- 在文本文件中保存 JSON 字符，通过文件读写来操作数据。
 
   ```python
   import json
   
   # 1.创建数据库文件
-  # 创建txt文件，将数据信息以json格式保存在该文件中
+  # 创建 TXT 文件，将数据信息以 JSON 格式保存在该文件中
   # 注意使用编程程序创建文本文件，否则会出现编码问题
-  with open(r"user.txt","w") as f:
+  with open(r"users.txt","w") as f:
   	users = '[{"name":"zhangsan","pwd":"123"},{"name":"lisi","pwd":"123"},{"name":"wangwu","pwd":"123"}]'
   	f.write(users)
   
   # 2.读数据（查询）
-  # 获取数据库文件中的json数据，转换成Python数据userList，并返回至Python数据
+  # 获取数据库文件中的 JSON 数据，转换成 Python 数据 user_list，并返回至 Python 数据
   def read_data():
-      with open(r"user.txt", "r") as f:
-          data_json = f.read()  # 获取到json数据
-      users_list = json.loads(data_json)  # 将json数据转化为Python数据
-      return users_list  # 函数返回至Python数据
+      with open(r"users.txt", "r") as f:
+          data_json = f.read()  # 获取到 JSON 数据
+      users_list = json.loads(data_json)  # 将 JSON 数据转化为 Python 数据
+      return users_list  # 函数返回至 Python 数据
   
   # 3.写数据（修改）
-  # 将新Python数据userList转换成json数据，并写入数据库文件
+  # 将新 Python 数据 user_list 转换成 JSON 数据，并写入数据库文件
   def write_data(users_list):
-      data_json = json.dumps(users_list, ensure_ascii = False)  # 将数据转化成json数据
-      with open(r"user.txt", "w") as f:  # 打开文件
-          f.write(data_json)  # 写入json数据
+      data_json = json.dumps(users_list, ensure_ascii = False)  # 将数据转化成 JSON 数据
+      with open(r"users.txt", "w") as f:  # 打开文件
+          f.write(data_json)  # 写入 JSON 数据
           print("----数据写入成功！")
   
   # 4.登录
   def login():
       name = input("请输入用户名：")
       password = input("请输入密码：")
-      users_list = read_data()  # 读取数据库文件中的json数据，转换成Python数据，详见readData()，并用userList接收
+      users_list = read_data()  # 读取数据库文件中的 JSON 数据，转换成 Python 数据，详见 read_data()，并用userList接收
       msg = "失败"
       for user in users_list:
           if name == user["name"] and password == user["pwd"]:
@@ -3078,10 +3068,10 @@
   def reg():
       name = input("请输入新用户名：")
       password = input("请输入密码：")
-      user_new = {"uname": name, "upwd": password}  # 新用户
-      users_list = read_data()  # 读取数据库文件中的json数据，转换成Python数据，详见readData()，并用userList接收
+      user_new = {"name": name, "pwd": password}  # 新用户
+      users_list = read_data()  # 读取数据库文件中的 JSON 数据，转换成 Python 数据，详见read_data()，并用 user_list接收
       users_list.append(user_new)  # 将新用户添加到用户列表
-      write_data(users_list)  # 将Python数据usersList转换成json数据并写入数据库文件，详见writeData()
+      write_data(users_list)  # 将 Python 数据 users_list 转换成 JSON 数据并写入数据库文件，详见 write_data()
       print("-----新用户添加成功！")
   
   # -------------------------
@@ -3091,7 +3081,7 @@
 
 ### hashlib 加密
 
-​	hashlib模块可实现md5加密，md5无法解密。
+​	hashlib 模块可实现 md5 加密，md5 无法解密。
 
 - **语法**
 
@@ -3127,9 +3117,9 @@
 
 ### socket 网络传输
 
-​	socket是对TCP/IP协议的封装，socket本身是一个调用接口（API），方便程序员用socket使用TCP/IP协议簇，实现网络通信。
+​	socket 是对 TCP/IP 协议的封装，socket 本身是一个调用接口（API），方便程序员用 socket 使用 TCP/IP 协议簇，实现网络通信。
 
-​	不同编程语言，使用socket的语法有所不同，但基本过程类似。
+​	不同编程语言，使用 socket 的语法有所不同，但基本过程类似。
 
 - **名词解释**
 
@@ -3157,7 +3147,7 @@
 
 ## 第三方模块
 
-​	第三方模块是由第三方个人或者组织使用Python开发，需要先下载安装才能使用的工具包。
+​	第三方模块是由第三方个人或者组织使用 Python 开发，需要先下载安装才能使用的工具包。
 
 ​	第三方模块安装的失败率很高，应该多试几次。
 
@@ -3189,7 +3179,7 @@
       - 在powershell中输入： python setup.py install，回车
   ```
 
-- **在Pycharm中安装**
+- **在 Pycharm 中安装**
 
   ```
   - 在创建项目时，需要选择系统环境，否则通过其它方式安装的模块，可能无法使用。
@@ -3198,11 +3188,11 @@
   - 点方框——Install Packge
   ```
 
-### pygame游戏开发
+### pygame 游戏开发
 
-​	pygame是制作小游戏的第三方模块。
+​	Pygame 是制作小游戏的第三方模块。
 
-- **pygame主要用法**
+- **Pygame 主要用法**
 
   ```
   - pip命令添加pygame模块
@@ -3225,7 +3215,7 @@
               sys.exit(0)
   ```
 
-- pygame其它用法
+- Pygame 其它用法
 
   ```
   - 添加文字：pygame.init()
@@ -3242,7 +3232,7 @@
 
 # 面向对象
 
-​	面向对象(Object Oriented)是软件开发方法，一种编程范式，面向对象是相对于面向过程来讲的。面向对象方法，把相关的数据属性和方法组织为一个整体来看待，从更高的层次来进行系统建模，更贴近事物的自然运行模式。
+​	面向对象（Object Oriented）是软件开发方法，一种编程范式，面向对象是相对于面向过程来讲的。面向对象方法，把相关的数据属性和方法组织为一个整体来看待，从更高的层次来进行系统建模，更贴近事物的自然运行模式。
 
 ## 语法
 
@@ -3269,14 +3259,14 @@
       # self关键词：在类的内部表示当前对象，即类以内的所有对象
       def __init__(self, nick, color, age):  # 定义属性：昵称，颜色，年龄
       
-          # 给对象的属性赋值，赋的值就是类的属性，即给对象的city属性初始化值
+          # 给对象的属性赋值，赋的值就是类的属性，即给对象的 city 属性初始化值
           self.nick = nick
           self.color = color
           self.age = age
-          self.strain = "加菲猫"  # 内部定义固定属性，所有对象的strain都是加菲猫
+          self.strain = "加菲猫"  # 内部定义固定属性，所有对象的 strain 都是加菲猫
           
       # 1.2其它方法
-      # def 方法名(self):  # 每个函数中都有固定形参self
+      # def 方法名(self):  # 每个函数中都有固定形参 self
       def eat1(self):
           print("猫在吃鱼！")
           
@@ -3481,12 +3471,12 @@
   # 将连接部分写在循环以外，防止频繁连接
   # 确保已创建数据库 db_test 和数据表 tb_test (四列：id, username, password, mobile)
   conn = pymysql.Connect(
-    host="localhost",  # 主机地址，如果要连接远程数据库，需填写对应数据库地址
-    port=3306,  # 端口号，注意数字是整型
-    user="root",
-    password="123456",
-    charset="utf8",  # 文件编码
-    database="db_test"  # 可提前连接某个特定数据库，以减少后期进入数据库的步骤
+      host="localhost",  # 主机地址，如果要连接远程数据库，需填写对应数据库地址
+      port=3306,  # 端口号，注意数字是整型
+      user="root",
+      password="123456",
+      charset="utf8",  # 文件编码
+      database="db_test"  # 可提前连接某个特定数据库，以减少后期进入数据库的步骤
   )
   print("MySQL已连接.....")
   cursor = conn.cursor(cursor=DictCursor)  # 创建游标对象（1.执行sql语句，2.处理数据查询结果）
@@ -3496,19 +3486,19 @@
   # 确保已创建 users.txt 文件（zhangsan,123,19999999999...）
   # 关于文件处理，详见：处理 TXT 文件
   with open('users.txt', 'r', encoding='utf-8') as f:
-    data = f.read().strip()
+      data = f.read().strip()
   list_a = data.split("\n")
   for line in list_a:
-    if not line:
-      continue
-    list_new = line.split(",")  # ['zhangsansan', '123', '19999999999'] for 循环3次，分别得到3个列表
+      if not line:
+          continue
+      list_new = line.split(",")  # ['zhangsansan', '123', '19999999999'] for 循环3次，分别得到3个列表
   
-    # 4.执行sql
-    # 不要直接将用户输入的值直接写入 sql 语句，防止 SQL 注入攻击。
-    sql = "insert into tb_test(username, password, mobile) values(%s, %s, %s)"  # %s 占位符
-    cursor.execute(sql, list_new)  # 将用户输入的值以列表的形式传递给 cursor.execute() 方法
-    conn.commit()
-    print("导入数据成功！")
+      # 4.执行sql
+      # 不要直接将用户输入的值直接写入 sql 语句，防止 SQL 注入攻击。
+      sql = "insert into tb_test(username, password, mobile) values(%s, %s, %s)"  # %s 占位符
+      cursor.execute(sql, list_new)  # 将用户输入的值以列表的形式传递给 cursor.execute() 方法
+      conn.commit()
+      print("导入数据成功！")
   
   # 5.关闭游标对象和连接
   # 将关闭连接部分写在循环以外，防止频繁连接
@@ -3587,12 +3577,12 @@
   # 一般以id作为主键
   sql = """
   create table tb2(
-  	id bigint unsigned primary key auto_increment not null,
-  	name varchar(16),
-    mobile char(11),
-    email varchar(128),
-    salary decimal(10, 2),
-  	ctime datetime
+    	id bigint unsigned primary key auto_increment not null,
+      name varchar(16),
+      mobile char(11),
+      email varchar(128),
+      salary decimal(10, 2),
+      ctime datetime
   )default charset=utf8;"""
   cursor.execute(sql)
   conn.commit()
@@ -3612,7 +3602,7 @@
 - **增加数据行**
 
   ``` python
-  sql = "insert into tb1(name, mobile, email, salary, ctime) values('zhaoliu', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30');"
+  sql = "insert into tb_test(name, mobile, email, salary, ctime) values('zhaoliu', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30');"
   cursor.execute(sql)
   conn.commit()
   print("增加数据行成功！")
@@ -3621,7 +3611,7 @@
   ``` python
   # 增加多行数据行
   
-  sql = """insert into tb1(name, mobile, email, salary, ctime) values
+  sql = """insert into tb_test(name, mobile, email, salary, ctime) values
       ('mayun', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30'),
       ('zhangsan', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30'),
       ('lisi', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30');"""
@@ -3633,7 +3623,7 @@
 - **删除数据行**
 
   ``` python
-  sql = "delete from tb1 where name='zhangsan';"
+  sql = "delete from tb_test where name='zhangsan';"
   cursor.execute(sql)
   conn.commit()
   print("删除数据行成功！")
@@ -3642,7 +3632,7 @@
   - 删除所有数据行
 
   ``` python
-  cursor.execute("delete from tb1;")
+  cursor.execute("delete from tb_test;")
   conn.commit()
   print("删除所有数据行成功！")
   ```
@@ -3660,7 +3650,7 @@
 - **查询特定数据**
 
   ``` python
-  sql = "select id from tb1 where name = 'zhaoliu';"
+  sql = "select id from tb_test where name = 'zhaoliu';"
   cursor.execute(sql)
   result = cursor.fetchall()
   print(result)
@@ -3670,7 +3660,7 @@
 
   ``` python
   # fetchone在Python中查询结果是一个字典
-  sql = "select * from tb1 where name = 'lisi';"
+  sql = "select * from tb_test where name = 'lisi';"
   cursor.execute(sql)
   result = cursor.fetchone()
   print(result)
@@ -3679,7 +3669,7 @@
 - **修改数据**
 
   ``` python
-  sql = "update tb1 set mobile = '1999998888' where name = 'zhangsan';"
+  sql = "update tb_test set mobile = '1999998888' where name = 'zhangsan';"
   cursor.execute(sql)
   conn.commit()
   print("修改数据成功！")
@@ -3688,19 +3678,16 @@
   - **修改多个数据（某行）**
 
   ``` python
-  sql = """update tb1 set
-  	name = 'zhaoliu',
-  	mobile = '1999999999'
-  where name = 'zhangsan';"""
+  sql = "update tb_test set name = 'zhaoliu',mobile = '1999999999' where name = 'zhangsan';"
   cursor.execute(sql)
   conn.commit()
   print("修改某行数据成功！")
   ```
-
+  
   - **修改多个数据（某列）**
-
+  
   ``` python
-  sql = "update tb1 set mobile = '1999998888';"
+  sql = "update tb_test set mobile = '1999998888';"
   cursor.execute(sql)
   conn.commit()
   print("修改某列数据成功！")
@@ -3720,12 +3707,12 @@
   # 2.连接 MySQL 服务器
   # 确保已创建数据库 db_test 和数据表 tb_test (四列：id, username, password, mobile)
   conn = pymysql.Connect(
-    host="localhost",
-    port=3306,
-    user="root",
-    password="123456",
-    charset="utf8",
-    database="db_test"
+      host="localhost",
+      port=3306,
+      user="root",
+      password="123456",
+      charset="utf8",
+      database="db_test"
   )
   print("MySQL 已连接.....")
   cursor = conn.cursor(cursor=DictCursor)
@@ -3733,18 +3720,18 @@
   # 3.文件处理
   # 关于文件处理，详见：处理 TXT 文件
   while True:
-    user = input("请输入用户名：")
-    if user.upper() == "Q":
-      break
-    pwd = input("请输入密码：")
-    phone = input("请输入手机号：")
+      user = input("请输入用户名：")
+      if user.upper() == "Q":
+          break
+      pwd = input("请输入密码：")
+      phone = input("请输入手机号：")
   
-    # 4.执行 sql
-    # 关于执行 sql，详见操作 MySQL
-    sql = "insert into tb_test(username, password, mobile) values(%s, %s, %s)"
-    cursor.execute(sql, [user, pwd, phone])
-    conn.commit()
-    print("添加数据成功！")
+      # 4.执行 sql
+      # 关于执行 sql，详见操作 MySQL
+      sql = "insert into tb_test(username, password, mobile) values(%s, %s, %s)"
+      cursor.execute(sql, [user, pwd, phone])
+      conn.commit()
+      print("添加数据成功！")
   
   # 5.关闭游标对象和连接
   cursor.close()
@@ -3776,12 +3763,12 @@
   # 确保已创建数据库 db_test 和数据表 tb_test (四列：id, username, password, mobile)
   # 确保已创建 users.txt 文件（zhangsan,123,19999999999...）
   conn = pymysql.Connect(
-    host="localhost",
-    port=3306,
-    user="root",
-    password="123456",
-    charset="utf8",
-    database="db_test"
+      host="localhost",
+      port=3306,
+      user="root",
+      password="123456",
+      charset="utf8",
+      database="db_test"
   )
   print("MySQL 已连接.....")
   cursor = conn.cursor(cursor=DictCursor)
@@ -3790,20 +3777,20 @@
   # 确保已创建 users.txt 文件（zhangsan,123,19999999999...）
   # 关于文件处理，详见：处理 TXT 文件
   with open('users.txt', 'r', encoding='utf-8') as f:
-    data = f.read().strip()
+      data = f.read().strip()
   
   list_a = data.split("\n")
   for line in list_a:
-    if not line:
-      continue
-    list_new = line.split(",")  # ['zhangsansan', '123', '19999999999'] for 循环3次，分别得到3个列表
+      if not line:
+          continue
+      list_new = line.split(",")  # ['zhangsansan', '123', '19999999999'] for 循环3次，分别得到3个列表
   
-    # 4.执行sql
-    # 关于执行 sql，详见操作 MySQL
-    sql = "insert into tb_test(username, password, mobile) values(%s, %s, %s)"
-    cursor.execute(sql, list_new)
-    conn.commit()
-    print("导入数据成功！")
+      # 4.执行sql
+      # 关于执行 sql，详见操作 MySQL
+      sql = "insert into tb_test(username, password, mobile) values(%s, %s, %s)"
+      cursor.execute(sql, list_new)
+      conn.commit()
+      print("导入数据成功！")
   
   # 5.关闭游标对象和连接
   cursor.close()
@@ -3823,12 +3810,12 @@
   # 2.连接 MySQL 服务器
   # 确保已创建数据库 db_test 和数据表 tb_test (四列：id, username, password, mobile)
   conn = pymysql.Connect(
-    host="localhost",
-    port=3306,
-    user="root",
-    password="123456",
-    charset="utf8",
-    database="db_test"
+      host="localhost",
+      port=3306,
+      user="root",
+      password="123456",
+      charset="utf8",
+      database="db_test"
   )
   print("MySQL 已连接.....")
   cursor = conn.cursor(cursor=DictCursor)
@@ -3847,13 +3834,12 @@
   
   # 5.文件处理
   for user in user_list:
-    line = "{}, {}, {}\n".format(user['username'], user['password'], user['mobile'])
-    with open('users.txt', 'a', encoding='utf-8') as f:
-      f.write(line)
+      line = "{}, {}, {}\n".format(user['username'], user['password'], user['mobile'])
+      with open('users.txt', 'a', encoding='utf-8') as f:
+          f.write(line)
   print("导出数据成功！")
   ```
 
-  
 
 # 了解网络编程
 
@@ -4832,3 +4818,34 @@
 
 - 手动创建2个管理员
 - 为了赶进度，停止本案例的学习。B站
+
+# Python Scripts
+
+## Music Crawler
+
+1. 抓包
+
+   ![image-20240405214854742](assets/image-20240405214854742.png)
+
+   1. 浏览器打开音乐播放页面
+   2. `F12` 进入开发者工具
+   3. 如上图找到“请求网址”
+   4. 此网址可以打开直接下载，也可以放在下面脚本中获取音乐文件
+
+2. Script
+
+   ```python
+   import requests
+   
+   # 抓包获取音乐的链接
+   url = "$URL"
+   
+   # get()向服务器发送get请求  .content获取二进制数据（.text 获取文本数据）
+   data = requests.get(url).content
+   
+   # 写入到本地
+   with open(r"E:\labs\以后的以后.mp4", "wb") as f:
+       f.write(data)
+   ```
+
+   

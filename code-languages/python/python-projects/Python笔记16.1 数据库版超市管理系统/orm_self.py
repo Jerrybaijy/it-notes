@@ -11,7 +11,7 @@ charset = "utf8"
 
 # 连接数据库
 def get_connection():
-    db = pymysql.Connect(host = host, port = port, user = user, passwd = password, db = dbname, charset = charset)
+    db = pymysql.Connect(host=host, port=port, user=user, passwd=password, db=dbname, charset=charset)
     return db
 
 

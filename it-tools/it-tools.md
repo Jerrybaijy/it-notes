@@ -514,7 +514,19 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
 
 # JSON
 
+​	JSON（JavaScript Object Notation， JS 对象简谱）是一种轻量级的数据交换格式。JSON 可以实现不同平台的数据交换，也可以使用它保存业务数据。
 
+## 语法
+
+- JSON 数据本质上是一个固定格式的字符串。使用键值对的方式表示一个业务对象（类似于字典）。
+
+- 键必须是字符串，必须使用双引号
+
+  ```json
+  {"$KEY1": $VALUE1, "$KEY2": $VALUE2, ....}
+  ```
+
+  
 
 # MySQL
 
@@ -613,9 +625,14 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   set names 'utf8';
   ```
 
+- Others
+
+  - Name should use `_` instead of `-`. EG: `db_test` and `tb_test`.
+
+
 ## Database
 
-- **Basic Commad**
+- **Basic Command**
 
   ```sql
   # Show all databases in the server
@@ -628,7 +645,7 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   drop database $DATABASE;
   ```
 
-- **Other Commad**
+- **Other Command**
 
   ```sql
   
@@ -680,7 +697,7 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   delete from $TABLE [where $CONDITION];
   # add row
   insert into $TABLE[($COLUMN1, $COLUMN2)] values("$VALUE1", "$VALUE2");
-  ```
+```
 
 - **Add many rows**
 

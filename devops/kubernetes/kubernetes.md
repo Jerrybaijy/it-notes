@@ -228,6 +228,17 @@
 
 # Pod
 
+- Command
+
+  ```bash
+  # Use when pod is pending
+  kubectl describe pod $POD
+  # Use when pod is exited
+  kubectl logs $POD
+  ```
+
+  
+
 # Service
 
 - **基础命令**
@@ -432,21 +443,23 @@
 
    ![image-20240329143514361](assets/image-20240329143514361.png)
 
-2. 访问 Argo CD 的 configmap
+2. [以下方法由博主提供](https://medium.com/@rojenshrestha100/argo-cd-out-of-sync-due-to-cilium-identity-f9d6188aa056)
+
+3. 访问 Argo CD 的 configmap
 
    ```bash
-   KUBE_EDITOR="nano" kubectl edit cm argocd-cm -n argocd
+   kubectl get cm -n argocd
    ```
 
    ![image-20240329143851461](assets/image-20240329143851461.png)
 
-3. 使用 nano 编辑器编辑此配置图
+4. 使用 nano 编辑器编辑此配置图
 
    ```bash
    KUBE_EDITOR="nano" kubectl edit cm argocd-cm -n argocd
    ```
 
-4. 文末在第一层级添加以下数据并保存
+5. 文末在第一层级添加以下数据并保存
 
    ```yaml
    data:

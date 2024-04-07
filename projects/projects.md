@@ -643,6 +643,482 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
 
 6. Config others ...
 
+# Commodity Manage (Login)
+
+## 项目概述
+
+- 这是一个带有 Login 功能的商品管理系统，一个 Python 脚本。
+
+- 功能
+
+  ```
+  a.	使用列表嵌套字典的方式保存用户数据（包含用户名，密码，姓名）；
+  b.	使用列表嵌套字典的方式保存商品数据（包含编号，名称，价格，折扣）；
+  c.	编写用户登录的函数，返回登录结果；
+  d.	循环提示菜单，业务完毕时返回主菜单，退出时回到登陆页面；
+  e.	将功能菜单中的业务功能各自编写到函数中；
+  f.	用户选择不同业务编号时，调用已经写好的各种函数。
+  ```
+
+## 创建过程
+
+- main.py
+
+  ```python
+  # 数据准备
+  user1 = {"用户名": "aaa", "密码": "123", "姓名": "张三"}
+  user2 = {"用户名": "bbb", "密码": "123", "姓名": "李四"}
+  user3 = {"用户名": "ccc", "密码": "123", "姓名": "王五"}
+  users_list = [user1, user2, user3]  # 用户列表
+  
+  p1 = {"编号": "1001", "名称": "苹果", "价格": 5, "折扣": 1}
+  p2 = {"编号": "1002", "名称": "香蕉", "价格": 3, "折扣": 1}
+  p3 = {"编号": "1003", "名称": "牛奶", "价格": 4, "折扣": 1}
+  p4 = {"编号": "1004", "名称": "白菜", "价格": 1, "折扣": 1}
+  p5 = {"编号": "1008", "名称": "西瓜", "价格": 3, "折扣": 1}
+  products_list = [p1, p2, p3, p4, p5]  # 商品列表
+  
+  
+  # 登录
+  def login():
+      msg = "失败"
+      while 1 == 1:
+          uname = input("请输入用户名：")
+          upwd = input("请输入密码：")
+          for user in users_list:
+              if uname == user["用户名"] and upwd == user["密码"]:
+                  print("---------验证成功！欢迎你，", user["姓名"], "！")
+                  msg = "成功"
+                  break
+          if msg == "失败":
+              print("用户名密码错误，请重新输入！")
+              continue
+          else:
+              break
+      return msg  # 返回登录结果
+  
+  
+  # 1.显示商品列表
+  def show_procucts():
+      print("-编号----名称----价格----折扣-")
+      for product in products_list:
+          print(product["编号"] + "-----" + product["名称"] + "-----" + str(product["价格"]) + "-------" + str(
+              product["折扣"]))
+      print("-----------------------------")
+  
+  
+  # 2.增加商品信息
+  def add_procuct():
+      # 生成新编号
+      lista = []  # 存放所有商品的编号
+      for product in products_list:
+          lista.append(int(product["编号"]))
+      new_num = str(max(lista) + 1)
+      name = input("请输入商品名称：")
+      price = float(input("请输入商品单价："))
+      new_product = {"编号": new_num, "名称": name, "价格": price, "折扣": 1}
+      products_list.append(new_product)
+      print("-------商品", name, "添加成功！")
+      show_procucts()
+  
+  
+  # 3.删除商品（通过编号删除）
+  def del_product():
+      while 1 == 1:
+          msg = 0  # 记录商品是否存在
+          num = input("请输入要删除的商品编号：")
+          for product in products_list:
+              if num == product["编号"]:
+                  print("---正在删除", product["名称"], "商品...........")
+                  products_list.remove(product)  # 删除商品
+                  print("----删除成功！")
+                  msg = 1
+                  break
+          if msg == 0:
+              print("商品编号不存在！")
+              choice = int(input("取消请按1，重新输入请按2："))
+              if choice == 1:
+                  break
+              else:
+                  continue
+          else:
+              show_procucts()
+              break
+  
+  
+  # 4.设置商品折扣
+  def set_discout():
+      while 1 == 1:
+          msg = 0  # 记录商品是否存在
+          num = input("请输入要设置折扣的商品编号：")
+          for product in products_list:
+              if num == product["编号"]:
+                  new_discout = float(input("请输入新的折扣（0.1-1）："))
+                  product["折扣"] = new_discout  # 设置折扣
+                  print("---商品", product["名称"], "折扣已设置成功，", new_discout * 10, "折！")
+                  msg = 1
+                  break
+          if msg == 0:
+              print("商品不存在！")
+              choice = int(input("取消请按1，重新输入请按2："))
+              if choice == 1:
+                  break
+              else:
+                  continue
+          else:
+              show_procucts()
+              break
+  
+  
+  # 5.修改商品价格信息
+  def set_rice():
+      while 1 == 1:
+          msg = 0  # 记录商品是否存在
+          num = input("请输入要调整价格的商品编号：")
+          for product in products_list:
+              if num == product["编号"]:
+                  new_rice = float(input("请输入新的价格："))
+                  product["价格"] = new_rice  # 设置价格
+                  print("---商品", product["名称"], "价格已设置成功，", new_rice, "元！")
+                  msg = 1
+                  break
+          if msg == 0:
+              print("商品不存在！")
+              choice = int(input("取消请按1，重新输入请按2："))
+              if choice == 1:
+                  break
+              else:
+                  continue
+          else:
+              show_procucts()
+              break
+  
+  
+  # 6.根据价格排序显示商品列表
+  def sort():
+      choice = int(input("请选择升序或者降序（1.升序  2.降序）："))
+      pList = []  # 存放所有价格信息
+      for product in products_list:
+          pList.append(product["价格"])
+      pList = list(set(pList))  # 去掉重复价格
+  
+      print("-编号----名称----价格----折扣-")
+      if choice == 1:
+          newList = sorted(pList)
+          for price in newList:
+              for product in products_list:
+                  if price == product["价格"]:
+                      print(
+                          product["编号"] + "-----" + product["名称"] + "-----" + str(product["价格"]) + "-------" + str(
+                              product["折扣"]))
+      else:
+          newList = sorted(pList, reverse=True)
+          for price in newList:
+              for product in products_list:
+                  if price == product["价格"]:
+                      print(
+                          product["编号"] + "-----" + product["名称"] + "-----" + str(product["价格"]) + "-------" + str(
+                              product["折扣"]))
+  
+  
+  # 模块化
+  # -------------------------------------
+  # 显示主菜单，调用已经写好的业务函数
+  
+  while 0 == 0:
+      result = login()
+      if result == "成功":
+          while 2 == 2:
+              print("----------------主菜单---------------")
+              print("---1.显示商品列表")
+              print("---2.增加商品信息")
+              print("---3.删除商品")
+              print("---4.设置商品折扣")
+              print("---5.修改商品信息")
+              print("---6.按照价格排序显示")
+              print("---7.退出")
+  
+              choice = int(input("请选择业务编号（输入1-6）："))
+              if choice == 1:
+                  show_procucts()
+              elif choice == 2:
+                  add_procuct()
+              elif choice == 3:
+                  del_product()
+              elif choice == 4:
+                  set_discout()
+              elif choice == 5:
+                  set_rice()
+              elif choice == 6:
+                  sort()
+              elif choice == 7:
+                  print("-------------正在退出...")
+                  break
+              else:
+                  print("没有此功能，请重新选择！")
+                  continue
+  ```
+
+# Commodity Manage (MySQL)
+
+## 项目概述
+
+- **来源**：[我要自学网燎原《Python编程入门2021新版教程》第十六章：综合训练-基于数据库的超市管理系统](https://www.51zxw.net/Show.aspx?cid=929&id=110570)
+- **概述**：这是一个商品管理系统的 Python 脚本，旨在练习函数的调用和 MySQL 的使用
+
+## 创建过程
+
+### 概述
+
+- **orm.py**：MySQL 部分
+- **market.py**：商品业务部分
+- **main.py**：总页面
+
+### Orm
+
+- MySQL 已创建“market”数据库
+
+- orm.py
+
+  ```python
+  # 数据库操作
+  import pymysql
+  
+  host = "localhost"
+  port = 3306
+  user = "root"
+  password = "123456"
+  dbname = "market"  # 数据库名称
+  charset = "utf8"
+  
+  
+  # 连接数据库
+  def get_connection():
+      db = pymysql.Connect(host=host, port=port, user=user, passwd=password, db=dbname, charset=charset)
+      return db
+  
+  
+  # 查询数据
+  def get_data(sql):
+      db = get_connection()  # 连接数据库
+      cursor = db.cursor()
+      # 在 market 中写各自的 sql 语句
+      data = None  # 保存返回数据
+      try:
+          cursor.execute(sql)
+          data = cursor.fetchall()
+      except Exception as e:
+          print("异常：", e)
+      finally:
+          cursor.close()
+          db.close()
+      return data
+  
+  
+  # 更新数据
+  def write_data(sql):
+      db = get_connection()  # 连接数据库
+      cursor = db.cursor()
+      r = 0
+      try:
+          r = cursor.execute(sql)
+          db.commit()
+          print("---------数据已更新！", r)
+      except Exception as e:
+          print("异常：", e)
+      finally:
+          cursor.close()
+          db.close()
+      return r  # 返回受影响的行数
+  ```
+
+### Market
+
+- market.py
+
+  ```python
+  # 编写业务方法
+  import orm
+  import random
+  
+  
+  # 查看商品列表
+  def get_all_products():
+      sql = "SELECT * FROM products;"
+      data = orm.get_data(sql)
+      print("序号    编号    名称    单价   折扣")
+      for product in data:
+          for x in product:
+              print(x, end="    ")
+          print()  # 换行
+  
+  
+  # 根据编号查询商品
+  def get_product():
+      num = input("请输入商品编号：")
+      sql = "SELECT * FROM products WHERE num=" + num + ";"
+      data = orm.get_data(sql)
+      if data != None:
+          print("-----商品名称：", data[0][2], "单价：", data[0][3], "折扣：", data[0][4])
+          return data[0][2], data[0][3], data[0][4]
+      else:
+          print("-----商品不存在！")
+          return None
+  
+  
+  # 添加商品
+  def add_product():
+      name = input("请输入商品名称：")
+      num = str(random.randint(1000, 9999))
+      price = input("请输入商品价格：")
+      sql = "INSERT INTO products(num,name,price,discount) VALUES(" + num + ",'" + name + "'," + price + ",1);"
+      # 由于 id 自动生成，所以 products 要指定添加内容
+      r = orm.write_data(sql)  # 方便查看执行结果
+      print(r)
+  
+  
+  # 根据编号删除商品
+  def del_product():
+      num = input("请输入商品编号：")
+      sql = "DELETE FROM products WHERE num=" + num + ";"
+      r = orm.write_data(sql)
+      if r == 0:
+          print("删除失败！")
+      else:
+          print("商品", num, "已删除！")
+  
+  
+  # 商品打折（修改折扣）
+  def set_discount():
+      num = input("请输入要修改的商品编号：")
+      discount = float(input("请输入设置的折扣："))
+      if 0.1 <= discount <= 1:
+          sql = "UPDATE products SET discount=" + str(discount) + " WHERE num=" + num + ";"
+          r = orm.write_data(sql)
+          if r == 0:
+              print("设置失败！")
+          else:
+              print("商品", num, "折扣设置成功！")
+      else:
+          print("折扣输入错误！")
+  
+  
+  # 查看所有订单；
+  def get_all_orders():
+      sql = "SELECT * FROM orders;"
+      data = orm.get_data(sql)
+      print("序号    编号    数量    金额")
+      for order in data:
+          for x in order:
+              print(x, end="    ")
+          print()
+  
+  
+  # 删除订单；（通过订单号删除）
+  def del_order():
+      num = input("请输入订单编号：")
+      sql = "DELETE FROM orders WHERE num=" + num + ";"
+      r = orm.write_data(sql)
+      if r == 0:
+          print("删除失败！")
+      else:
+          print("订单", num, "已删除！")
+  
+  
+  # 订单统计（总销量，销售额）；
+  def accord_order():
+      sql = "SELECT * FROM orders;"
+      data = orm.get_data(sql)
+      total_count = 0
+      total_amount = 0
+      for order in data:
+          total_count += order[2]
+          total_amount += order[3]
+      print("总销量", total_count, "件！，销售额", total_amount, "元！")
+  
+  
+  # 商品结算
+  def settle():
+      order_count = 0
+      order_amount = 0
+      msg = 0  # 保存订单是否有效，以决定是否生成新订单
+      while 1 == 1:
+          data = get_product()
+          num = int(input("请输入商品数量："))
+          if data != None:
+              msg = 1
+              price = data[1]
+              discount = data[2]
+              amount = price * num * discount
+              order_count += num
+              order_amount += amount
+              print("当前添加", num, "件！金额", amount, "元！")
+          r = input("继续添加请输入1，结算请输入2：")
+          if r == "1":
+              continue
+          else:
+              print("--------------------------------------")
+              break
+      print("****您购买的总数量", order_count, "件！总金额", order_amount, "元！")
+  
+      # 添加订单
+      if msg == 1:
+          oid = str(random.randint(1000, 9999))  # 随机引入编号
+          sql = "INSERT INTO orders(num,count,amount) VALUES(" + oid + "," + str(order_count) + "," + str(
+              order_amount) + "); "  # 由于 id 自动生成，所以 order 要指定添加内容
+          orm.write_data(sql)
+          print("--------添加成功！")
+  ```
+
+### Main
+
+- main.py
+
+  ```python
+  # 调用
+  import market
+  
+  
+  def main():
+      print("***********************超市管理系统*************************")
+      print("***********************1.查看商品列表")
+      print("***********************2.根据编号查询商品")
+      print("***********************3.添加商品")
+      print("***********************4.根据编号删除商品")
+      print("***********************5.商品打折")
+      print("***********************6.查看所有订单")
+      print("***********************7.删除订单")
+      print("***********************8.订单统计")
+      print("***********************9.商品结算")
+      print("***********************10.退出")
+      print("***********************************************************")
+      c = int(input("请选择："))
+      if c == 1:
+          market.get_all_products()
+      elif c == 2:
+          market.get_product()
+      elif c == 3:
+          market.add_product()
+      elif c == 4:
+          market.del_product()
+      elif c == 5:
+          market.set_discount()
+      elif c == 6:
+          market.get_all_orders()
+      elif c == 7:
+          market.del_order()
+      elif c == 8:
+          market.accord_order()
+      elif c == 9:
+          market.settle()
+      else:
+          print("***********************************************************")
+  
+  
+  if __name__ == '__main__':
+      main()
+  ```
+
 # Dockerfile Build Image
 
 ## 项目概述
@@ -812,6 +1288,512 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
 
    - 项目文件推送至远程仓库
    - GitLab 在 Pipeline 中自动生成 Image 并推送至 DockerHub
+
+# Library Manage
+
+## 项目概述
+
+- **来源**：[我要自学网燎原《Python编程入门2021新版教程》第十一章：综合训练-迷你图书馆](https://www.51zxw.net/Show.aspx?cid=929&id=110528)
+- **概述**：这是一个迷你图书馆借阅系统的 Python 脚本，旨在练习函数的调用
+- **说明**
+  - 自己添加了循环 Login 功能
+  - 创建数据文件时，注释掉主函数部分
+  - 运行主函数时，注释掉创建数据文件部分
+
+## 创建过程
+
+- library.py
+
+  ```python
+  import json
+  import datetime
+  import time
+  
+  
+  # 创建数据库（先注释掉主函数创建数据库，然后注释掉此部分）
+  users_data='[{"用户名": "admin", "密码": "123", "姓名": "张三"},{"用户名": "aaa", "密码": "123", "姓名": "李四"}]'
+  with open(r"users.txt","w") as f:
+  		f.write(users_data)
+  
+  books_data='[{"编号":1001, "书名": "<红楼梦>", "作者": "曹雪芹", "借出状态": "可借"},\
+  {"编号":1002, "书名": "<java教程>","作者": "齐一天", "借出状态": "可借"},\
+  {"编号":1003, "书名": "<圣经>","作者": "耶稣", "借出状态": "已借出"},\
+  {"编号":1004, "书名": "<李白诗集>","作者": "李白", "借出状态": "可借"}\
+  ]'
+  with open(r"books.txt","w") as f:
+  		f.write(books_data)
+  
+  # 读数据
+  def read_users():
+      with open(r"users.txt", "r") as f:
+          json_data = f.read()
+      data_list = json.loads(json_data)
+      return data_list
+  
+  
+  def read_books():
+      with open(r"books.txt", "r") as f:
+          json_data = f.read()
+      data_list = json.loads(json_data)
+      return data_list
+  
+  
+  # 写数据
+  def write_users(data_list):
+      json_data = json.dumps(data_list, ensure_ascii=False)
+      with open(r"users.txt", "w") as f:
+          f.write(json_data)
+          print("------数据写入成功！")
+  
+  
+  def write_books(data_list):
+      json_data = json.dumps(data_list, ensure_ascii=False)
+      with open(r"books.txt", "w") as f:
+          f.write(json_data)
+          print("------数据写入成功！")
+  
+  
+  # 用户登录
+  def login():
+      while 1 == 1:
+          msg = "失败"
+          user_list = read_users()
+          name = input("请输入用户名：")
+          pwd = input("请输入密码：")
+          for user in user_list:
+              if name == user["用户名"] and pwd == user["密码"]:
+                  msg = "成功"
+                  print("------登录成功！")
+                  break
+          if msg == "失败":
+              print("登录失败，请重新输入！")
+              continue
+          else:
+              break
+      return msg
+  
+  
+  # 1.显示图书列表
+  def show_books():
+      data_list = read_books()
+      print("----------图书列表----------")
+      for book in data_list:
+          print(book["编号"], "   ", book["书名"], "   ", book["作者"], "   ", book["借出状态"])
+      print("---------------------------")
+  
+  
+  # 2.图书上架
+  def add_book():
+      data_list = read_books()
+      num_list = []
+      for book in data_list:
+          num_list.append(book["编号"])
+      new_num = max(num_list) + 1
+      book_name = input("请输入书名：")
+      book_name = "<" + book_name + ">"
+      author = input("请输入作者：")
+      state = "可借"
+      new_book = {"编号": new_num, "书名": book_name, "作者": author, "借出状态": state}
+      data_list.append(new_book)
+      write_books(data_list)
+  
+  
+  # 3.图书下架
+  def del_book():
+      data_list = read_books()
+      show_books()
+      data1 = input("请输入图书名：")
+      data2 = int(input("请输入图书编号："))
+      for book in data_list:
+          if data1 == book["书名"] or data2 == book["编号"]:
+              data_list.remove(book)
+              print("-----图书", book["书名"], "已下架！")
+              write_books(data_list)
+              show_books()
+  
+  
+  # 4.借书
+  def lend_book():
+      show_books()
+      msg = 0
+      data_list = read_books()
+      num = int(input("请输入要借的图书编号："))
+      for book in data_list:
+          if num == book["编号"]:
+              msg = 1
+              if book["借出状态"] == "可借":
+                  print("----您已成功借出图书：", book["书名"], "！")
+                  book["借出状态"] = "已借出"
+                  write_books(data_list)
+              else:
+                  print("----", book["书名"], "已经借出！下次再来吧！")
+      if msg == 0:
+          print("-----没有此图书！")
+      show_books()
+  
+  
+  # 5.还书
+  def return_book():
+      show_books()
+      data_list = read_books()
+      num = int(input("请输入要归还的图书编号："))
+      msg = 0
+      for book in data_list:
+          if num == book["编号"]:
+              msg = 1
+              if book["借出状态"] == "已借出":
+                  print("----成功归还图书", book["书名"], "!")
+                  book["借出状态"] = "可借"
+                  write_books(data_list)
+              else:
+                  print("---该图书不允许归还！")
+      if msg == 0:
+          print("-----没有此图书！")
+      show_books()
+  
+  
+  # 主函数
+  def main():
+      msg = login()
+      if msg == "成功":
+          while 1 == 1:
+              print("***********************图书管理系统1.0*************************")
+              print("1.显示所有图书；\n2.图书上架；\n3.图书下架；\n4.借书；\n5.还书。")
+              print("*************************************************************")
+              c = int(input("请输入业务编号（1-5）："))
+              if c == 1:
+                  show_books()
+              elif c == 2:
+                  add_book()
+              elif c == 3:
+                  del_book()
+              elif c == 4:
+                  lend_book()
+              elif c == 5:
+                  return_book()
+              else:
+                  print("没有此业务！")
+  
+  
+  # 运行
+  if __name__ == '__main__':
+      main()
+  ```
+
+# Login And Sign Up
+
+## 项目概述
+
+- **概述**：这是一个自己整合的 Login And Sign Up 笔记。
+- 使用了四种方法充当数据库：List，TXT，JSON，MySQL
+- 循环逻辑的实现以列表数据库为准，其余只是为了展示不同数据库使用方法
+
+## List 数据库
+
+- 此例为了展示 Login And Sign Up 的循环逻辑，所有逻辑以此为准
+  - 注册
+  - 循环登录
+  - 选择菜单
+- 为了方便，此例使用 List 模拟数据库
+
+- login.py
+
+  ```python
+  users_list = [{"name": "zhangsan", "password": "123"}]
+  
+  
+  def register():
+      for user_exist in users_list:
+          name = input("请输入注册用户名/退出请按Q：")
+          if name.upper() == "Q":
+              return  # 输入 Q 退出脚本
+          password = input("请输入注册密码：")
+          user = {"name": name, "password": password}
+          if user["name"] == user_exist["name"]:  # 判断用户名已存在
+              print("用户名已存在，请重新输入！")
+              continue
+          else:
+              users_list.append(user)
+              print("恭喜你，注册成功！")
+              return
+  
+  
+  def login():
+      msg = 0
+      while True:  # 循环登录
+          name = input("请输入登录用户名/退出请按'Q'：")
+          if name.upper() == "Q":
+              return
+          password = input("请输入登录密码：")
+          for user_exist in users_list:
+              if name == user_exist["name"] and password == user_exist["password"]:
+                  print("恭喜你，登录成功！")
+                  msg = 1
+                  return msg
+          if msg == 0:
+              print("用户名密码错误，请重新输入！")
+              continue
+  
+  
+  def user_info():
+      print(users_list)
+  
+  
+  def main():
+      while True:
+          if login() == 1:  # 登录并判断登录结果
+              while True:
+                  print("-----业务选择------")
+                  print("1.注册")  # 可以将此类整合到mapping中，通过函数输出
+                  print("2.登录")
+                  print("3.查看用户信息")
+                  print("4.退出")
+                  choice = input("请选择业务编号：")
+  
+                  mapping = {
+                      "1": register,
+                      "2": login,
+                      "3": user_info
+                  }
+                  func = mapping.get(choice)  # func 即为 mapping 里的值，如果不能获取到键，func 为 None
+                  if func:  # 即 func 不为 None，能获取键
+                      func()  # func 为 mapping 里对应 choice 的值
+                  elif choice == "4":
+                      return  # 函数终止
+                  else:
+                      print("输入错误，请重新选择！")
+                      continue
+          else:
+              break  # 结束外层循环，保证在 login 页面系统可以退出
+  
+  
+  if __name__ == '__main__':
+      main()
+  ```
+
+## TXT 数据库（加密）
+
+- 此例为了展示使用 TXT 模拟数据库，并且密码加密，用 Python 实现 Login And Sign Up 功能
+
+- 逻辑以 List 数据库示例为准
+
+- users.txt
+
+  ```
+  # 初始密码：123
+  zhangsan|a75362a2fb4b34836614959f7294d01b
+  ```
+
+- login.py
+
+  ```python
+  import hashlib
+  
+  USERS_PATH = r"users.txt"  # 环境变量
+  
+  
+  def md5(data_string):
+      obj = hashlib.md5("88888".encode('utf-8'))  # 加盐
+      obj.update(data_string.encode('utf-8'))  # 括号里必须是字节
+      return obj.hexdigest()  # 返回密文
+  
+  
+  def register():
+      user = input("请输入注册用户名：")
+      if user.upper() == "Q":
+          return
+      pwd = input("请输入注册密码：")
+      pwd_md5 = md5(pwd)
+  
+      with open(USERS_PATH, 'a', encoding='utf-8') as f:
+          line = "{}|{}\n".format(user, pwd_md5)
+          f.write(line)
+      print("恭喜你，注册成功！")
+  
+  
+  def login():
+      msg = 0
+      while True:
+          user = input("请输入登录用户名/退出请按'Q'：")
+          if user.upper() == "Q":
+              msg = 0
+              return msg
+          pwd = input("请输入登录密码：")
+          pwd_md5 = md5(pwd)
+  
+          with open(USERS_PATH, 'r', encoding='utf-8') as f:
+              for line in f:
+                  line = line.strip()
+                  user_library, pwd_library = line.split('|')
+                  if user == user_library and pwd_md5 == pwd_library:
+                      print("恭喜你，登录成功！")
+                      msg = 1
+                      return msg
+          if msg == 0:
+              print("用户名密码错误，请重新输入！")
+              continue
+  
+  
+  def user_info():
+      with open(USERS_PATH, 'r', encoding='utf-8') as f:
+          for line in f:
+              print(line)
+  
+  
+  def main():
+      while True:
+          result = login()
+          if result == 1:
+              while True:
+                  func_dict = {
+                      "1": register,
+                      "2": login,
+                      "3": user_info
+                  }
+                  print("-----业务选择------")
+                  print("1.注册")  # 可以将此类整合到mapping中，通过函数输出
+                  print("2.登录")
+                  print("3.查看用户信息")
+                  print("4.退出")
+                  choice = input("请选择业务编号：")
+  
+                  func = func_dict.get(choice)  # 如果获取不到键，func为None
+                  if func:
+                      func()
+                  elif choice == "4":
+                      return
+                  else:
+                      print("输入错误，请重新选择！")
+                      continue
+          else:
+              break  # 保证在login页面系统可以退出
+  
+  
+  if __name__ == '__main__':
+      main()
+  ```
+
+## JSON 数据库
+
+- 此例为了展示使用 JSON 模拟数据库，用 Python 实现 Login And Sign Up 功能
+
+- 循环逻辑以 List 数据库示例为准
+
+- login.py
+
+  ```python
+  import json
+  
+  USERS_PATH = r"users.txt"  # 环境变量
+  
+  # 1.创建数据库文件
+  # 创建 TXT 文件，将数据信息以 JSON 格式保存在该文件中
+  # 注意使用编程程序创建文本文件，否则会出现编码问题
+  with open(USERS_PATH, "w") as f:
+      users = '[{"name":"zhangsan","pwd":"123"},{"name":"lisi","pwd":"123"},{"name":"wangwu","pwd":"123"}]'
+      f.write(users)
+  
+  
+  # 2.读数据（查询）
+  # 获取数据库文件中的 JSON 数据，转换成 Python 数据 user_list，并返回至 Python 数据
+  def read_data():
+      with open(USERS_PATH, "r") as f:
+          data_json = f.read()  # 获取到 JSON 数据
+      users_list = json.loads(data_json)  # 将 JSON 数据转化为 Python 数据
+      return users_list  # 函数返回至 Python 数据
+  
+  
+  # 3.写数据（修改）
+  # 将新 Python 数据 user_list 转换成 JSON 数据，并写入数据库文件
+  def write_data(users_list):
+      data_json = json.dumps(users_list, ensure_ascii=False)  # 将数据转化成 JSON 数据
+      with open(USERS_PATH, "w") as f:  # 打开文件
+          f.write(data_json)  # 写入 JSON 数据
+          print("----数据写入成功！")
+  
+  
+  # 4.登录
+  def login():
+      name = input("请输入用户名：")
+      password = input("请输入密码：")
+      users_list = read_data()  # 读取数据库文件中的 JSON 数据，转换成 Python 数据，详见 read_data()，并用userList接收
+      msg = "失败"
+      for user in users_list:
+          if name == user["name"] and password == user["pwd"]:
+              msg = "成功"
+              print("----恭喜登陆成功！")
+      if msg == "失败":
+          print("----登录失败！")
+      return msg
+  
+  
+  # 5.注册（在数据库中增加用户）
+  def reg():
+      name = input("请输入新用户名：")
+      password = input("请输入密码：")
+      user_new = {"name": name, "pwd": password}  # 新用户
+      users_list = read_data()  # 读取数据库文件中的 JSON 数据，转换成 Python 数据，详见read_data()，并用 user_list接收
+      users_list.append(user_new)  # 将新用户添加到用户列表
+      write_data(users_list)  # 将 Python 数据 users_list 转换成 JSON 数据并写入数据库文件，详见 write_data()
+      print("-----新用户添加成功！")
+  
+  
+  if __name__ == '__main__':
+      login()
+  ```
+
+## MySQL
+
+- 此例为了展示使用 MySQL 数据库，用 Python 实现 Login And Sign Up 功能
+
+- 循环逻辑以 List 数据库示例为准
+
+- login.py
+
+  ```python
+  import pymysql
+  
+  
+  def get_data(sql):
+      # 需要先创建一个数据库，才能连接
+      host = "localhost"
+      port = 3306  # 注意使用数字
+      user = "root"
+      password = "123456"
+      db = "51db"  # 数据库名称
+      charset = "utf8"
+  
+      # 创建数据库连接对象，并建立连接
+      db = pymysql.Connect(host=host, port=port, user=user, passwd=password, db=db, charset=charset)
+      print("数据库已连接.....")
+      # 创建游标对象(1.执行sql语句，2.处理数据查询结果)
+      cursor = db.cursor()
+      cursor.execute(sql)  # 执行sql
+      data = cursor.fetchone()  # 获取一行数
+  
+      # 关闭
+      cursor.close()
+      db.close()
+  
+      return data
+  
+  
+  # 登录
+  def login():
+      uname = input("请输入用户名：")
+      upwd = input("请输入密码：")
+      sql = "SELECT * FROM users WHERE username='" + uname + "' and password='" + upwd + "'"
+      data = get_data(sql)
+      if data == None:
+          print("失败！")
+      else:
+          print("成功！")
+  
+  if __name__ == '__main__':
+      login()
+  ```
+
+  
 
 # Student Spring Boot React Full Stack
 
@@ -1633,3 +2615,104 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
        - port: 3306
          targetPort: 3306
    ```
+
+## Local docker
+
+### 使用 link
+
+- mysql
+
+```bash
+docker run -d \
+--name mysql \
+-e MYSQL_ROOT_PASSWORD=123456 \
+-e MYSQL_DATABASE=fullstack \
+-e MYSQL_USER=jerry \
+-e MYSQL_PASSWORD=123456 \
+-p 3306:3306 \
+mysql:8.0 \
+--character-set-server=utf8mb4
+```
+
+- backend
+
+```bash
+docker run -d \
+--name backend \
+-p 8080:8080 \
+--link mysql:mysql \
+jerrybaijy/student-springboot-react-backend:v1.0
+```
+
+```
+docker run -d \
+--name frontend \
+--type LoadBalancer \
+-p 80:8080 \
+--link mysql:mysql \
+jerrybaijy/student-springboot-react-frontend:v1.0
+```
+
+### 加入同一网络
+
+- create network
+
+  ```bash
+  docker network create full-stack
+  ```
+
+- mysql
+
+  ```bash
+  docker run -d \
+  --name mysql \
+  -e MYSQL_ROOT_PASSWORD=123456 \
+  -e MYSQL_DATABASE=fullstack \
+  -e MYSQL_USER=jerry \
+  -e MYSQL_PASSWORD=123456 \
+  -p 3306:3306 \
+  --network full-stack \
+  mysql:8.0 \
+  --character-set-server=utf8mb4
+  ```
+
+- backend
+
+  ```bash
+  docker run -d \
+  --name backend \
+  -p 8080:8080 \
+  --network full-stack \
+  jerrybaijy/student-springboot-react-backend:v1.0
+  ```
+
+- frontend
+
+  ```bash
+  docker run -d \
+  --name frontend \
+  -p 80:8080 \
+  --network full-stack \
+  jerrybaijy/student-springboot-react-frontend:v1.0
+  ```
+
+- 访问
+
+  ```
+  docker exec -it mysql bash
+  ```
+
+
+## Helm
+
+- 11
+
+  ```bash
+  helm install mysql-cluster \
+  oci://registry-1.docker.io/bitnamicharts/mysql \
+  --set global.storageClass=nfs-client \
+  --set architecture=replication \
+  --set secondary.replicaCount=2
+  ```
+
+  

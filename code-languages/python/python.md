@@ -277,7 +277,7 @@
 
   - 卸载 SublimeREPL 插件
 
-  - Ctrl+shift+p，输入框中输入“remove package”；
+  - Ctrl+shift + p，输入框中输入“remove package”；
 
   - 下面会有提示，直接点击或者输入后回车。
 
@@ -286,7 +286,7 @@
   
   - 编写代码，保存：文件名.py；
   
-  - 运行：Ctrl+B（第一次选择“Python”）。
+  - 运行：Ctrl + B（第一次选择“Python”）。
   
 
 ## 代码规范
@@ -295,7 +295,7 @@
 
 - **缩进**：敏感
 
-  python最具特色的就是使用缩进来表示代码块，不需要使用大括号 **{}** 。
+  python 最具特色的就是使用缩进来表示代码块，不需要使用大括号 **{}** 。
 
   缩进的空格数是可变的，但是同一个代码块的语句必须包含相同的缩进空格数。
 
@@ -305,15 +305,15 @@
 
 - 除以下规范，其余同编程语言通用规范。
 - **规范**
-
-  - 只能含有字母、数字、下划线，且不能以数字或下划线开头
-
-  - **区别常规**：不含$，不以下划线开头
+- 只能含有字母、数字、下划线，且不能以数字开头
+  
+- **区别常规**：不含 $
 - **命名习惯**
-  - **变量名**：使用小写英文单词，多个单词使用下划线连接
-    - **函数名**：使用小写英文单词，多个单词使用下划线连接
-    - **类名**：大驼峰
-	- **文件名**：不使用数字开头，不使用殊符号和关键字，后缀名为 `.py`
+  - **变量名**：小写蛇形命名法
+  - **函数名**：小写蛇形命名法
+  - **类名**：大驼峰
+	- **文件名**：不要使用 `-`，因为将文件作为模块引入时，如果模块名中包含破折号，可能会导致一些问题。
+	- **环境变量**：大写蛇形命名法
 
 ## 注释
 
@@ -663,7 +663,7 @@
 - 说明
 
   - 在列表末尾追加
-  - Python中每次只能追加1个元素
+  - Python 中每次只能追加1个元素
   - 原列表受影响
 
 - `$LIST.append($ELEMENT_NEW)`
@@ -1469,6 +1469,59 @@
   else:
       print("第一道密码输入错误，请出去吧！")
   ```
+
+#### 商品管理系统
+
+- 为一家超市开发一个简易的收银系统（以3-5种商品为例）
+
+  ```
+  使用变量保存：商品编号 商品价格 商品名字
+  提示用户输入商品编号和数量,然后显示总价多少钱
+  提示用户输入付款金额,然后显示找零金额。
+  ```
+
+  ```python
+  num1 = "1001"
+  price1 = 7
+  name1 = "苹果"
+  
+  num2 = "1002"
+  price2 = 4
+  name2 = "香蕉"
+  
+  num3 = "1003"
+  price3 = 5
+  name3 = "梨子"
+  
+  # 提前声明变量保存需要的商品价格和名称
+  num = input("请输入商品编号：")
+  count = int(input("请输入商品数量："))
+  
+  price = 0
+  name = ""
+  
+  if num == num1:
+      price = price1
+      name = name1
+  elif num == num2:
+      price = price2
+      name = name2
+  elif num == num3:
+      price = price3
+      name = name3
+  else:
+      print("没有此商品！")
+  if price != 0:
+      amount = price * count
+      print("您当前购买的是：", name, ",单价：", price, "元,数量：", count, "件,金额：", amount, "元！")
+      money = float(input("请输入付款金额："))
+      if money < amount:
+          print("金额不足！")
+      else:
+          print("付款：", money, "元！找零：", money - amount, "元！")
+  ```
+
+  
 
 ## 循环结构
 
@@ -2954,7 +3007,19 @@
 
 ​	在 Python 中 JSON 数据本质上是一个固定格式的字符串。使用键值对的方式表示一个业务对象（类似于字典）。
 
-- 保存一个对象
+- 创建一个 TXT 文件
+
+  ```python
+  with open(r"users.txt", "w") as f:
+      users = '[{"name":"zhangsan","pwd":"123"},{"name":"lisi","pwd":"123"},{"name":"wangwu","pwd":"123"}]'
+      f.write(users)
+  ```
+  
+  ```
+  [{"name":"zhangsan","pwd":"123"},{"name":"lisi","pwd":"123"},{"name":"wangwu","pwd":"123"}]
+  ```
+  
+- Python 中保存一个对象
 
   ```json
   '{"键1": "值1", "键2": "值2", ....}'
@@ -2978,7 +3043,7 @@
   |    None     | null     |
   |  '单引号'   | "双引号" |
   
-- 保存多个对象
+- Python 中保存多个对象
 
   ```json
   '[{"键1": 值1, "键2": 值2}, {"键1": 值1, "键2": 值2}, …]'
@@ -3022,62 +3087,8 @@
 
 #### JSON 模拟数据库
 
-- 在文本文件中保存 JSON 字符，通过文件读写来操作数据。
+- 详见 Projects > Login And Sign Up
 
-  ```python
-  import json
-  
-  # 1.创建数据库文件
-  # 创建 TXT 文件，将数据信息以 JSON 格式保存在该文件中
-  # 注意使用编程程序创建文本文件，否则会出现编码问题
-  with open(r"users.txt","w") as f:
-  	users = '[{"name":"zhangsan","pwd":"123"},{"name":"lisi","pwd":"123"},{"name":"wangwu","pwd":"123"}]'
-  	f.write(users)
-  
-  # 2.读数据（查询）
-  # 获取数据库文件中的 JSON 数据，转换成 Python 数据 user_list，并返回至 Python 数据
-  def read_data():
-      with open(r"users.txt", "r") as f:
-          data_json = f.read()  # 获取到 JSON 数据
-      users_list = json.loads(data_json)  # 将 JSON 数据转化为 Python 数据
-      return users_list  # 函数返回至 Python 数据
-  
-  # 3.写数据（修改）
-  # 将新 Python 数据 user_list 转换成 JSON 数据，并写入数据库文件
-  def write_data(users_list):
-      data_json = json.dumps(users_list, ensure_ascii = False)  # 将数据转化成 JSON 数据
-      with open(r"users.txt", "w") as f:  # 打开文件
-          f.write(data_json)  # 写入 JSON 数据
-          print("----数据写入成功！")
-  
-  # 4.登录
-  def login():
-      name = input("请输入用户名：")
-      password = input("请输入密码：")
-      users_list = read_data()  # 读取数据库文件中的 JSON 数据，转换成 Python 数据，详见 read_data()，并用userList接收
-      msg = "失败"
-      for user in users_list:
-          if name == user["name"] and password == user["pwd"]:
-              msg = "成功"
-              print("----恭喜登陆成功！")
-      if msg == "失败":
-          print("----登录失败！")
-      return msg
-  
-  # 5.注册（在数据库中增加用户）
-  def reg():
-      name = input("请输入新用户名：")
-      password = input("请输入密码：")
-      user_new = {"name": name, "pwd": password}  # 新用户
-      users_list = read_data()  # 读取数据库文件中的 JSON 数据，转换成 Python 数据，详见read_data()，并用 user_list接收
-      users_list.append(user_new)  # 将新用户添加到用户列表
-      write_data(users_list)  # 将 Python 数据 users_list 转换成 JSON 数据并写入数据库文件，详见 write_data()
-      print("-----新用户添加成功！")
-  
-  # -------------------------
-  if __name__ == '__main__':
-      login()
-  ```
 
 ### hashlib 加密
 
@@ -3845,13 +3856,13 @@
 
 # 了解多线程
 
-# Flask框架
+# Flask 框架
 
 ​	Flask 是一个轻量级的 Python Web 框架，用于构建 Web 应用程序。它由 Armin Ronacher 创建，基于 Werkzeug 和 Jinja2。Flask 的设计目标是简单而灵活，使得开发者能够快速地构建 Web 应用。
 
 ## 环境搭建
 
-- 安装flask
+- 安装 Flask
 
   ```bash
   # 查看 flask
@@ -3982,17 +3993,17 @@
    1. 程序会自动在项目根目录创建一个 users.txt 文件，并将用户提交信息存储在文件中。
    2. 页面自动跳转至 login 页面。
 
-# Django框架
+# Django 框架
 
 ​	Django 是一个用于构建 Web 应用程序的高级 Python Web 框架。它由 Adrian Holovaty 和 Simon Willison 创建，遵循了“Don't repeat yourself”（不要重复你自己）和“Convention over Configuration”（约定大于配置）等软件设计原则。Django 提供了一套功能强大而完整的工具，使得开发者能够更快速地构建复杂的 Web 应用。
 
 ## 创建项目-cmd
 
-- 正常情况通过pycharm创建项目
+- 正常情况通过 pycharm 创建项目
 
-- cmd中安装Django及创建项目
+- cmd 中安装 Django 及创建项目
 
-  - 安装django
+  - 安装 django
   - 进入项目目录
   - 创建项目
 
@@ -4022,7 +4033,7 @@
   关闭：Ctrl + c
   ```
 
-## Django知识点
+## Django 知识点
 
 - **快速编写一个网站**
 
@@ -4046,7 +4057,7 @@
 
   app就是存放不同功能文件的文件夹
 
-  - **创建app**
+  - **创建 app**
 
     终端terminal
 
@@ -4065,7 +4076,7 @@
   		- admin.py    【django内置后台管理】
   ```
 
-  - **注册app**
+  - **注册 app**
 
     settings.py
 
@@ -4076,7 +4087,7 @@
   ]
   ```
 
-  - **app创建文件夹**
+  - **app 创建文件夹**
 
   ```
   - day15
@@ -4117,13 +4128,13 @@
   ]
   ```
 
-## html模板
+## html 模板
 
-​	html模板就是存放html文件的文件夹
+​	html 模板就是存放 html 文件的文件夹
 
 ### 模板位置
 
-- urls.py配置
+- urls.py 配置
 
   ```python
   from django.contrib import admin
@@ -4136,7 +4147,7 @@
   ]
   ```
 
-- views.py配置
+- views.py 配置
 
   ```python
   from django.shortcuts import render
@@ -4196,7 +4207,7 @@
   </body>
   ```
 
-- **模板for 循环**
+- **模板 for 循环**
 
   - 以列表为例，其它容器同理
   - urls.py同基本语法
@@ -4225,7 +4236,7 @@
 
   - 以列表为例，其它容器同理
 
-  - urls.py和views.py同基本语法
+  - urls.py 和 views.py同基本语法
 
   - views.py
 
@@ -4273,8 +4284,8 @@
 
 - 位置2  不推荐
 
-  - Django优先去settings.py文件中  TEMPLATES -> 'DIRS': [], 寻找templates模板
-  - 在项目根目录创建templates文件夹，里面创建名为static的文件夹
+  - Django 优先去 settings.py 文件中  TEMPLATES -> 'DIRS': [], 寻找 templates 模板
+  - 在项目根目录创建 templates 文件夹，里面创建名为 static 的文件夹
 
   ```
   settings.py添加
@@ -4287,7 +4298,7 @@
 
 ### 静态资源引入
 
-- static里创建如下文件夹
+- static 里创建如下文件夹
 
   ```
   - CSS      放CSS
@@ -4319,8 +4330,8 @@
   ```
 
   - 在顶部引入static文件夹确保系统能找到路径，输入路径时才能有提示。
-  - 引入路径时src="{% static '...' %}"
-  - 定义class方式不变
+  - 引入路径时 src="{% static '...' %}"
+  - 定义 class 方式不变
 
 ## 请求与相应
 
@@ -4426,7 +4437,7 @@
 
 ## 数据库操作
 
-- Django操作数据库流程
+- Django 操作数据库流程
 
   ![无标题-2023-11-04-1411](assets/无标题-2023-11-04-1411.png)	
 
@@ -4447,7 +4458,7 @@
 
 ### 查看数据库
 
-- sqlite驱动
+- sqlite 驱动
 
   - 下载驱动https://github.com/xerial/sqlite-jdbc/releases
 
@@ -4588,7 +4599,7 @@
 
 ### 删除数据行
 
-- **urls.py和models.py同增加数据行**
+- **urls.py 和 models.py 同增加数据行**
 
 - **views.py**
 
@@ -4615,7 +4626,7 @@
 
 ### 修改数据列
 
-- **urls.py和models.py同增加数据行**
+- **urls.py 和 models.py同增加数据行**
 
 - **views.py**
 
@@ -4637,7 +4648,7 @@
 
 ### 修改数据
 
-- **urls.py和models.py同增加数据行**
+- **urls.py 和 models.py 同增加数据行**
 
 - **views.py**
 
@@ -4659,7 +4670,7 @@
 
 ### 查询数据
 
-- **urls.py和models.py同增加数据行**
+- **urls.py 和 models.py 同增加数据行**
 
 - **views.py**
 
@@ -4782,7 +4793,7 @@
 
 ### 创建项目
 
-- 创建项目、创建app并注册、引入static、创建templates
+- 创建项目、创建 app 并注册、引入 static、创建 templates
 
 ### 表结构
 
@@ -4816,8 +4827,8 @@
 
 ### 用户登录
 
-- 手动创建2个管理员
-- 为了赶进度，停止本案例的学习。B站
+- 手动创建 2 个管理员
+- 为了赶进度，停止本案例的学习。B 站
 
 # Python Scripts
 

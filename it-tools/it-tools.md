@@ -518,15 +518,12 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
 
 ## 语法
 
-- JSON 数据本质上是一个固定格式的字符串。使用键值对的方式表示一个业务对象（类似于字典）。
-
 - 键必须是字符串，必须使用双引号
 
   ```json
   {"$KEY1": $VALUE1, "$KEY2": $VALUE2, ....}
   ```
 
-  
 
 # MySQL
 

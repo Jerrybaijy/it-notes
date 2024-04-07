@@ -210,15 +210,16 @@ Linux 是一个开源的类 Unix 操作系统内核。它是一个多用户、�
 
   ```bash
   # 查看文件
-  cat $FILE_NAME
+  cat $FILE
   # 创建文件
-  touch $FILE_NAME
+  touch $FILE
   # 编辑文件
-  nano $FILE_NAME
+  nano $FILE
+  vim $FILE
   # 删除文件
-  rm $FILE_NAME
+  rm $FILE
   # 复制文件
-  cp $FILE_NAME $DES_PATH
+  cp $FILE $DES_PATH
   ```
 
 - **文本搜索**
@@ -253,18 +254,67 @@ Linux 是一个开源的类 Unix 操作系统内核。它是一个多用户、�
   find . -name jquery* -print # 查找当前目录下所有文件名以jquery开头的文件，并打印路径
   ```
 
-## vim
+## Vim
 
-- 方法
+**Vi**（Vi IMproved）是 Unix 系统上最早的文本编辑器之一，**Vim**（Vi IMproved）是 Vi 的增强版。
+
+### Basics
+
+- Basics
 
   ```bash
-  # 编辑文件
-  vim FILE_NAME.TYPE
-  # 编辑
+  # show version
+  vi / vim
+  # open / create file
+  vim $FILE
+  # into insert mode
   i
-  # 退出
+  # back to command mode
+  `Esc`
+  # exit
   :q
+  # save and exit
+  :wq
   ```
+
+### Command mode
+
+- Default enter into command mode.
+
+  ![image-20240406160608629](assets/image-20240406160608629.png)
+
+- `Esc`: Back to command mode
+
+- `dd`: Cut cursor line. `2dd`: Cut cursor and next line
+
+- `yy`: Copy cursor line. `2yy`: Copy cursor and next line
+
+- `p`: Paste at next line of cursor. `2p`: Paste at next line of cursor 2 times
+
+- `Ctrl + F`: Page Up. `Ctrl + U`: Page Up Half.
+
+- `Ctrl + B`: Page Down. `Ctrl + D`: Page Down Half.
+
+### Insert mode
+
+- Into insert mode
+  - `i`: before cursor
+  - `I`: line beginning
+  - `a`: after cursor
+  - `A`: line end
+  - `o`: next new line
+  - `O`: previous new line
+- Edit
+  - `^`: jump to line beginning
+  - `$`: jump to line end
+
+### Last line mode
+
+- `:`: Into last line mode
+- `:q`: exit
+- `:wq`: save and exit
+- `:set nu`: show line number
+- `:set nonu`: close line number
 
 # 文件夹
 

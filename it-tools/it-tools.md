@@ -611,6 +611,10 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
 
   ```sql
   # A command line must be followed by a ';'，or a '\g'.
+  # Show all users
+  select user, host from mysql.user;
+  # Login with root, and authorize jerry, or jerry can't operate database
+  grant all privileges on $DATABASE/TABLE.* to 'jerry'@'%';
   
   # Exit MySQL server
   exit;
@@ -620,6 +624,7 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   show variables like 'character_set_database';
   # Set characters between client and server
   set names 'utf8';
+  
   ```
 
 - Others
@@ -681,7 +686,25 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
     password varchar(16),
   	age int [default 3]  # 选项：不填默认为3
   )default charset=utf8;
-```
+  ```
+  
+  ```sql
+  create table test_test(
+  	id int primary key auto_increment not null,
+  	username varchar(16),
+  	password varchar(16)
+  )default charset=utf8;
+  ```
+  
+  ```sql
+  create table test_test(
+  	id int primary key auto_increment not null,
+  	address varchar(16),
+  	name varchar(16)
+  )default charset=utf8;
+  ```
+  
+  
 
 ## Row
 
@@ -694,7 +717,6 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   delete from $TABLE [where $CONDITION];
   # add row
   insert into $TABLE[($COLUMN1, $COLUMN2)] values("$VALUE1", "$VALUE2");
-```
 
 - **Add many rows**
 
@@ -704,6 +726,15 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   	('mayun', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30'),
   	('mayun', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30'),
   	('mayun', '18888888888', 'x@qq.com', 1000, '2023-11-01 12:30:30');
+  ```
+
+## Column
+
+- **Basic command**
+
+  ```sql
+  # del column
+  alter table $TABLE drop column $COLUMN
   ```
 
 ## Data

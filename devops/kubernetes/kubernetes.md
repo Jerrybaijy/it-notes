@@ -235,8 +235,10 @@
   kubectl describe pod $POD
   # Use when pod is exited
   kubectl logs $POD
+  # Exit pod
+  kubectl exec -it $POD -- /bin/bash
   ```
-
+  
   
 
 # Service

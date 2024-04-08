@@ -3465,10 +3465,67 @@
 
 # Operate MySQL
 
+## Syntax
+
+- SQL syntax in Python
+
+  ```python
+  sql = "show databases;"
+  ```
+
+  解释：
+
+  - 结尾不加分号也行
+  - 整个 sql 语句用双引号包围
+  - 当作为数据的值时，应该使用单引号
+
+- Commit SQL syntax template
+
+  ```python
+  cursor.execute("$SQL_SYNTAX")
+  
+  # 1. 如果是查询业务，则执行 fetchall
+  result = cursor.fetchall()
+  print(result)
+  
+  # 2. 如果是增删改业务，则执行 commit
+  conn.commit()
+  ```
+
+## About DictCursor
+
+- 引入 DictCursor
+
+  ```python
+  import pymysql
+  from pymysql.cursors import DictCursor  # 引入 DictCursor
+  
+  # 连接方式
+  cursor = conn.cursor(cursor=DictCursor)
+  ```
+
+  ```
+  # 查询结果：每行数据都放在各自字典中，所有行都放在一个列表中，即列表嵌套字典，列名为字典的键，数据为字典的值。
+  [{'id': 8, 'username': 'zhangsansan', 'password': '123', 'mobile': '19999999999'}, {'id': 9, 'username': 'lisisi', 'password': '123', 'mobile': '18888888888'}, {'id': 10, 'username': 'wangwuwu', 'password': '123', 'mobile': '16666666666'}]
+  ```
+
+- 不引入 DictCursor
+
+  ```python
+  import pymysql
+  
+  # 连接方式
+  cursor = conn.cursor()
+  ```
+
+  ```
+  # 查询结果：每行数据都放在各自元组中，所有行都放在一个大元组中，即元组嵌套元组。
+  ((8, 'zhangsansan', '123', '19999999999'), (9, 'lisisi', '123', '18888888888'), (10, 'wangwuwu', '123', '16666666666'))
+  ```
 
 ## Operate MySQL
 
-- 通过引入 DictCursor，查询结果为：每行数据都放在各自字典中，所有行都放在一个列表中，即列表嵌套字典，列名为字典的键，数据为字典的值。否则查询结果为：每行数据都放在各自元组中，所有行都放在一个大元组中，即元组嵌套元组。
+### An operation
 
 - 此例作为 Python 操作 MySQL 的样板文件，可以替换中间 `文件处理` 和 `执行sql` 部分。
 
@@ -3476,7 +3533,7 @@
   # 1.引入 pymysql 和 DictCursor
   # 确保第三方模块 pymysql、DictCursor 已安装
   import pymysql
-  from pymysql.cursors import DictCursor
+  from pymysql.cursors import DictCursor  # 引入 DictCursor，查询结果为列表嵌套字典
   
   # 2.连接 MySQL 服务器
   # 将连接部分写在循环以外，防止频繁连接
@@ -3490,7 +3547,7 @@
       database="db_test"  # 可提前连接某个特定数据库，以减少后期进入数据库的步骤
   )
   print("MySQL已连接.....")
-  cursor = conn.cursor(cursor=DictCursor)  # 创建游标对象（1.执行sql语句，2.处理数据查询结果）
+  cursor = conn.cursor(cursor=DictCursor)  # 创建游标对象（连接方式 DictCursor，查询结果为列表嵌套字典）
   
   # 3.增删改查（以导入数据为例）
   # 3.文件处理
@@ -3518,25 +3575,38 @@
   print("MySQL 已断开连接！")
   ```
 
-## Syntax
+### Multiple operations
 
-- SQL syntax in Python
-
-  - 结尾不加分号也行
-  - 整个 sql 语句用双引号包围
-  - 作为数据的值时，应该使用单引号
-
-- Template
+- 当需要多次连接 MySQL 时，可以将连接和断开连接封装成函数，以免冗余。
 
   ```python
-  cursor.execute("$SQL_STATEMENT")
+  import pymysql
+  from pymysql.cursors import DictCursor
   
-  # 1. 如果是查询业务，则执行 fetchall
+  
+  # 连接 MySQL
+  def conn_mysql():
+      return pymysql.Connect(
+          host="localhost",
+          port=3306,
+          user="root",
+          password="123456",
+          charset="utf8",
+          database="db_test"
+      )
+  
+  
+  # 断开 MySQL
+  def close_conn_mysql(conn, cursor):
+      cursor.close()
+      conn.close()
+  
+  # 以查询数据为例
+  conn = conn_mysql()  # 调用连接 MySQL 函数
+  cursor = conn.cursor(cursor=DictCursor)
+  cursor.execute("select * from tb_test")
   result = cursor.fetchall()
-  print(result)
-  
-  # 2. 如果是增删改业务，则执行 commit
-  conn.commit()
+  close_conn_mysql(conn, cursor)  # 调用断开 MySQL 函数
   ```
 
 ## Database
@@ -3731,16 +3801,16 @@
   # 3.文件处理
   # 关于文件处理，详见：处理 TXT 文件
   while True:
-      user = input("请输入用户名：")
-      if user.upper() == "Q":
+      username = input("请输入用户名：")
+      if username.upper() == "Q":
           break
-      pwd = input("请输入密码：")
+      password = input("请输入密码：")
       phone = input("请输入手机号：")
   
       # 4.执行 sql
-      # 关于执行 sql，详见操作 MySQL
+      # 关于执行 sql，详见 Operate MySQL
       sql = "insert into tb_test(username, password, mobile) values(%s, %s, %s)"
-      cursor.execute(sql, [user, pwd, phone])
+      cursor.execute(sql, [username, password, phone])
       conn.commit()
       print("添加数据成功！")
   

@@ -1490,49 +1490,140 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
 
 ## List 数据库
 
-- 此例为了展示 Login And Sign Up 的循环逻辑，所有逻辑以此为准
+- 此例为了展示 Login And Sign Up 的循环逻辑，所有逻辑以新版为准
   - 注册
   - 循环登录
   - 选择菜单
 - 为了方便，此例使用 List 模拟数据库
+- 此例有两个版本，以新版为准，旧版的意义在于
+  - 留存 msg 的用法
+  - 对 `continue` `breake` `return` 更深的理解
 
-- login.py
+
+### 新版
+
+- login.py （新版）
 
   ```python
-  users_list = [{"name": "zhangsan", "password": "123"}]
+  users_list = [{"username": "zhangsan", "password": "123"}]
+  
+  
+  # 用户信息
+  def user_info():
+      print("用户信息：")
+      for user in users_list:
+          print(f"用户名: {user['username']}, 密码: {user['password']}")
+  
+  
+  # 注册
+  def register():
+      while True:  # 循环注册
+          username = input("请输入注册用户名/返回请按'Q'：")
+          if username.upper() == "Q":
+              return  # 输入 Q 退出注册
+          password = input("请输入注册密码：")
+          user = {"username": username, "password": password}
+  
+          # 检查用户名是否已存在
+          # 此处为了使下面的 continue 对 while 生效，减少一层 for 循环
+          exists = any(user["username"] == user_exist["username"] for user_exist in users_list)
+          if exists:
+              print("用户名已存在，请重新输入！")
+              continue  # 如果用户名存在，本次循环终止，重新执行 while 循环
+  
+          # 用户名不存在，将新用户添加到列表中
+          users_list.append(user)
+          print("恭喜你，注册成功！")
+  
+  # 登录
+  def login():  # 循环登录
+      while True:
+          username = input("请输入登录用户名/退出请按'Q'：")
+          if username.upper() == "Q":
+              return None  # 返回 None 传回主函数，使主函数终止，代替了 msg
+          password = input("请输入登录密码：")
+          for user_exist in users_list:
+              if username == user_exist["username"] and password == user_exist["password"]:
+                  print("恭喜你，登录成功！")
+                  return user_exist  # 不返回 None 传回主函数，使登录成功，代替了 msg
+          print("用户名或密码错误，请重新输入！")
+  
+  
+  def main():
+      while True:
+          if login():  # 登录并判断登录结果，以 login() 的返回值是不是 None 作为判定标准
+              while True:
+                  print("-----业务选择------")
+                  print("1.注册")
+                  print("2.登录")
+                  print("3.查看用户信息")
+                  print("4.退出")
+                  choice = input("请选择业务编号：")
+  
+                  # 将要执行函数的函数名放入字典
+                  mapping = {
+                      "1": register,
+                      "2": login,
+                      "3": user_info
+                  }
+  
+                  func = mapping.get(choice)  # func 即为 mapping 里的值，如果不能获取到键，func 为 None
+                  if func:  # 即 func 不为 None，能获取键
+                      func()  # func 为 mapping 里对应 choice 的值
+                  elif choice == "4":
+                      return  # 函数终止
+                  else:
+                      print("输入错误，请重新选择！")
+          else:
+              return  # 如果输入的是 Q，login() 的返回值传回的是 None，则主函数终止
+  
+  
+  if __name__ == '__main__':
+      main()
+  ```
+
+### 旧版 msg
+
+- login.py （旧版 msg）
+
+  ```python
+  users_list = [{"username": "zhangsan", "password": "123"}]
   
   
   def register():
-      for user_exist in users_list:
-          name = input("请输入注册用户名/退出请按Q：")
-          if name.upper() == "Q":
-              return  # 输入 Q 退出脚本
+      while True:
+          username = input("请输入注册用户名/返回请按'Q'：")
+          if username.upper() == "Q":
+              return
           password = input("请输入注册密码：")
-          user = {"name": name, "password": password}
-          if user["name"] == user_exist["name"]:  # 判断用户名已存在
+          user = {"username": username, "password": password}
+  
+          exists = any(user["username"] == user_exist["username"] for user_exist in users_list)
+          if exists:
               print("用户名已存在，请重新输入！")
               continue
-          else:
-              users_list.append(user)
-              print("恭喜你，注册成功！")
-              return
+  
+          users_list.append(user)
+          print("恭喜你，注册成功！")
   
   
   def login():
-      msg = 0
-      while True:  # 循环登录
-          name = input("请输入登录用户名/退出请按'Q'：")
-          if name.upper() == "Q":
-              return
+      msg = 0  # msg 作为登录是否成功的标志，0失败，1成功
+      while True:
+          username = input("请输入登录用户名/退出请按'Q'：")
+          if username.upper() == "Q":
+              return  # 默认返回 None，传回主函数，主函数终止
           password = input("请输入登录密码：")
           for user_exist in users_list:
-              if name == user_exist["name"] and password == user_exist["password"]:
+              if username == user_exist["username"] and password == user_exist["password"]:
                   print("恭喜你，登录成功！")
-                  msg = 1
-                  return msg
-          if msg == 0:
-              print("用户名密码错误，请重新输入！")
-              continue
+                  msg = 1  # 登录成功
+                  return msg  # 返回 1，传回主函数，登录成功
+          print("用户名密码错误，请重新输入！")
+          # 此步骤是以下三行的简写
+          # if msg == 0:
+          #     print("用户名密码错误，请重新输入！")
+          #     continue
   
   
   def user_info():
@@ -1541,10 +1632,10 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
   
   def main():
       while True:
-          if login() == 1:  # 登录并判断登录结果
+          if login() == 1:  # 如果 login() 传回 1 代表登录成功
               while True:
                   print("-----业务选择------")
-                  print("1.注册")  # 可以将此类整合到mapping中，通过函数输出
+                  print("1.注册")
                   print("2.登录")
                   print("3.查看用户信息")
                   print("4.退出")
@@ -1555,16 +1646,18 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
                       "2": login,
                       "3": user_info
                   }
-                  func = mapping.get(choice)  # func 即为 mapping 里的值，如果不能获取到键，func 为 None
-                  if func:  # 即 func 不为 None，能获取键
-                      func()  # func 为 mapping 里对应 choice 的值
+                  func = mapping.get(choice)
+                  if func:
+                      func()
                   elif choice == "4":
                       return  # 函数终止
                   else:
                       print("输入错误，请重新选择！")
-                      continue
+                      # continue  # 本次循环后面无代码，此处可省略
           else:
-              break  # 结束外层循环，保证在 login 页面系统可以退出
+              # 如果输入的是 Q，login() 的返回值传回的是 None，则 while 循环终止，主函数终止
+              # 此处最好使用 return，直接终止主函数，因为目的就是要直接终止主函数
+              break
   
   
   if __name__ == '__main__':
@@ -1746,53 +1839,120 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
 
 - 此例为了展示使用 MySQL 数据库，用 Python 实现 Login And Sign Up 功能
 
-- 循环逻辑以 List 数据库示例为准
+- 循环逻辑以 List 数据库示例为准，此例的循环逻辑完全套用 List 数据库示例
 
 - login.py
 
   ```python
   import pymysql
+  from pymysql.cursors import DictCursor
   
   
-  def get_data(sql):
-      # 需要先创建一个数据库，才能连接
-      host = "localhost"
-      port = 3306  # 注意使用数字
-      user = "root"
-      password = "123456"
-      db = "51db"  # 数据库名称
-      charset = "utf8"
+  # 连接 MySQL 函数
+  def conn_mysql():
+      return pymysql.Connect(
+          host="localhost",
+          port=3306,
+          user="root",
+          password="123456",
+          charset="utf8",
+          database="db_test"
+      )
   
-      # 创建数据库连接对象，并建立连接
-      db = pymysql.Connect(host=host, port=port, user=user, passwd=password, db=db, charset=charset)
-      print("数据库已连接.....")
-      # 创建游标对象(1.执行sql语句，2.处理数据查询结果)
-      cursor = db.cursor()
-      cursor.execute(sql)  # 执行sql
-      data = cursor.fetchone()  # 获取一行数
   
-      # 关闭
+  # 断开 MySQL 函数
+  def close_conn_mysql(conn, cursor):
       cursor.close()
-      db.close()
+      conn.close()
   
-      return data
+  
+  # 获取数据
+  def get_data():
+      conn = conn_mysql()
+      cursor = conn.cursor(cursor=DictCursor)
+      cursor.execute("select * from tb_test")
+      result = cursor.fetchall()
+      close_conn_mysql(conn, cursor)
+      return result  # 返回获取结果
+  
+  
+  # 用户信息
+  def user_info():
+      print("用户信息：")
+      for user in get_data():  # 使用 get_data() 的返回值
+          print(f"用户名: {user['username']}, 密码: {user['password']}")
+  
+  
+  # 注册
+  def register():
+      while True:
+          username = input("请输入注册用户名/退出请按Q：")
+          if username.upper() == "Q":
+              return
+          password = input("请输入注册密码：")
+          user = {"username": username, "password": password}
+  
+          # 检查用户名是否已存在
+          exists = any(user["username"] == user_exist["username"] for user_exist in get_data())
+          if exists:
+              print("用户名已存在，请重新输入！")
+              continue
+  
+          # 用户名不存在，执行插入操作
+          conn = conn_mysql()
+          cursor = conn.cursor(cursor=DictCursor)
+          sql = "insert into tb_test(username, password) values(%s, %s)"
+          cursor.execute(sql, [user["username"], user["password"]])
+          conn.commit()
+          close_conn_mysql(conn, cursor)
+          print("恭喜你，注册成功！")
   
   
   # 登录
   def login():
-      uname = input("请输入用户名：")
-      upwd = input("请输入密码：")
-      sql = "SELECT * FROM users WHERE username='" + uname + "' and password='" + upwd + "'"
-      data = get_data(sql)
-      if data == None:
-          print("失败！")
-      else:
-          print("成功！")
+      while True:
+          username = input("请输入登录用户名/退出请按'Q'：")
+          if username.upper() == "Q":
+              return None
+          password = input("请输入登录密码：")
+          for user_exist in get_data():
+              if username == user_exist["username"] and password == user_exist["password"]:
+                  print("恭喜你，登录成功！")
+                  return user_exist
+          print("用户名或密码错误，请重新输入！")
+  
+  
+  def main():
+      while True:
+          if login():
+              while True:
+                  print("-----业务选择------")
+                  print("1.注册")
+                  print("2.登录")
+                  print("3.查看用户信息")
+                  print("4.退出")
+                  choice = input("请选择业务编号：")
+  
+                  mapping = {
+                      "1": register,
+                      "2": login,
+                      "3": user_info
+                  }
+                  func = mapping.get(choice)
+                  if func:
+                      func()
+                  elif choice == "4":
+                      return
+                  else:
+                      print("输入错误，请重新选择！")
+          else:
+              return
+  
   
   if __name__ == '__main__':
-      login()
+      main()
   ```
-
+  
   
 
 # Student Spring Boot React Full Stack
@@ -2121,13 +2281,17 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
 
 1. 使用 Argo CD 在集群中部署
 
+   1. 一直连接不到 MySQL
+
+   2. Pod 一直重建
+
 2. application.yaml
 
    ```yaml
    apiVersion: argoproj.io/v1alpha1
    kind: Application
    metadata:
-     name: student-springboot-react-backend
+     name: backend
      namespace: argocd
    
    spec:
@@ -2136,14 +2300,13 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
        repoURL: https://gitlab.com/jerrybai/student-springboot-react-backend.git
        targetRevision: HEAD
        path: dev
-     
      destination:
        server: https://kubernetes.default.svc
-       namespace: student-springboot-react-backend
+       namespace: student
    
      syncPolicy:
        syncOptions:
-         - CreateNamespace=true
+         - CreateNamespace=false
        automated:
          selfHeal: true
          prune: true
@@ -2155,34 +2318,22 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
    apiVersion: apps/v1
    kind: Deployment
    metadata:
-     name: student-springboot-react-backend
+     name: backend
    spec:
      selector:
        matchLabels:
-         app: student-springboot-react-backend
+         app: backend
      replicas: 1
      template:
        metadata:
          labels:
-           app: student-springboot-react-backend
+           app: backend
        spec:
          containers:
-           - name: student-springboot-react-backend
+           - name: backend
              image: jerrybaijy/student-springboot-react-backend:v1.0
              ports:
                - containerPort: 8080
-             env:
-               - name: PORT
-                 value: "8080"
-             resources:
-               requests:
-                 memory: "1Gi"
-                 cpu: "500m"
-                 ephemeral-storage: "1Gi"
-               limits:
-                 memory: "1Gi"
-                 cpu: "500m"
-                 ephemeral-storage: "1Gi"
    ```
 
 4. service.yaml
@@ -2191,13 +2342,13 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
    apiVersion: v1
    kind: Service
    metadata:
-     name: student-springboot-react-backend
+     name: backend
    spec:
      selector:
-       app: student-springboot-react-backend
+       app: backend
      type: ClusterIP
      ports:
-       - port: 80
+       - port: 8080
          targetPort: 8080
    ```
 
@@ -2458,7 +2609,7 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
      apiVersion: argoproj.io/v1alpha1
      kind: Application
      metadata:
-       name: student-springboot-react-frontend
+       name: frontend
        namespace: argocd
      
      spec:
@@ -2470,11 +2621,11 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
        
        destination:
          server: https://kubernetes.default.svc
-         namespace: student-springboot-react-frontend
+         namespace: student
      
        syncPolicy:
          syncOptions:
-           - CreateNamespace=true
+           - CreateNamespace=false
          automated:
            selfHeal: true
            prune: true
@@ -2486,46 +2637,34 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
      apiVersion: apps/v1
      kind: Deployment
      metadata:
-       name: student-springboot-react-frontend
+       name: frontend
      spec:
        selector:
          matchLabels:
-           app: student-springboot-react-frontend
+           app: frontend
        replicas: 1
        template:
          metadata:
            labels:
-             app: student-springboot-react-frontend
+             app: frontend
          spec:
            containers:
-             - name: student-springboot-react-frontend
+             - name: frontend
                image: jerrybaijy/student-springboot-react-frontend:v1.0
                ports:
                  - containerPort: 8080
-               env:
-                 - name: PORT
-                   value: "8080"
-               resources:
-                 requests:
-                   memory: "1Gi"
-                   cpu: "500m"
-                   ephemeral-storage: "1Gi"
-                 limits:
-                   memory: "1Gi"
-                   cpu: "500m"
-                   ephemeral-storage: "1Gi"
      ```
-
+     
    - service.yaml
-
+   
      ```bash
      apiVersion: v1
      kind: Service
      metadata:
-       name: student-springboot-react-frontend
+       name: frontend
      spec:
        selector:
-         app: student-springboot-react-frontend
+         app: frontend
        type: LoadBalancer
        ports:
          - port: 80
@@ -2542,19 +2681,19 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
    apiVersion: argoproj.io/v1alpha1
    kind: Application
    metadata:
-     name: student-springboot-react-database
+     name: mysql
      namespace: argocd
    
    spec:
      project: default
      source:
-       repoURL: https://gitlab.com/jerrybai/student-springboot-react-database.git
+       repoURL: https://gitlab.com/jerrybai/student-springboot-react-mysql.git
        targetRevision: HEAD
        path: dev
      
      destination:
        server: https://kubernetes.default.svc
-       namespace: student-springboot-react-database
+       namespace: student
    
      syncPolicy:
        syncOptions:
@@ -2564,57 +2703,79 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
          prune: true
    ```
 
-3. deploymnet.yaml
+3. pvc-pod-demo.yaml
+
+   1. [GKE 中动态预配 PersistentVolume](https://cloud.google.com/kubernetes-engine/docs/concepts/persistent-volumes?hl=zh-CN)
+   2. [运行一个单实例有状态应用](https://kubernetes.io/zh-cn/docs/tasks/run-application/run-single-instance-stateful-application/)
+   3. 结合以上两点自己生成此 YAML 文件
+   4. 部署 MySQL 成功，查询日志正常，但一直处于同步状态
 
    ```yaml
-   apiVersion: apps/v1
-   kind: Deployment
+   # pvc-pod-demo.yaml
+   apiVersion: v1
+   kind: PersistentVolumeClaim
    metadata:
-     name: student-springboot-react-database
+     name: pvc-demo
    spec:
-     selector:
-       matchLabels:
-         app: student-springboot-react-database
-     replicas: 1
-     template:
-       metadata:
-         labels:
-           app: student-springboot-react-database
-       spec:
-         containers:
-           - name: student-springboot-react-database
-             image: jerrybaijy/student-springboot-react-database:v1.0
-             ports:
-               - containerPort: 3306
-             env:
-               - name: PORT
-                 value: "3306"
-             resources:
-               requests:
-                 memory: "1Gi"
-                 cpu: "500m"
-                 ephemeral-storage: "1Gi"
-               limits:
-                 memory: "1Gi"
-                 cpu: "500m"
-                 ephemeral-storage: "1Gi"
-   ```
-
-4. service.yaml
-
-   ```bash
+     accessModes:
+       - ReadWriteOnce
+     resources:
+       requests:
+         storage: 30Gi
+     storageClassName: standard-rwo
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: mysql
+   spec:
+     volumes:
+       - name: pvc-demo-vol
+         persistentVolumeClaim:
+          claimName: pvc-demo
+     containers:
+       - name: mysql
+         image: mysql:8.0
+         env:
+         - name: MYSQL_ROOT_PASSWORD
+           value: "123456"
+         - name: MYSQL_DATABASE
+           value: "fullstack"
+         - name: MYSQL_USER
+           value: "jerry"
+         - name: MYSQL_PASSWORD
+           value: "123456"
+         resources:
+           limits:
+             cpu: 10m
+             memory: 80Mi
+           requests:
+             cpu: 10m
+             memory: 80Mi
+         ports:
+           - containerPort: 3306
+             name: "mysql"
+         volumeMounts:
+           - mountPath: "/usr/share/nginx/html"
+             name: pvc-demo-vol
+   
+   ---
    apiVersion: v1
    kind: Service
    metadata:
-     name: student-springboot-react-database
+     name: mysql
    spec:
      selector:
-       app: student-springboot-react-database
+       app: mysql
      type: ClusterIP
      ports:
        - port: 3306
          targetPort: 3306
    ```
+
+## 说明
+
+- 从此以下，都是临时保存，为了留存当初试验过的内容
 
 ## Local docker
 

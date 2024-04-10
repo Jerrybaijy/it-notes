@@ -1955,6 +1955,378 @@ A 不仅监视存储库更改，还会监视集群中的更改，双方任意一
   
   
 
+# Login Flask React
+
+![image-20240411011108035](assets/image-20240411011108035.png)
+
+## 项目概述
+
+- **项目概述**：这是一个全栈 Web 应用项目，主要功能注册和登录，实现网页端与数据库的数据交互。
+- **文件来源**：后端文件循环逻辑来自于项目 Login And Sign Up 的 List 数据库（新版）
+- **环境搭建**
+  - **前端**：使用 Java Script 的 React 框架搭建
+  - **后端**：使用 Python 的 Flask 框架搭建
+  - **数据库**：使用容器化的 MySQL
+
+- **项目功能**
+  - 网页端可以通过后端连接 MySQL 登录、注册、获取用户信息
+  - 网页端有操作反馈，显示在 Message 区
+  - 登录以后实现跳转到 Home 页面
+
+- **代码存储**：前后端和数据库以两个分项目形式分别存储在托管平台
+  - **后端**：login-flask
+  - **前端**：login-react
+
+
+## 后端
+
+1. Pycharm 创建后端 Flask 框架项目 `login-flask`
+
+2. login-flask/app.py
+
+   ```python
+   from flask import Flask, jsonify, request
+   from flask_cors import CORS
+   import pymysql
+   from pymysql.cursors import DictCursor
+   
+   app = Flask(__name__)
+   CORS(app)  # 允许所有域的跨域请求，即允许前端的 3000 端口访问后端的 5000 端口
+   
+   
+   # 连接 MySQL 函数
+   def conn_mysql():
+       return pymysql.Connect(
+           host="localhost",
+           port=3306,
+           user="root",
+           password="123456",
+           charset="utf8",
+           database="db_test"
+       )
+   
+   
+   # 断开 MySQL 函数
+   def close_conn_mysql(conn, cursor):
+       cursor.close()
+       conn.close()
+   
+   
+   # 获取数据
+   def get_data():
+       conn = conn_mysql()
+       cursor = conn.cursor(cursor=DictCursor)
+       cursor.execute("select * from tb_test")
+       result = cursor.fetchall()
+       close_conn_mysql(conn, cursor)
+       return result  # 返回获取结果
+   
+   
+   # 注册
+   @app.route('/register', methods=['POST'])
+   def register():
+       data = request.json
+       username = data.get('username')
+       password = data.get('password')
+   
+       if not username or not password:
+           return jsonify({'message': '用户名或密码不能为空'})
+   
+       users = get_data()
+       for user in users:
+           if user['username'] == username:
+               return jsonify({'message': '用户名已存在'})
+   
+       conn = conn_mysql()
+       cursor = conn.cursor(cursor=DictCursor)
+       sql = "insert into tb_test(username, password) values(%s, %s)"
+       cursor.execute(sql, [username, password])
+       conn.commit()
+       close_conn_mysql(conn, cursor)
+       return jsonify({'message': '注册成功'})
+   
+   
+   # 登录
+   @app.route('/login', methods=['POST'])
+   def login():
+       data = request.json
+       username = data.get('username')
+       password = data.get('password')
+   
+       if not username or not password:
+           return jsonify({'message': '用户名或密码不能为空'})
+   
+       users = get_data()
+       # print(users)
+       for user in users:
+           if username == user['username'] and password == user['password']:
+               return jsonify({'message': '登录成功', 'user': user})
+   
+       return jsonify({'message': '用户名或密码错误'})
+   
+   
+   # 查看用户信息
+   @app.route('/user_info', methods=['GET'])
+   def user_info():
+       users = get_data()
+       return jsonify({'users': users})
+   
+   
+   if __name__ == '__main__':
+       app.run(debug=True)
+   ```
+
+## 数据库
+
+- 在本地使用 Docker 运行 MySQL，创建数据库 `db_test` 和数据表 `tb_test`
+
+  ```
+  +----+----------+----------+
+  | id | username | password |
+  +----+----------+----------+
+  | 31 | zhangsan | 123      |
+  +----+----------+----------+
+  ```
+
+- 访问 http://localhost:5000/user_info 即可获取数据库数据
+
+## 前端
+
+- Pycharm 创建前端 React 框架项目 `login-react`
+
+### Appbar 组件
+
+- login-react/src/components/Appbar.js
+
+  ```javascript
+  import * as React from 'react';
+  import AppBar from '@mui/material/AppBar';
+  import Box from '@mui/material/Box';
+  import Toolbar from '@mui/material/Toolbar';
+  import Typography from '@mui/material/Typography';
+  import Button from '@mui/material/Button';
+  import IconButton from '@mui/material/IconButton';
+  import MenuIcon from '@mui/icons-material/Menu';
+  
+  // 此处的 Appbar 即主程序文件 App.js 中的 <Appbar />
+  export default function Appbar() {
+    return (
+      <Box sx={{flexGrow: 1}}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{mr: 2}}
+            >
+              <MenuIcon/>
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{flexGrow: 1, textAlign: 'center'}}>
+              Login Flask React
+            </Typography>
+            <Button color="inherit">Login</Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    );
+  }
+  ```
+
+### Login 组件
+
+- login-react/src/components/Login.js
+
+  ```javascript
+  import React, {useState} from 'react';
+  import axios from 'axios';
+  import {TextField, Button, Container} from '@mui/material';
+  
+  const Login = ({onLogin}) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+  
+    const handleRegister = async () => {
+      try {
+        const response = await axios.post('http://localhost:5000/register', {username, password});
+        if (response.data.message === '注册成功') {
+          setMessage(response.data.message);
+        } else {
+          setMessage(response.data.message);
+        }
+      } catch (error) {
+        console.error('Registration failed:', error);
+        setError('注册失败，请稍后重试');
+      }
+    };
+  
+    const handleLogin = async () => {
+      try {
+        const response = await axios.post('http://localhost:5000/login', {username, password});
+        if (response.data.message === '登录成功') {
+          onLogin();
+        } else {
+          setMessage(response.data.message);
+        }
+      } catch (error) {
+        console.error('Login failed:', error);
+        setError('登录失败，请稍后重试');
+      }
+    };
+  
+    return (
+      <Container>
+        <h1>用户登录</h1>
+        <div>
+          <TextField label="用户名" value={username} onChange={(e) => setUsername(e.target.value)}/>
+        </div>
+        <div>
+          <TextField label="密码" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+        </div>
+        <div>
+          <Button variant="contained" color="primary" onClick={handleRegister}>注册</Button>
+          <Button variant="contained" color="primary" onClick={handleLogin}>登录</Button>
+        </div>
+        <div>{message}</div>
+      </Container>
+    );
+  };
+  
+  export default Login;
+  ```
+
+### Home 组件
+
+- login-react/src/components/Home.js
+
+  ```javascript
+  import React, {useState, useEffect} from 'react';
+  import axios from 'axios';
+  import {Container, Button, List, ListItem, ListItemText} from '@mui/material';
+  
+  
+  const Home = () => {
+    const [userInfo, setUserInfo] = useState([]);
+    const [error, setError] = useState('');
+    const [showUserInfo, setShowUserInfo] = useState(false);
+  
+    useEffect(() => {
+      if (showUserInfo) {
+        fetchUserInfo();
+      }
+    }, [showUserInfo]);
+  
+    const fetchUserInfo = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/user_info');
+        setUserInfo(response.data.users);
+      } catch (error) {
+        console.error('Failed to fetch user info:', error);
+        setError('获取用户信息失败，请稍后重试');
+      }
+    };
+  
+    return (
+      <Container>
+        <h1>欢迎来到主页</h1>
+        <Button variant="contained" color="primary" onClick={() => setShowUserInfo(true)}>显示用户信息</Button>
+        {error && <div>{error}</div>}
+        {showUserInfo && (
+          <List>
+            {userInfo.map((user, index) => (
+              <ListItem key={index}>
+                <ListItemText primary={`用户名: ${user.username}, 密码: ${user.password}`}/>
+              </ListItem>
+            ))}
+          </List>
+        )}
+      </Container>
+    );
+  };
+  
+  export default Home;
+  ```
+
+### App 访问程序
+
+- login-react/src/App.js
+
+  ```javascript
+  import React, { useState } from 'react';
+  import axios from 'axios';
+  import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+  import Login from './components/Login';
+  import Home from './components/Home';
+  
+  const App = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+    const handleLoginSuccess = () => {
+      setIsLoggedIn(true);
+    };
+  
+    return (
+  
+      <Router>
+        <Routes>
+          {/*如果未登录直接访问 Home 页面，则跳转至登录页面*/}
+          <Route path="/" element={isLoggedIn ? <Navigate to="/home" /> : <Login onLogin={handleLoginSuccess} />} />
+          <Route path="/home" element={isLoggedIn ? <Home /> : <Navigate to="/" />} />
+        </Routes>
+      </Router>
+    );
+  };
+  
+  export default App;
+  ```
+
+### Index 主程序
+
+- login-react/src/index.js
+
+  ```js
+  import React from 'react';
+  import ReactDOM from 'react-dom/client';
+  import './index.css';
+  import App from './App';
+  import reportWebVitals from './reportWebVitals';
+  import Appbar from "./components/Appbar";
+  
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      <Appbar/>
+      <App/>
+    </React.StrictMode>
+  );
+  
+  reportWebVitals();
+  ```
+
+- login-react/src/index.css
+
+  ```css
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  ```
+
+- 访问 http://localhost:3000/
+
 # Student Spring Boot React Full Stack
 
 ![image](assets/image.png)

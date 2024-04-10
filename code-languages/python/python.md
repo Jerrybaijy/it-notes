@@ -305,15 +305,16 @@
 
 - 除以下规范，其余同编程语言通用规范。
 - **规范**
-- 只能含有字母、数字、下划线，且不能以数字开头
-  
-- **区别常规**：不含 $
+  - 只能含有字母、数字、下划线，且不能以数字开头
+
+  - **区别常规**：不含 $
+
 - **命名习惯**
-  - **变量名**：小写蛇形命名法
-  - **函数名**：小写蛇形命名法
+  - **变量名**：小蛇形
+  - **函数名**：小蛇形
   - **类名**：大驼峰
-	- **文件名**：不要使用 `-`，因为将文件作为模块引入时，如果模块名中包含破折号，可能会导致一些问题。
-	- **环境变量**：大写蛇形命名法
+  - **文件名**：Python 文件名不要使用 `-`，因为将文件作为模块引入时，如果模块名中包含破折号，可能会导致一些问题。
+  - **环境变量**：大蛇形
 
 ## 注释
 
@@ -3199,6 +3200,20 @@
   - 点方框——Install Packge
   ```
 
+### flask-cors 允许跨域
+
+​	在默认情况下，浏览器会阻止跨源的 HTTP 请求，以保护用户的安全和隐私。因此，当你在 localhost 的端口 3000 上运行的前端应用尝试向 localhost 的端口 5000 上运行的后端应用发送请求时，由于跨域限制，浏览器会拒绝这些请求。要解决这个问题，你需要在后端应用中配置 CORS，允许来自前端应用的跨源请求。在 Flask 中，你可以使用 flask_cors 库来处理跨域请求。请注意，这样配置会允许来自任何域的跨源请求，因此在生产环境中应谨慎使用，最好限制允许的来源。
+
+- 应用
+
+  ```python
+  from flask import Flask
+  from flask_cors import CORS
+  
+  app = Flask(__name__)
+  CORS(app)  # 允许所有域的跨域请求，即允许前端的 3000 端口访问后端的 5000 端口
+  ```
+
 ### pygame 游戏开发
 
 ​	Pygame 是制作小游戏的第三方模块。
@@ -3239,11 +3254,8 @@
   	- screen.blit(text_fmt,(80,100))
   ```
 
-  
 
 # 面向对象
-
-​	面向对象（Object Oriented）是软件开发方法，一种编程范式，面向对象是相对于面向过程来讲的。面向对象方法，把相关的数据属性和方法组织为一个整体来看待，从更高的层次来进行系统建模，更贴近事物的自然运行模式。
 
 ## 语法
 
@@ -3262,7 +3274,8 @@
   - 基础示例
 
   ```py
-  # 1.创建类  class 类名:
+  # 1.创建类
+  # class $CLASS:
   class Cat:
       
       # 1.1初始化方法，即定义类的属性
@@ -3282,7 +3295,7 @@
           print("猫在吃鱼！")
           
       def eat2(self):
-          print("{}在吃鱼！".format(self.nick))  # 当前对象nick在吃鱼
+          print("{}在吃鱼！".format(self.nick))  # 当前对象 nick 在吃鱼
           
       def eat3(self, count):
           print("{}在吃鱼！吃了{}条！".format(self.nick, count))  # 当前对象nick在吃鱼，吃了count条！
@@ -3330,29 +3343,45 @@
   # 2.自动执行一句：obj = __init__(obj, "江西")
   ```
 
-- **方法分类**
+- 银行卡示例
 
-  ```
-  - 绑定方法
-      - 绑定方法就是默认方法
-      - 绑定方法至少有一个self参数
-      - 必须先创建对象，再由对象调用执行
-      - 需要对象封装数据时，使用绑定方法调用
-  - 静态方法
-      - 定义静态方法之前写“@staticmethod”，代表此方法是静态方法
-      - 静态方法可以有任意个对象
-      - 可以通过类调用执行，也可以通过对象调用执行
-      - 当调用方法不需要对象属性值的时候，就可以批量使用静态方法调用
-  - 类方法
-      - 定义类方法之前写“@classmethod”，代表此方法是类方法
-      - 类方法至少有一个cls参数，cls代表当前类，与self类似
-      - 可以通过类调用执行，也可以通过对象调用执行
-      - 当调用方法需要类名时，就可以使用类方法调用
-  - 省略方法括号
-      - 了解
-      - 即obj.f()写成obj.f，其中f为方法名，直观感觉很像对象在调自己的属性
-      - 定义类方法之前写“@property”，代表以后调用方法时，可以省略方法名后的括号
-      - 此种方法只能有一个self参数
+  ```python
+  # 编写一个银行卡类
+  # 属性：银行名称，卡号，密码，姓名，余额
+  # 方法：登录，存款
+  
+  # 1.创建类
+  # 1.1初始化方法
+  class Card():
+      def __init__(self, num, pwd, user, balance):
+          self.bank_name = "Python Bank"
+          self.num = num
+          self.pwd = pwd
+          self.user = user
+          self.balance = balance
+  
+      # 1.2创建方法
+      def longin(self):
+          unum = input("请输入卡号：")
+          upwd = input("请输入密码：")
+          if unum == self.num and upwd == self.pwd:
+              print("验证成功！")
+              return unum
+          else:
+              print("验证失败！")
+              return None
+  
+      def deposit(self):
+          if self.longin():  # 类的内部可以调用其它函数
+              money = float(input("请输入存款金额："))
+              self.balance += money
+              print("存款成功！存入", money, "元！余额", self.balance, "元！")
+  
+  # -----------------------------------------------------------
+  # 2.创建对象
+  c1 = Card("1001", "123", "张三", 0)
+  c2 = Card("1002", "123", "张三", 0)
+  c1.deposit()
   ```
 
 ## 面向对象三大特性
@@ -3450,7 +3479,7 @@
 - **\__call__对象执行方法**
 
   ```
-  	普通对象自身没有方法，不能使用“对象名()”执行方法，只能通过“对象名.方法名()”调用类的方法，但此种模式可以让对象直接通过“对象名()”去执行一个定义好的自己的方法。
+  普通对象自身没有方法，不能使用“对象名()”执行方法，只能通过“对象名.方法名()”调用类的方法，但此种模式可以让对象直接通过“对象名()”去执行一个定义好的自己的方法。
   ```
 
   ```python
@@ -3928,7 +3957,7 @@
 
 # Flask 框架
 
-​	Flask 是一个轻量级的 Python Web 框架，用于构建 Web 应用程序。它由 Armin Ronacher 创建，基于 Werkzeug 和 Jinja2。Flask 的设计目标是简单而灵活，使得开发者能够快速地构建 Web 应用。
+​	Flask 是一个轻量级的 Python Web 框架，适用于构建小型到中型规模的 Web 应用程序和 API。它由 Armin Ronacher 创建，基于 Werkzeug 和 Jinja2。Flask 的设计目标是简单而灵活，使得开发者能够快速地构建 Web 应用。
 
 ## 环境搭建
 
@@ -3945,29 +3974,34 @@
 
 ![image-20240322141019074](assets/image-20240322141019074.png)
 
-1. [B 站武沛齐《精品 Python 全套课程》P19 10-1 前端开发 - 01:05:36](https://www.bilibili.com/video/BV1zd4y1y7px?p=19&vd_source=02dd98cfbf740b256dca0ec3e66776e6)
+1. [**来源**：B 站武沛齐《精品 Python 全套课程》P19 10-1 前端开发 - 01:05:36](https://www.bilibili.com/video/BV1zd4y1y7px?p=19&vd_source=02dd98cfbf740b256dca0ec3e66776e6)
 
-2. 此项目没有整理至《projects》，没有存储至 Git 托管平台
+2. **说明**
 
-3. 创建 Flask 项目
+   1. 这是一个没有前端框架和数据库的 Flask 简介项目
+   2. 此项目没有整理至《projects》，没有存储至 Git 托管平台
 
-4. 在项目根目录创建后端主程序文件 register.py
+3. Pycharm 创建 Flask 项目
+
+4. 在项目根目录创建后端主程序文件 app.py
 
    ```python
-   from flask import Flask, render_template, request, redirect
+   from flask import Flask, render_template, request
+   
    app = Flask(__name__)
    
-   # 定义注册路由
+   
+   # 定义初始页面路由，返回至 register.html 页面
    @app.route("/register")
    def register():
-       # 返回至register页面
        return render_template("register.html")
    
-   # 定义submit路由
+   
+   # 定义 submit 路由，返回至 login.html 页面
    @app.route("/register_ok", methods=["POST"])
    def register_ok():
        # 1.接收用户提交数据
-       # 左侧user为要存入数据库的变量名，右侧user为form表单提交数据的变量名
+       # 左侧 user 为要存入数据库的变量名，右侧 user 为 form 表单提交数据的变量名
        user = request.form.get("user")
        pwd = request.form.get("pwd")
        role = request.form.get("role")
@@ -3980,8 +4014,9 @@
        with open("users.txt", "a", encoding="utf-8") as f:
            line = "{}|{}|{}|{}|{}|{}\n".format(user, pwd, role, gender, hobby, others)
            f.write(line)
-       # 3.返回至login页面
        return render_template("login.html")
+   
+   
    if __name__ == '__main__':
        app.run()
    ```
@@ -3998,7 +4033,7 @@
          <title>Title</title>
      </head>
      <body>
-     # 定义submit路由和HTTP协议
+     <!--定义submit路由和HTTP协议-->
      <form action="/register_ok" method="POST">
          <div>
              <!--"user"作为接收用户输入内容的变量-->
@@ -4062,6 +4097,10 @@
 
    1. 程序会自动在项目根目录创建一个 users.txt 文件，并将用户提交信息存储在文件中。
    2. 页面自动跳转至 login 页面。
+
+## 项目
+
+- Login Flask React
 
 # Django 框架
 

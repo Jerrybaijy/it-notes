@@ -1927,6 +1927,31 @@
   print(dict_a)
   ```
 
+- 要求：得到一个 TXT 格式的字幕文件，只提取字幕部分
+
+  ```txt
+  Dialogue: 0,0:00:33.27,0:00:34.96,Default,NTP,0,0,0,,即使哥伦布在海上迷失\N{\rEng}So, even Columbus got lost,
+  Dialogue: 0,0:00:34.96,0:00:36.68,Default,NTP,0,0,0,,没成为首位发现美洲大陆的人\N{\rEng}and wasn't the first who discovered America,
+  # 删除“}”之前多余内容，变成如下
+  So, even Columbus got lost,
+  and wasn't the first who discovered America,
+  ```
+
+  ```python
+  # 读取文件内容
+  with open(r'hanchi_original.txt', 'r', encoding='utf-8') as file:
+      lines = file.readlines()
+  
+  # 提取“}”后面的内容
+  extracted_lines = [line.split('}', 1)[1].strip() if '}' in line else '' for line in lines]
+  
+  # 写入新文件
+  with open(r'hanchi_new.txt', 'w', encoding='utf-8') as output_file:
+      output_file.write('\n'.join(extracted_lines))
+  ```
+
+  
+
 ### 下载图片
 
 - **语法**

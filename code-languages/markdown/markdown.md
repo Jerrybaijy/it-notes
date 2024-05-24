@@ -24,10 +24,27 @@
 
 # Text
 
-- **Bold:** `**Text**`
-- **Escape Character:** `\`
-- **Link:** `[Describe]($URL)`
-- **Picture:** `![Describe]($PATH)`
+- **\<em>**    `*$TEXT*`
+
+  *This is an example of emphasized text.*
+
+- **\<strong>**    `**$TEXT**`
+
+  **This is an example of strong text.**
+
+- **\<del>**    `~~$TEXT~~`
+
+  ~~This is an example of deleted text.~~
+
+- **\<sup>**    `^$TEXT^`    a^2^
+
+- **\<sub>**    `~$TEXT~`    a~2~
+
+- **Escape Character:** `\$TEXT`
+
+- **Link:** `[$Describe]($URL)`
+
+- **Image:** `![$Describe]($PATH)`
 
 # Typora
 
@@ -146,6 +163,11 @@ p .md-image:only-child{
     text-align: left;
 }
 /* ---------------------- 其它 ---------------- */
+/* 删除线颜色 */
+del {
+    text-decoration-color: red;
+}
+
 /* 未知代码继承 */
 .md-heading code, #typora-sidebar code {
   color: inherit;
@@ -449,7 +471,9 @@ p .md-image:only-child{
 
 ### Themes
 
-- Github
+#### Github
+
+- Github.css
 
   ```css
   /* -----------------------以下为修改区域----------------- */
@@ -487,9 +511,17 @@ p .md-image:only-child{
   a:hover {
       color: #4183C4 !important;
   }
+  
+  /* 删除线颜色 */
+  del {
+      text-decoration-color: red;
+  }
   ```
 
--  [github-night-dimmed](https://github.com/kinoute/typora-github-night-theme/releases/tag/v0.6.2)
+
+#### [github-night-dimmed](https://github.com/kinoute/typora-github-night-theme/releases/tag/v0.6.2)
+
+- github-night-dimmed.c
 
   ```css
   /* -----------------------以下为修改区域----------------- */
@@ -501,6 +533,11 @@ p .md-image:only-child{
   a:hover {
       color: #4183C4 !important;
   }
+  
+  /* 删除线颜色 */
+  del {
+      text-decoration-color: red;
+  }
   ```
 
 ## Edit
@@ -508,8 +545,10 @@ p .md-image:only-child{
 ​	Typora supports most Markdown HTML CSS syntaxes.
 
 - **Shortcut keys**
-  - **Title:** Ctrl + n
-  - **Bold:** Ctrl + B
+  - **Title:** Ctrl + $N
+  - **Strong:** Ctrl + B
+  - **Underline:** Ctrl + U
+  - **Strike(Delete):** Alt + Shift + 5
 
 ## 其它
 
@@ -532,3 +571,11 @@ p .md-image:only-child{
   - [ ] 任务3
   ```
 
+### 文字颜色
+
+- 使用 HTML
+
+  ```html
+  ```
+
+  

@@ -1,126 +1,78 @@
-# Kubernetes 基础
+# K8S Basics
 
-## 环境搭建
+Kubernetes （K8S）是一个可移植、可扩展的开源平台，用于管理容器化的工作负载和服务，可促进声明式配置和自动化。
 
-- Kubernete 需运行在 Docker 基础上
+## Build ENV
+
+- K8S 需运行在 Docker 基础上
 - 在本地使用 Minikube 搭建集群
 - 在 Cloud 中搭建集群
-
-## Minikube
-
-​	Minikube 用于创建本地集群，供学习使用，不能用于生产环境。
-
-- **Minikube 安装**
-
-  ```bash
-  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-  sudo install minikube-linux-amd64 /usr/local/bin/minikube
-  ```
-
-- **Minikube 管理**
-
-  ```bash
-  # 列出 minkube 配置文件
-  minikube profile list
-  ```
-
-- **基础命令**
-
-  ```bash
-  # 查看集群
-  minikube status
-  # 创建集群
-  minikube start
-  # 删除集群
-  minikube delete
-  ```
-
-## Kubectl
-
-​	kubectl 命令行工具用于与集群交互
-
-- 安装 kubectl
-
-  ```bash
-  # 安装 kubectl
-  sudo snap install kubectl --classic
-  # 添加环境变量
-  export PATH=$PATH:/snap/bin
-  # 验证安装
-  kubectl version --client
-  ```
-
-  解释：
-
-  - `--classic` 用于允许 kubectl 访问系统上的文件系统。
-  - `--client` 用于告诉 kubectl 仅显示客户端版本信息，而不连接到 Kubernetes 集群来获取服务器版本信息。
-
-## 命令
-
-- **通用命令**
-
-  ```bash
-  # 查看 get
-  kubectl get pods
-  
-  # 删除 delete
-  kubectl delete pods
-  
-  # 应用 apply
-  kubectl apply -f $YAML # `-f` 指定路径
-  
-  # 查看pod
-  kubectl logs $POD_NAME -n $NAME_SPACE # -n指定命名空间
-  ```
-
-- **常用命令**
-
-  ```bash
-  
-  ```
-
-## 命令选项
-
--  **-n $NAMESPACE**：指定命名空间
-- 
+- 其它
 
 ## K8S 架构
 
 ![Kubernetes架构图](assets/Kubernetes架构图.png)
 
+## [K8S Objects](https://kubernetes.io/zh-cn/docs/concepts/overview/working-with-objects/)
+
+- *Kubernetes objects* are persistent entities in the Kubernetes system.
+
+### [Manifest File](https://kubernetes.io/docs/concepts/overview/working-with-objects/#describing-a-kubernetes-object)
+
+#### [Fields](https://kubernetes.io/docs/concepts/overview/working-with-objects/#required-fields)
+
+#### [Field Selectors](https://kubernetes.io/zh-cn/docs/concepts/overview/working-with-objects/field-selectors/)
+
+#### [Labels](https://kubernetes.io/zh-cn/docs/concepts/overview/working-with-objects/common-labels/)
+
+# [Control Plane](https://kubernetes.io/zh-cn/docs/concepts/overview/components/#control-plane-components)
+
+Control Plane is one of the cluster's basic components, and make global decisions about the cluster.
+
 # Cluster
 
-## Cluster 基础
+## Cluster basics
 
-- **基础命令**
+- A Kubernetes cluster consists of two types of resources:
+
+  - **Control Plane**: The Control Plane is responsible for managing the cluster
+  - **Node**: A node is a VM or a physical computer that serves as a worker machine in a Kubernetes cluster.
+
+- [All the required components in a complete and working cluster.](https://kubernetes.io/zh-cn/docs/concepts/overview/components/)
+
+  ![components-of-kubernetes](assets/components-of-kubernetes.svg)
+
+- Basic commands
 
   ```bash
-  # 查看 Cluster
+  # Show cluster
   kubectl cluster-info
-  # 停止 Cluster
+  # Stop Cluster
   systemctl stop kubelet
   ```
 
-# Namespace
+## Build cluster
 
-## Namespace 基础
+搭建集群需要一些步骤，主要是配置和安装相关软件。以下是 GPT 在一台空服务器上搭建集群的一般步骤：
 
-​	Namespace（命名空间）是 Kubernetes 中用于隔离和组织资源的虚拟工作空间。它是一种在逻辑上划分集群资源的方式，允许在同一集群内创建多个虚拟的独立环境。
+1. **选择操作系统**：选择适合您需求的操作系统。常见的选择包括 Ubuntu、CentOS、或者其他 Linux 发行版。
+2. **安装必要软件**：安装必要的软件，包括 SSH 服务器（用于远程连接）和基本的网络配置。
+3. **配置主机名和 IP 地址**：为您的服务器配置主机名和静态 IP 地址，这样其他服务器可以通过主机名或 IP 地址访问它。
+4. **安装容器化平台**：选择并安装适合您的容器化平台，比如 Docker 或者 Kubernetes。这些平台可以帮助您管理和运行应用程序容器。
+5. **配置容器化平台**：配置您的容器化平台，包括设置网络、存储和其他必要的配置。
+6. **创建集群**：使用容器化平台工具创建一个集群，将多台服务器连接在一起。
+7. **部署应用程序**：将您的应用程序容器化，并在集群中部署它们。您可以使用 Docker 镜像或者 Kubernetes 部署描述文件来简化这个过程。
+8. **监控和维护**：设置监控和日志记录，确保您的集群正常运行。定期进行维护和更新以确保安全性和性能。
 
-- **基础命令**
 
-  ```bash
-  # 创建 namespace
-  kubectl create namespace NAMESPACE_NAME
-  # 删除 namespace
-  kubectl delete namespace NAMESPACE_NAME
-  ```
 
 # Deployment
 
 ## Deployment 基础
 
 ​	Deployment（部署）是 Kubernetes 中用于管理 Pod 和 ReplicaSet 的控制器。它定义了您希望部署的应用程序的期望状态，并负责确保集群中的实际状态与所定义的状态匹配。
+
+![module_02_first_app](assets/module_02_first_app.svg)
 
 - **基础命令**
 
@@ -224,17 +176,124 @@
         volumes:
   ```
 
-# Node
+# [Kubectl](https://kubernetes.io/zh-cn/docs/reference/kubectl/)
+
+​	kubectl 命令行工具用于与集群交互
+
+## Install
+
+### [On Linux](https://kubernetes.io/zh-cn/docs/tasks/tools/install-kubectl-linux/#install-using-other-package-management)
+
+- Install on Linux
+
+  ```bash
+  # 安装 kubectl
+  sudo snap install kubectl --classic
+  # 添加环境变量
+  export PATH=$PATH:/snap/bin
+  # 验证安装
+  kubectl version --client
+  ```
+
+  解释：
+
+  - `--classic` 用于允许 kubectl 访问系统上的文件系统。
+  - `--client` 用于告诉 kubectl 仅显示客户端版本信息，而不连接到 Kubernetes 集群来获取服务器版本信息。
+
+## [Commands](https://kubernetes.io/zh-cn/docs/reference/kubectl/)
+
+- Commands
+
+  ```bash
+  # 列出资源
+  kubectl get $RESOURCE
+  # 删除资源
+  kubectl delete $RESOURCE
+  # 应用 apply
+  kubectl apply -f $YAML # `-f` 指定路径
+  # 查看资源日志
+  kubectl logs $RESOURCE
+  # 查看资源详细信息
+  kubectl describe $RESOURCE
+  ```
+
+- Options
+
+  -  `-n $NAMESPACE`：指定命名空间
+
+# [Minikube](https://minikube.sigs.k8s.io/docs/)
+
+​	Minikube 用于创建本地集群，供学习使用，不能用于生产环境。
+
+- **Install**
+
+  ```bash
+  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  sudo install minikube-linux-amd64 /usr/local/bin/minikube
+  ```
+
+- **Manage**
+
+  ```bash
+  # 列出 minkube 配置文件
+  minikube profile list
+  ```
+
+- **基础命令**
+
+  ```bash
+  # 查看集群
+  minikube status
+  # 创建集群
+  minikube start
+  # 删除集群
+  minikube delete
+  ```
+
+# [Namespace](https://kubernetes.io/zh-cn/docs/concepts/overview/working-with-objects/namespaces/)
+
+## Namespace 基础
+
+​	Namespace（命名空间）是 Kubernetes 中用于隔离和组织资源的虚拟工作空间。它是一种在逻辑上划分集群资源的方式，允许在同一集群内创建多个虚拟的独立环境。Namespace 作用域仅针对同一 Namespace 的对象，对集群范围的对象不适用。
+
+- **基础命令**
+
+  ```bash
+  # 创建 namespace
+  kubectl create namespace NAMESPACE_NAME
+  # 删除 namespace
+  kubectl delete namespace NAMESPACE_NAME
+  ```
+
+# [Node](https://kubernetes.io/zh-cn/docs/concepts/architecture/nodes/)
+
+- [**Node Component**](https://kubernetes.io/zh-cn/docs/concepts/overview/components/#node-components)
+  - Node component is one of the cluster's basic components.
+  - Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment.
+
+- Node 可以是一个虚拟机或者物理机器，取决于所在的集群配置。 每个节点包含运行 Pod 所需的服务； Kubernetes 通过将容器放入在 Node 上运行的 Pod 中来执行你的工作负载。
+
+- 所有 Node 由 Control Plane 负责管理。
+
+- Node 上的组件包括 [kubelet](https://kubernetes.io/docs/reference/generated/kubelet)、 [container runtime](https://kubernetes.io/zh-cn/docs/setup/production-environment/container-runtimes) 以及 [kube-proxy](https://kubernetes.io/zh-cn/docs/reference/command-line-tools-reference/kube-proxy/)。
+
+
 
 # Pod
+
+![module_03_pods](assets/module_03_pods.svg)
 
 - Command
 
   ```bash
-  # Use when pod is pending
+  # 列出 pod
+  kubectl get pod
+  # 删除 pod
+  kubectl delete pod
+  # 查看 pod 日志
+  kubectl logs pod
+  # 查看 pod 详细信息
   kubectl describe pod $POD
-  # Use when pod is exited
-  kubectl logs $POD
   # Exit pod
   kubectl exec -it $POD -- /bin/bash
   ```
@@ -474,6 +533,8 @@
          - "*"
    ```
 
+# Grafana
+
 # Helm
 
 Helm 是 Kubernetes 的包管理器，使用 "chart" 的打包格式来描述 Kubernetes 资源的集合，使得部署和管理应用程序变得更加简单和可重复。
@@ -608,6 +669,8 @@ Helm 是 Kubernetes 的包管理器，使用 "chart" 的打包格式来描述 Ku
   helm repo list
   # 添加 Helm Repo
   helm repo add $HELM_REPO https://jerrybaijy.github.io/$REPO
+  helm repo add arldka https://arldka.github.io/helm-charts
+  helm repo update
   # 删除 Helm Repo
   helm repo remove $HELM_REPO
   # 删除所有 Helm Repo
@@ -643,6 +706,7 @@ Helm 是 Kubernetes 的包管理器，使用 "chart" 的打包格式来描述 Ku
   # 部署 release
   helm install $RELEASE $HELM_REPO/$CHART_NAME
   # 删除 release
+  helm delete $RELEASE
   # 测试 release
   helm test $RELEASE
   ```
@@ -757,3 +821,159 @@ Helm 是 Kubernetes 的包管理器，使用 "chart" 的打包格式来描述 Ku
   affinity: {}
   ```
 
+# How to deploy Kubernetes on bare metal
+
+在裸机服务器上部署 Kubernetes 涉及检查一些先决条件、安装 Kubernetes 工具以及使用终端配置集群。
+
+## 设置物理机
+
+在裸机服务器上部署 Kubernetes 之前，您需要配置物理机：
+
+- **安装****操作系统****：**选择轻量级 Linux 发行版模型（示例包括 Ubuntu、CentOS 和 CoreOS），并将其安装在裸机服务器上。
+- **配置网络设置：**安装操作系统后，请进行网络配置并确保每台计算机都有唯一的 IP 地址。
+- **分配主机名：**编辑 **etc** 中的**主机名**，为每台物理机分配描述性主机名（例如，主节点、worker1 和 worker2），以便于管理。此外，编辑**主机**以将每个主机名连接到其各自的 IP 地址。
+
+在此步骤结束时，您将安装必要的操作系统。除此之外，每个节点都有一个唯一的名称。
+
+## 安装容器运行时
+
+虽然 Kubernetes 可帮助您运行容器化应用程序，但它通过与容器运行时交互来启动和管理集群来实现。
+
+如果您选择了 Ubuntu 或 [CentOS，Docker](https://www.liquidweb.com/kb/install-docker-on-linux-almalinux/) 是常见的容器运行时选择。对于 CoreOS，rkt （Rocket） 通常服务得更好。
+
+## 禁用交换
+
+交换是硬盘驱动器上用于在物理 RAM 已满时临时存储数据的空间。它充当 RAM 的扩展，并为操作系统提供了一种从 RAM 卸载非活动数据的方法。
+
+但是，Kubernetes 和容器化应用程序针对快速访问物理 RAM 进行了优化。因此，您必须禁用交换，以防止 Kubernetes 依赖较慢的交换空间。
+
+您可以通过在终端中输入以下代码来禁用交换：
+
+```
+sudo swapoff -a
+```
+
+## 安装 Kubernetes 工具
+
+现在，是时候在集群中的所有物理计算机上安装 Kubernetes 工具了。基本工具包括 **kubeadm**、**kubelet** 和 **kubectl**，它们支持创建、操作和管理 Kubernetes 集群。
+
+将 Kubernetes 存储库添加到包管理器，以便您的操作系统（在此示例中为 Ubuntu）可以找到必要的包。然后，安装以下 Kubernetes 工具：
+
+1. 输入以下代码以更新软件包列表，以便操作系统可以访问存储库的最新可用软件包及其版本：
+
+```
+sudo apt-get update
+```
+
+2. 安装依赖项以避免在下一步中遇到问题。
+
+```
+sudo apt-get install -y apt-transport-https curl
+```
+
+3. 从指定的 URL 下载 Kubernetes 包的安全密钥 — GPG 密钥，并将其添加到密钥环中。
+
+```
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/kubernetes-archive-keyring.gpg add -
+```
+
+4. 将 Kubernetes 存储库添加到包源列表中。
+
+```
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+```
+
+5. 在终端中输入以下代码以安装 kubeadm、kubelet 和 kubectl：
+
+```
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+```
+
+## 初始化主节点
+
+安装 Kubernetes 工具后，您可以使用 **kubeadm** 初始化主节点。
+
+输入以下代码开始：
+
+```
+sudo kubeadm init --pod-network-cidr=CIDR
+```
+
+“CIDR”的值取决于您选择的 Pod 网络。对于法兰绒，通常为 10.244.0.0/16。
+
+因此，如果您选择法兰绒，您可以输入：
+
+```
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+```
+
+命令完成后，你将看到有关在主节点上配置 kubectl 并将工作节点连接到集群的说明输出。
+
+具体而言，你将看到如下输出：
+
+```
+kubeadm join <master-node-ip>:<master-node-port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
+```
+
+保存此输出命令，因为在步骤 8 中需要它来将工作器节点连接到群集。
+
+## 在主节点上设置 kubectl
+
+初始化主节点后，您需要在其[上配置 kubectl](https://www.liquidweb.com/kb/how-to-install-and-configure-kubectl-a-tutorial/)，以方便其与 Kubernetes API 的通信。
+
+您可以通过在终端中输入以下命令来执行此操作：
+
+```
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+## 安装 Pod 网络插件
+
+为了帮助 Kubernetes 集群中节点之间的通信，您需要一个 Pod 网络附加组件。您可以在 Kubernetes 网站上找到[附加选项](https://kubernetes.io/docs/concepts/cluster-administration/addons/)列表。
+
+选择附加组件后，您可以通过输入以下命令来安装它：
+
+```
+kubectl apply -f <pod-network-addon>.yaml
+```
+
+将 <pod-network-addon> 替换为您所选附加组件的 URL。例如，如果要安装 Flannel，则可以输入以下命令：
+
+```
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yaml
+```
+
+## 将工作节点加入集群
+
+初始化主节点并配置 Pod 网络后，您可以将工作节点添加到集群中。
+
+您可以通过在每个节点上运行以下命令来执行此操作：
+
+```
+sudo kubeadm join <master-node-ip>:<master-node-port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
+```
+
+在这里，您必须将 **<master-node-ip>**、**<master-node-port>**、**<token>** 和 **<hash>** 替换为您在步骤 5 结束时保存的值。
+
+## 验证集群状态
+
+将所有工作节点添加到主节点后，就可以验证集群的状态了。
+
+您可以通过在主节点中输入以下命令来执行此操作：
+
+```
+kubectl get nodes
+```
+
+您应该会看到包含所有工作节点的输出，其状态为“就绪”。
+
+## 部署应用程序
+
+设置 Kubernetes 集群后，现在可以将应用程序部署到集群上。例如，如果要使用 NGINX 应用程序进行测试，可以通过输入以下命令来实现：
+
+```
+kubectl create deployment nginxtest1 --image=nginx
+```

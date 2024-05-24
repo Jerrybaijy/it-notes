@@ -113,3 +113,8 @@ a:link {
 a:hover {
     color: #4183C4 !important;
 }
+
+/* 删除线颜色 */
+del {
+    text-decoration-color: red;
+}

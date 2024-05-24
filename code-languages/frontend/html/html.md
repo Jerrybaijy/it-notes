@@ -775,9 +775,9 @@ HTML 由一系列的元素组成，这些元素可以用来包围不同部分的
 
 ## 强调
 
-- [粗体 `<strong>`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/strong) 用于对一个句子的部分内容增加重要性，一般用粗体显示。
+- [`<strong>`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/strong) 标签用于对一个句子的部分内容增加重要性，一般用粗体显示。
 
-- [斜体 `<em>`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/em) 用于改变一个句子的意思，一般用斜体显示。
+- [`<em>`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/em) 标签用于改变一个句子的意思，一般用斜体显示。
 
 - 粗体 `<strong>`、斜体 `<em>` 都含有**语义**，在一些辅助技术（如屏幕阅读器）中，能更好理解它们的语义。
 
@@ -818,7 +818,7 @@ HTML 由一系列的元素组成，这些元素可以用来包围不同部分的
 
 ## 删除线`<del>`和下划线`<ins>`
 
-- [删除元素 `<del>`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/del)表示删除的文本，包含的文本是不再准确或不再有效的，通常以删除线的形式显示。
+- [`<del>`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/del) 标签表示删除的文本，包含的文本是不再准确或不再有效的，通常以删除线的形式显示。
 
 - [插入元素 `<ins>`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/ins) 表示添加的文本，包含的文本是新增的文本，通常以下滑线的形式显示。
 

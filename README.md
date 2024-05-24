@@ -4,7 +4,7 @@
 
 ## Self
 
-This folder contains all the files in the folder named IT which is in Baidu Netdisk
+This folder contains all the files in the folder named `it-notes` which is in Baidu Netdisk
 
 ## Getting started
 

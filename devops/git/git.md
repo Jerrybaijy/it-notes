@@ -79,11 +79,11 @@
   # 查看本地 Repo 配置的 Remote Repo
   git remote -v
   # 添加默认 Remote Repo（本地没有 Remote Repo 的操作，添加后需设置 Upstream）
-  git remote add origin REMOTE_REPO
+  git remote add origin $REMOTE_REPO
   # 添加另一个 Remote Repo，后添加的只能 pull
-  git remote set-url --add origin REMOTE_REPO
+  git remote set-url --add origin $REMOTE_REPO
   # 移除一个 Remote Repo
-  git remote set-url --delete origin REMOTE_REPO
+  git remote set-url --delete origin $REMOTE_REPO
   # 移除所有 Remote Repo
   git remote rm origin
   ```

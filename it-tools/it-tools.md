@@ -3,16 +3,18 @@
 ## Task list
 
 - **Daily**
-  - [x] Make a real task list
-  - [x] Learn `.gitignore`, then add `git-push.sh`.
-  - [x] Put `typora.md` into `Markdown.md`
-  - [x] Learn markdown
-- **Current project**
-  - [x] Build the image of frontend and backend.
-  - [x] Deploy frontend and backend into a cluster.
-  - [x] Config the YAML of backend.
-  - [ ] Deploy a database into a cluster.
-  - [ ] Connect them and visit the application in cluster on the internet.
+  - [ ] 正则表达式，slack dev-misc
+
+- **AI**
+  - [ ] 区块链，以太坊，web3
+
+
+- **Database**
+  - [ ] Databricks
+  - [ ] Vector search
+
+- **运维**
+  - [ ] Ansible是一个服务器运维工具，terraform（需要云账户）是一个云计算资源管理语言工具
 - **Shell Script**
   - [ ] Windows
   - [ ] Linux
@@ -28,13 +30,9 @@
   - [ ] server
   - [ ] nslookup
 - **Broswer**
-
   - [ ] CS
 
   - [ ] BS  Java Client
-- **text editing**
-
-  - [ ] Vi/Vim
 - **configmap**
 
   - [ ] 
@@ -43,6 +41,38 @@
 - **MySQL**
   - [ ] Use `stateset`
   - [ ] stateful app
+
+# Blockchain
+
+## Basics
+
+- **区块链**提供了去中心化的基础技术。
+- **以太坊**是利用区块链技术的平台，支持智能合约和dApps。
+- **Web3**是未来互联网的发展方向，依赖区块链技术（如以太坊）来实现其目标。
+
+## Blockchain
+
+区块链（Blockchain）是一种分布式账本技术，用于安全、透明和不可篡改地记录交易数据。区块链的核心特点包括：
+
+1. **去中心化**：区块链不依赖于中央机构，而是由网络中的多个节点共同维护。
+2. **透明性**：所有参与者都可以查看区块链上的交易记录。
+3. **安全性**：通过加密技术确保数据的安全和完整性。
+
+## Ethereum
+
+以太坊（Ethereum）是一个基于区块链技术的平台，不仅支持加密货币交易，还支持智能合约和去中心化应用（dApps）。以太坊的主要特点包括：
+
+1. **智能合约**：以太坊引入了智能合约功能，这是一种自动执行合约条款的代码。
+2. **以太币（ETH）**：以太坊网络的原生加密货币，用于支付交易费用和执行智能合约。
+3. **去中心化应用（dApps）**：开发者可以在以太坊平台上构建和部署各种去中心化应用。
+
+## Web3
+
+Web3（Web 3.0）是下一代互联网的愿景，旨在创建一个更加去中心化、开放和用户主权的网络。Web3的核心理念包括：
+
+1. **去中心化**：通过区块链技术实现数据和应用的去中心化，减少对中心化服务器和服务的依赖。
+2. **用户主权**：用户拥有和控制自己的数据和数字资产。
+3. **互操作性**：不同的区块链和应用可以互相连接和协作。
 
 # Google Cloud
 
@@ -129,7 +159,7 @@
   # 查看登录账户
   gcloud auth list
   # 切换登录账户
-  gcloud config set account YOUR_ACCOUNT
+  gcloud config set account $YOUR_ACCOUNT
   # 查看当前区域
   gcloud config get-value compute/region
   ```
@@ -141,6 +171,10 @@
   gcloud config get-value project
   # 查看当前项目
   gcloud config list project
+  # 查看所有项目
+  gcloud projects list
+  # 删除项目
+  gcloud projects delete $PROJECT_ID
   # 切换项目
   gcloud config set project $PROJECT_ID
   ```
@@ -171,6 +205,8 @@
   ```bash
   # 创建集群
   gcloud container clusters create-auto $CLUSTER_NAME --location=$LOCATION
+  # e.g.
+  gcloud container clusters create-auto jerry-cluster --location=asia-east2
   # 查看集群
   gcloud container clusters list
   # 删除集群
@@ -178,6 +214,131 @@
   # 停止集群
   gcloud container clusters resize $CLUSTER_NAME --size=0 --zone=$LOCATION
   ```
+
+- 实例
+
+  ```bash
+  # 查看项目中的实例
+  gcloud compute instances list --project=$PROJECT_ID
+  ```
+
+  
+
+## [Bare Metal](https://cloud.google.com/bare-metal/docs/bms-setup?hl=zh-cn)
+
+裸金属（Bare Metal）是指未经虚拟化的物理服务器，即裸机。在裸金属服务器上运行的操作系统直接安装在物理硬件上，而不是在虚拟化层上运行。
+
+### 准备工作
+
+1. Google Cloud 控制台中的项目选择器页面上创建项目，并启用 API。
+
+2. [创建 VPC 网络](https://cloud.google.com/vpc/docs/create-modify-vpc-networks?hl=zh-cn#gcloud)
+
+   ```bash
+   # 创建
+   gcloud compute networks create $VPC_NETWORK_NAME \
+       --subnet-mode=auto \
+       --bgp-routing-mode=$DYNAMIC_ROUTING_MODE \
+       --mtu=$MTU
+   
+   # 删除
+   gcloud compute networks delete $VPC_NETWORK_NAME
+   ```
+
+   ```bash
+   # EG
+   gcloud compute networks create my-vpc-network-1 \
+       --subnet-mode=auto \
+       --bgp-routing-mode=global \
+       --mtu=1460
+   ```
+
+### [创建 VLAN 连接](https://cloud.google.com/bare-metal/docs/bms-setup?hl=zh-cn#bms-vlan-attachments)
+
+1. 按照以下步骤为 Cloud Interconnect 连接创建 VLAN 连接
+
+2. 创建两个 Cloud Router 实例
+
+   ```bash
+   gcloud compute routers create $ROUTER_NAME \
+   --network $VPC_NETWORK_NAME \
+   --asn 16550 \
+   --region $REGION
+   ```
+
+   ```bash
+   # EG
+   gcloud compute routers create my-router-1 \
+   --network my-vpc-network-1 \
+   --asn 16550 \
+   --region us-central1
+   
+   gcloud compute routers create my-router-2 \
+   --network my-vpc-network-1 \
+   --asn 16550 \
+   --region us-central1
+   ```
+
+3. 创建两个  `InterconnectAttachment`
+
+   ```bash
+   # 创建
+   gcloud compute interconnects attachments partner create $ATTACHMENT_NAME \
+     --region $REGION \
+     --router $ROUTER_NAME \
+     --edge-availability-domain availability-domain-1 \
+     --edge-availability-domain $AVAILABILITY_DOMAIN \
+     --admin-enabled
+   
+   # 删除
+   gcloud compute interconnects attachments delete $ATTACHMENT_NAME --region=us-central1
+   ```
+
+   ```bash
+   # EG
+   gcloud compute interconnects attachments partner create my-attachment-1 \
+    --region us-central1 \
+    --router my-router-1 \
+    --edge-availability-domain availability-domain-1 \
+    --admin-enabled
+    
+   gcloud compute interconnects attachments partner create my-attachment-2 \
+    --region us-central1 \
+    --router my-router-2 \
+    --edge-availability-domain availability-domain-2 \
+    --admin-enabled
+   ```
+
+4. 描述连接，以检索其配对密钥。您在打开更改请求以创建与裸金属解决方案环境的连接后，将与 Google Cloud 共享密钥。
+
+   ```bash
+   gcloud compute interconnects attachments describe my-attachment-1 \
+     --region us-central1
+   
+   gcloud compute interconnects attachments describe my-attachment-2 \
+     --region us-central1
+   ```
+
+5. 激活 VLAN 连接
+
+   ```bash
+   gcloud compute interconnects attachments partner update $ATTACHMENT_NAME \
+   --region $REGION \
+   --admin-enabled
+   ```
+
+   ```bash
+   # EG
+   gcloud compute interconnects attachments partner update my-attachment-1 \
+   --region us-central1 \
+   --admin-enabled
+   
+   gcloud compute interconnects attachments partner update my-attachment-2 \
+   --region us-central1 \
+   --admin-enabled
+   ```
+
+6. 至此仍为：`state: PENDING_PARTNER`，实际应为 `INACTIVE` 或 `ACTIVE`
 
 ## [GKE](https://cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview?hl=zh-cn)
 
@@ -514,7 +675,7 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
 
 # JSON
 
-​	JSON（JavaScript Object Notation， JS 对象简谱）是一种轻量级的数据交换格式。JSON 可以实现不同平台的数据交换，也可以使用它保存业务数据。
+​	JSON（JavaScript Object Notation，JS 对象简谱）是一种轻量级的数据交换格式。JSON 可以实现不同平台的数据交换，也可以使用它保存业务数据。
 
 ## 语法
 
@@ -524,6 +685,147 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   {"$KEY1": $VALUE1, "$KEY2": $VALUE2, ....}
   ```
 
+# MongoDB
+
+​	MongoDB 是一种非关系型数据库管理系统，是 NoSQL 的一种，是一种文档型数据库，以 BSON（Binary JSON，二进制 JSON）格式展示数据。Collection 类似于 MySQL 中的 table, document 类似于 MySQL 中的 row。
+
+## Build ENV
+
+### Install
+
+1. 此步骤为在 Ubuntu 中安装
+
+2. 导入 MongoDB 公钥
+
+   ```bash
+   wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | sudo apt-key add -
+   ```
+
+3. 创建 MongoDB 的列表文件
+
+   ```bash
+   echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+   ```
+
+4. 更新包数据库
+
+   ```bash
+   sudo apt-get update
+   ```
+
+5. 安装 MongoDB
+
+   ```bash
+   sudo apt-get install -y mongodb-org
+   ```
+
+6. 安装 MongoDB Shell
+
+   ```bash
+   sudo apt-get install mongodb-mongosh
+   ```
+
+7. 启动 MongoDB 服务
+
+   ```bash
+   sudo systemctl start mongod
+   ```
+
+8. 设置 MongoDB 服务开机自启动
+
+   ```bash
+   sudo systemctl enable mongod、
+   ```
+
+9. 查看状态
+
+   ```bash
+   sudo systemctl status mongod
+   ```
+
+### Uninstall
+
+## MongoDB Manage
+
+- **MongoDB Manage**
+
+  ```bash
+  # show MongoDB version
+  mongod --version
+  # show MongoDB Shell version
+  mongo --version
+  # show status
+  sudo systemctl status mongod
+  ```
+
+## Basics
+
+- **Operate**
+
+  ```bash
+  # 启动
+  sudo systemctl start mongod
+  # 停止
+  sudo systemctl stop mongod
+  # 重启
+  sudo systemctl restart mongod
+  # 启动 MongoDB Shell
+  mongosh
+  # 退出 MongoDB Shell
+  exit
+  # 清屏
+  cls
+  ```
+
+## Database
+
+- **Basic command**
+
+  ```sh
+  # 查看所有
+  show dbs
+  # 进入（如果没有，会自动创建）
+  use $DATABASE;
+  # 删除
+  drop database $DATABASE;
+  ```
+
+## Collection
+
+​	MongoDB 中的 collection 类似于 MySQL 中的 table
+
+- **Basic command**
+
+  ```sh
+  # 查看 collection
+  show collections
+  # 创建 Collection / document
+  db.$COLLECTION_NAME.insertOne({$KEY1:"$VALUE1"}[,{$KEY2:"$VALUE2"},...])
+  # 删除 Collection
+  db.$COLLECTION_NAME.drop()
+
+## Document
+
+​	MongoDB 中的 document 类似于 MySQL 中的 row，所有数据以 document 形式，按照 BSON 格式存储。不同 document 无需有相同的结构和字段
+
+- **Basic command**
+
+  ```sh
+  # 查看 document
+  db.$COLLECTION_NAME.find()
+  
+  # 操作第一个 document 用'~One'
+  # 操作所有 document 用'~Many'
+  
+  # 创建 Collection / document
+  db.$COLLECTION_NAME.insertOne({$KEY1:"$VALUE1"},{$KEY2:"$VALUE2"},...)
+  # 修改 document
+  db.$COLLECTION_NAME.updateOne({KEY:"VALUE"},{$set:{KEY1:"VALUE1",KEY2:"VALUE2"}})
+  db.$COLLECTION_NAME.updateMany({KEY:"VALUE"},{$set:{KEY1:"VALUE1",KEY2:"VALUE2"}})
+  # 删除 document
+  db.$COLLECTION_NAME.updateOne({KEY:"VALUE"})
+  db.$COLLECTION_NAME.updateMany({KEY:"VALUE"})
+  ```
 
 # MySQL
 
@@ -624,9 +926,8 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   show variables like 'character_set_database';
   # Set characters between client and server
   set names 'utf8';
-  
   ```
-
+  
 - Others
 
   - Name should use `_` instead of `-`. EG: `db_test` and `tb_test`.
@@ -637,13 +938,13 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
 - **Basic Command**
 
   ```sql
-  # Show all databases in the server
+  # 查看所有
   show databases; 
-  # Enter database
+  # 进入
   use $DATABASE;
-  # Create database
+  # 创建
   create database $DATABASE [default charset=utf8];
-  # delete database
+  # 删除
   drop database $DATABASE;
   ```
 
@@ -703,7 +1004,6 @@ GKE (Google Kubernetes Engine)，是由 Google 开发的代管式 Kubernetes 服
   	name varchar(16)
   )default charset=utf8;
   ```
-  
   
 
 ## Row
@@ -808,6 +1108,67 @@ Postman 是一个 API 开发工具，用于创建、测试和调试 API。它可
 - **Body**：即用户要发送的请求内容，以 JSON 格式发送
 
 - 最后一行是反馈结果，类似于 console
+
+# Prometheus
+
+Prometheus 是一个开源的监控和警报工具，最初由 Sound Cloud 开发。它专为云环境而设计，可以动态发现目标，并收集它们的度量指标，存储这些指标，并提供基于这些指标的警报功能。
+
+## Basics
+
+### Install
+
+1. [This part is from NANA, and it is unfinished.](https://www.youtube.com/watch?v=QoDqxm7ybLc)
+
+2. **Requirement**
+
+   1. Cluster is running.
+   2. Helm has been installed and the repo 'arldka' is added into local.
+
+3. Install
+
+   ```bash
+   helm install prometheus arldka/prometheus-operator
+   ```
+
+### Install
+
+1. [**Source:** This part is from IBM.](https://www.youtube.com/watch?v=VMP48mMBDZw)
+
+2. **Requirement:** Git, Docker, Docker Compose
+
+3. install
+
+   ```bash
+   git clone https://gitlab.com/jerrybai/pmi-prometheus-grafana-sample.git
+   cd pmi-prometheus-grafana-sample
+   docker-compose up
+   ```
+
+4. This will build and run 3 containers.
+
+5. Access WAS PMI metrics - Prometheus endpoint
+   http://localhost:9080/metrics
+
+6. Access Prometheus Server UI
+   [http://localhost:9090](http://localhost:9090/)
+
+7. Access Grafana
+    [http://localhost:3000](http://localhost:3000/)
+
+   Login: admin / admin
+
+8. Stop
+
+   ```bash
+   docker stop grafana prometheus twas_metrics
+   ```
+
+9. Restart
+
+   ```bash
+   docker start grafana prometheus twas_metrics
+   ```
+
 
 # Shell Script
 

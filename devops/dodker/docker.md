@@ -39,7 +39,7 @@
 4. 验证 Docker 安装：
 
    ```bash
-   docker --version
+   docker -v
    ```
 
 5. 启动 Docker
@@ -65,6 +65,76 @@
    ```bash
    docker login
    ```
+
+### WSL Ubuntu
+
+1. 更新软件包列表
+
+   ```bash
+   sudo apt update
+   ```
+
+2. 安装必要的软件包
+
+   ```bash
+   sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+   ```
+
+3. 添加 Docker 的官方 GPG 密钥
+
+   ```bash
+   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+   ```
+
+4. 添加 Docker APT 仓库
+
+   ```bash
+   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   ```
+
+5. 再次更新软件包列表，以确保新添加的仓库已经包含在软件包列表中
+
+   ```bash
+   sudo apt update
+   ```
+
+6. 安装 Docker Engine
+
+   ```bash
+   sudo apt install -y docker-ce docker-ce-cli containerd.io
+   ```
+
+7. 启动 Docker 服务
+
+   ```bash
+   sudo systemctl status docker
+   ```
+
+8. 其它同 Linux 安装
+
+## Docker Compose
+
+- Docker Compose 是一个用于管理 Docker 容器的工具。
+
+- Install
+
+  ```bash
+  sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+  docker-compose --version
+  ```
+
+- Command
+
+  ```bash
+  # Build and run all containers
+  cd $DOCKER_COMPOSE_FOLDER
+  docker-compose up
+  # Remove all containers
+  cd $DOCKER_COMPOSE_FOLDER
+  docker-compose down
+  ```
+
 
 ## Docker 管理
 

@@ -550,6 +550,101 @@ del {
   - **Underline:** Ctrl + U
   - **Strike(Delete):** Alt + Shift + 5
 
+## 表格
+
+- Typora 中的表格功能很鸡肋，无合并功能，所以使用 HTML 的表格元素添加表格，使用 CSS 修改内容的样式。
+
+  ```HTML
+  <!-- 全文居中 -->
+  <table style="text-align: center;">
+    <tr>
+      <!-- 该单元格占2列 -->
+      <th colspan="2">表头1</th>
+      <th>表头2</th>
+      <th>表头3</th>
+      <th>表头4</th>
+    </tr>
+    <tr>
+      <!-- 该单元格占3行 -->
+      <td rowspan="3">内容</td>
+      <td>内容</td>
+      <td colspan="2">内容</td>
+      <td>内容</td>
+    </tr>
+    <tr>
+      <td>内容</td>
+      <td colspan="3">内容</td>
+    </tr>
+    <tr>
+      <td>内容</td>
+      <td>内容</td>
+      <td>内容</td>
+      <td>内容</td>
+    </tr>
+  </table>
+  ```
+
+## 流程图
+
+- Typora 没有流程图功能，使用 Mermaid 语法添加流程图。
+
+- 实际使用中只需要将代码块语言添加 mermaid 即可
+
+  ```
+  %% 定义图的方向
+  graph TD
+  
+  	%% 定义样式类
+  	classDef israeliNode fill:#3c78d8,stroke:#333,stroke-width:0px,color:#ffffff;
+  	classDef islamNode fill:#5fdd27,stroke:#333,stroke-width:0px,color:#ffffff;
+  	classDef judaismNode fill:#FFB900,stroke:#333,stroke-width:0px,color:#ffffff;
+  	classDef christNode fill:#F7630C,stroke:#333,stroke-width:0px,color:#ffffff;
+  	
+  	%% 定义节点和连接线
+  	A(亚当&夏娃) --> B(赛特\n第1世孙)
+  	B --> C(……)
+  	C --> D(挪亚\n第9世孙)
+  	D --> E(……)
+  	E --> F(亚伯拉罕\n第20世孙)
+  	F --> G(以撒)
+  	G --> H(雅各)
+  	H --> I(犹大)
+  	I --> J(大卫\n第33世孙\n以色列联合王国)
+  	J --> K(南方犹大)
+  	K --> L(……)
+  	L --> M(约西亚)
+  	M --> N(西底家\n末代犹大君王)
+  	N --> O(……)
+  	O --> P(现代以色列人)
+  	
+  	F --> F1(以实玛利)
+  	F1 --> F2(……)
+  	F2 --> F3(阿拉伯人)
+  	F3 --> F4(……)
+  	F4 --> F5(穆罕默德)
+  	F5 --> F6(伊斯兰教)
+  	
+  	H --> H1(利未)
+  	H1 --> H2(……)
+  	H2 --> H3(摩西)
+  	H3 --> H4(犹太教)
+  	
+  	M --> M1(约雅敬\n倒数第3代犹大君王)
+  	M1 --> M2(约雅斤\n倒数第2代犹大君王)
+  	M2 --> M3(……)
+  	M3 --> M4(约瑟)
+  	M4 --> M5(耶稣\n第75世孙)
+  	M5 --> M6(基督教)
+  	
+  	%% 应用样式类
+  	class A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P israeliNode;
+  	class F1,F2,F3,F4,F5,F6 islamNode;
+  	class H1,H2,H3,H4 judaismNode;
+  	class M1,M2,M3,M4,M5,M6 christNode;
+  ```
+
+  
+
 ## 其它
 
 ### 标注拼音

@@ -1169,6 +1169,9 @@ Prometheus 是一个开源的监控和警报工具，最初由 Sound Cloud 开�
    docker start grafana prometheus twas_metrics
    ```
 
+# Regex
+
+​	**正则表达式**（Regular Expression，在代码中常简写为regex、regexp或RE），是一种[文本模式](https://baike.baidu.com/item/文本模式/7355156?fromModule=lemma_inlink)，包括普通字符（例如，a 到 z 之间的字母）和特殊字符（[元字符](https://baike.baidu.com/item/元字符/6062776?fromModule=lemma_inlink)）。正则表达式使用范式（pattern）来匹配（match）字符串，通常被用来检索、替换那些符合某个模式的文本。
 
 # Shell Script
 

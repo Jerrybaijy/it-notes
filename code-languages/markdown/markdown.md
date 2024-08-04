@@ -521,7 +521,14 @@ del {
 
 #### [github-night-dimmed](https://github.com/kinoute/typora-github-night-theme/releases/tag/v0.6.2)
 
-- github-night-dimmed.c
+- Copy all the following files into theme foder
+
+  - github-night
+  - github-night.css
+  - github-night-dimmed.css
+  - github-night-high-contrast.css
+  
+- github-night-dimmed.css
 
   ```css
   /* -----------------------以下为修改区域----------------- */

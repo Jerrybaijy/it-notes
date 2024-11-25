@@ -7,67 +7,23 @@
 This folder contains all the files in the folder named `it-notes` which is in Baidu Netdisk.
 
 
-- 这是换行直接添加代码<br>
-```html
-<dl>
-  <dt>First Term</dt>
-  <dd>This is the definition of the first term.</dd>
-  <dt>Second Term</dt>
-  <dd>This is one definition of the second term. </dd>
-  <dd>This is another definition of the second term.</dd>
-</dl>
-```
+# 实验
 
-- 这是换行直接添加内容<br>
-<dl>
-  <dt>First Term</dt>
-  <dd>This is the definition of the first term.</dd>
-  <dt>Second Term</dt>
-  <dd>This is one definition of the second term. </dd>
-  <dd>This is another definition of the second term.</dd>
-</dl>
+## 列表项的区别
 
-- 这是换行后缩进添加内容<br>
-	<dl>
-	  <dt>First Term</dt>
-	  <dd>This is the definition of the first term.</dd>
-	  <dt>Second Term</dt>
-	  <dd>This is one definition of the second term. </dd>
-	  <dd>This is another definition of the second term.</dd>
-	</dl>
+### 正常列表项（列表项之间 没有 空行）
 
-- 这是新的段落添加代码
+- 列表项
+- 列表项
+- 列表项
+- 列表项
 
-```html
-<dl>
-  <dt>First Term</dt>
-  <dd>This is the definition of the first term.</dd>
-  <dt>Second Term</dt>
-  <dd>This is one definition of the second term. </dd>
-  <dd>This is another definition of the second term.</dd>
-</dl>
-```
+### 手动列表项（列表项之间 有 空行，手动添加）
 
-- 这是新的段落添加内容
+- 列表项
 
-<dl>
-  <dt>First Term</dt>
-  <dd>This is the definition of the first term.</dd>
-  <dt>Second Term</dt>
-  <dd>This is one definition of the second term. </dd>
-  <dd>This is another definition of the second term.</dd>
-</dl>
+- 列表项
 
+- 列表项
 
-- 这是换行后缩进添加文本<br>
-	我是文本
-- 这是换行后不缩进添加文本<br>
-我是文本
-
-- 这是新段落添加文本
-
-我是文本
-
-- 这是新段落缩进添加文本
-
-	我是文本
+- 列表项

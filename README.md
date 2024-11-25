@@ -8,7 +8,7 @@ This folder contains all the files in the folder named `it-notes` which is in Ba
 
 
 - 这是换行直接添加代码<br>
-```
+```html
 <dl>
   <dt>First Term</dt>
   <dd>This is the definition of the first term.</dd>

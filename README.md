@@ -67,3 +67,7 @@ This folder contains all the files in the folder named `it-notes` which is in Ba
 - 这是新段落添加文本
 
 我是文本
+
+- 这是新段落缩进添加文本
+
+	我是文本

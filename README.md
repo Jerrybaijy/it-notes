@@ -36,6 +36,12 @@ This folder contains all the files in the folder named `it-notes` which is in Ba
 
 ### 无列表项的文本
 
+基准文本（结尾有空格），  
+无缩进的文本
+
+基准文本（结尾有空格），  
+		有缩进的文本
+
 基准文本，
 这是直接回车，在第二行，直接添加的文本
 

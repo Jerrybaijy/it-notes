@@ -28,6 +28,10 @@ This folder contains all the files in the folder named `it-notes` which is in Ba
 
 - 列表项
 
+- 这是行尾没有两个空格的列表项
+- 这是行尾有两个空格的列表项  
+- 这是行尾没有两个空格的列表项
+
 ## 文本的区别
 
 ### 无列表项的文本

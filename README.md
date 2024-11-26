@@ -11,9 +11,7 @@ This folder contains all the files in the folder named `it-notes` which is in Ba
 
 - 第一个列表项
 - 第二个列表项
-
-     ![alt](https://inews.gtimg.com/om_bt/OXc3xUJruDX0KA3XE7WpE-s5P1xbZwsF4OW50yTg9eL5YAA/641)
-
 - 第三个列表项
 - 第四个列表项
 
+- **说明**：**同一个段落内**，不要使用 <kbd>Enter</kbd> 换行，这会造成新起一个段落。
